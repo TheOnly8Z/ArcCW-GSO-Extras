@@ -26,7 +26,7 @@ end
 att.Mult_RPM = 0.8
 att.Mult_Damage = 1.15
 att.Mult_DamageMin = 1.15
-att.Mult_Recoil = 1.3
+att.Mult_Recoil = 1.2
 att.Mult_ShootPitch = 1.1
 
 att.ActivateElements = {"go_glock_mag_28"}
