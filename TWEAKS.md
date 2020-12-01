@@ -198,6 +198,17 @@ Making these reduce mag cap was a bad idea.
 - Now called "Automatic Internals"
 - Auto/Semi/Safe firemodes instead of just Auto
 
+### Black Grip (G3)
+**Tweaked:**
+- Now called "Polymer Grip"
+- Now available for the AK as well
+- -10% Sight time
+- +10% Horizontal recoil
+
+### Collapsible Stock (G3)
+**Added:**
+- -15% Sight time
+
 # Weapon Tweaks
 
 ## Pistols

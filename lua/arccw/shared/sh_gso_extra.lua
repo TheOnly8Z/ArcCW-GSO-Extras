@@ -430,6 +430,17 @@ local function GSOE()
         end
     end
 
+    local akm = weapons.GetStored("arccw_go_ak47")
+    table.insert(akm.Attachments, 6, {
+        PrintName = "Grip",
+        Slot = {"go_g3_grip"},
+        DefaultAttName = "Standard Grip"
+    })
+
+    akm.AttachmentElements["go_g3_grip_black"] = {
+        VMBodygroups = {{ind = 4, bg = 1},},
+    }
+
     -- Dirty dirty overwrites
     local base = weapons.GetStored("arccw_base")
     base.DoLaser = function(self, world)
@@ -678,6 +689,10 @@ local function PostLoadAtt()
         ArcCW.AttachmentTable["go_ammo_match"].Mult_HipDispersion = 1.2
         ArcCW.AttachmentTable["go_ammo_match"].Description = "Precision-tooled rounds with carefully meaasured powder improves weapon accuracy and range, but is more difficult to use when hip firing."
 
+        -- G3 Stock
+        ArcCW.AttachmentTable["go_g3_stock_collapsible"].Description = "Retractable and lightweight stock for the G3, improving sight time and moving spread at the cost of recoil."
+        ArcCW.AttachmentTable["go_g3_stock_collapsible"].Mult_SightTime = 0.85
+
         -- Perks
         ArcCW.AttachmentTable["go_perk_rapidfire"].Mult_RPM = 1.1
         ArcCW.AttachmentTable["go_perk_light"].Mult_SightedSpeedMult = 1.2
@@ -703,5 +718,10 @@ local function PostLoadAtt()
     end
 
     ArcCW.AttachmentTable["go_glock_slide_auto"].ExcludeFlags = {"noauto"}
+
+    ArcCW.AttachmentTable["go_g3_grip_black"].PrintName = "Polymer Grip"
+    ArcCW.AttachmentTable["go_g3_grip_black"].Description = "Alternative polymer grip that is ever so slightly more egronomical."
+    ArcCW.AttachmentTable["go_g3_grip_black"].Mult_SightTime = 0.9
+    ArcCW.AttachmentTable["go_g3_grip_black"].Mult_RecoilSide = 1.1
 end
 hook.Add("ArcCW_PostLoadAtts", "ArcCW_GSOE", PostLoadAtt)
