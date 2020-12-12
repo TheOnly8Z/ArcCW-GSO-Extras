@@ -674,7 +674,8 @@ local function PostLoadAtt()
         for _, i in pairs(compact) do
             ArcCW.AttachmentTable[i].Desc_Cons = {"con.magcap"}
             ArcCW.AttachmentTable[i].Mult_SightTime = 0.7
-            ArcCW.AttachmentTable[i].Mult_Recoil = 1.1
+            ArcCW.AttachmentTable[i].Mult_ReloadTime = 0.85
+            ArcCW.AttachmentTable[i].Mult_Recoil = 1.15
             ArcCW.AttachmentTable[i].Mult_RPM = 1.2
         end
 

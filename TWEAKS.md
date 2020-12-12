@@ -162,7 +162,8 @@ Slightly more viable.
 Making these reduce mag cap was a bad idea.
 
 **Tweaked:**
-- +10% Recoil (down from +25%)
+- +15% Recoil (down from +25%)
+- +15% Reload speed
 - +20% Fire rate
 
 ### Match Ammo
