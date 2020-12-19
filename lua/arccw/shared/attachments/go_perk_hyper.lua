@@ -16,7 +16,7 @@ att.Override_Firemodes = {
         RunawayBurst = true,
         PostBurstDelay = 0.2,
         Override_ShotRecoilTable = {
-            [1] = 0.2
+            [0] = 0.1
         }
     },
     {
