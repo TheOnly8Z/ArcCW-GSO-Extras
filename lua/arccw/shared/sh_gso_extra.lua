@@ -3,6 +3,7 @@ local gunBal = CreateConVar("arccw_gsoe_gunbal", 1, FCVAR_ARCHIVE + FCVAR_REPLIC
 local originTweak = CreateConVar("arccw_gsoe_origintweak", 0, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Resets origin of GSO weapons, making them look more like how they are in CSGO.", 0, 1)
 local catMode = CreateConVar("arccw_gsoe_catmode", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Change GSO weapon categories. 1 - CS:GO categories, 2 - one category", 0, 2)
 local laserColor = CreateConVar("arccw_gsoe_lasermode", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Make 1mW, 3mW and 5mW lasers use custom colors defined by the player. Set to 2 to disable anti-cheese.", 0, 2)
+local addSway = CreateConVar("arccw_gsoe_addsway", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Dynamically insert aim sway to every GSO gun and attachment. Set to 2 to apply to ALL guns and attachments.", 0, 2)
 if CLIENT then
     CreateClientConVar("arccw_gsoe_laser_r", "255", true, true, "", 0, 255)
     CreateClientConVar("arccw_gsoe_laser_g", "0", true, true, "", 0, 255)
@@ -60,6 +61,8 @@ local balanceList = {
         Category = "Rifles",
     },
     ["arccw_go_ace"] = {
+        SightTime = 0.3,
+        Trivia_Mechanism = "Gas-Operated",
         Category = "Rifles",
     },
     ["arccw_go_ak47"] = {
@@ -279,117 +282,127 @@ local function GSOE()
                 end
             end
         end
-
-        local ar15 = weapons.GetStored("arccw_go_ar15")
-        local function check_ar15(tbl)
-            local fcg = 0
-            local bar = 0
-            local smg = false
-            for i, v in pairs(tbl) do
-                if v.Installed == "go_perk_burst" then
-                    fcg = 1
-                elseif v.Installed == "go_homemade_auto" then
-                    fcg = 2
-                elseif v.Installed == "go_ar15_barrel_med" then
-                    bar = 1
-                elseif v.Installed == "go_ar15_barrel_long" then
-                    bar = 2
-                elseif v.Installed == "go_m4_barrel_long" then
-                    bar = -1
-                elseif v.Installed == "go_m4_mag_21_9mm" or v.Installed == "go_m4_mag_30_9mm" then
-                    smg = true
-                end
-            end
-            return fcg, bar, smg
-        end
-        ar15.Hook_NameChange = function(wep, name)
-            local fcg, bar, smg = check_ar15(wep.Attachments)
-            if smg and fcg == 2 then
-                return "R0635"
-            elseif smg and fcg == 1 then
-                return "R0639"
-            elseif smg then
-                return "Colt 9mm SMG"
-            elseif fcg == 2 and bar == 2 then
-                return "M16A3"
-            elseif fcg == 1 and bar == 2 then
-                return "M16A2"
-            elseif bar < 2 and fcg > 0 then
-                return "Colt Commando"
-            end
-            return "AR-15"
-        end
-        ar15.Hook_ClassChange = function(wep, name)
-            local fcg, bar, smg = check_ar15(wep.Attachments)
-            if smg then
-                return "Submachine Gun"
-            elseif fcg > 0 and bar > 0 then
-                return "Assault Rifle"
-            elseif fcg > 0 then
-                return "Assault Carbine"
-            end
-            return "Semi-Automatic Rifle"
-        end
-        ar15.Hook_DescChange = function(wep, data)
-            local fcg, bar, smg = check_ar15(wep.Attachments)
-            if smg then
-                return "A submachine gun adapted from the AR-15 platform, used on a small scale by some departments in the US, one of which is the Department of Energy, somehow."
-            elseif fcg == 2 and bar == 2 then
-                return "An AR-15 converted into the M16A3 pattern. It is identical to the A2 but capable of automatic fire, adopted by select branches of the US military."
-            elseif fcg == 1 and bar == 2 then
-                return "An AR-15 converted into the M16A2 pattern, most famously used during the Vietnam War. The burst firing mechanism was added to conserve ammo due to G.I.s spraying wildly in the jungles."
-            elseif fcg > 0 then
-                return "An automatic carbine adapted from the AR-15. The short barrel allows for high manuverability, and is mainly used by American crewmen and special forces."
-            end
-            return "A civilian version of the M4. Created by Eugene Stoner and sold originally by Armalite, it has since become the basis for the most popular rifles in the world. Semi-auto only!"
-        end
-
-        local r8 = weapons.GetStored("arccw_go_r8")
-        r8.TriggerDelay = true
-        r8.Hook_TranslateAnimation = function(wep, anim)
-            if (anim == "fire" or anim == "fire_iron")
-                    and wep:GetCurrentFiremode().Override_TriggerDelay == false then
-                return "fire_alt"
-            end
-        end
-        r8.Firemodes = {
-            {
-                Mode = 1,
-                PrintName = "DACT"
-            },
-            {
-                Mode = 1,
-                PrintName = "FAN",
-                Override_TriggerDelay = false,
-                Mult_HipDispersion = 3,
-                Mult_AccuracyMOA = 3
-            },
-            {
-                Mode = 0
-            }
-        }
-        r8.Animations["fire"] = {
-            Source = "fire",
-            Time = 0.5,
-            LHIK = true,
-            LHIKIn = 0.1,
-            LHIKOut = 0.1,
-        }
-        r8.Animations["fire_alt"] = {
-            Source = {"alt1", "alt2", "alt3"},
-            Time = 0.7,
-            LHIK = true,
-            LHIKIn = 0.1,
-            LHIKOut = 0.1,
-        }
-        r8.Animations["trigger"] = {
-            Source = "prepare",
-            MinProgress = 0.25,
-        }
-        r8.Animations["untrigger"] = {
-            Source = "idle",
-        }
     end
+
+    if addSway:GetInt() >= 1 then
+        for _, t in pairs(weapons.GetList()) do
+            local class = t.ClassName
+            if not weapons.IsBasedOn(class, "arccw_base") then continue end
+            if t.Throwing or t.IronSightStruct == false then continue end
+            if addSway:GetInt() < 2 and string.Left(class, 9) ~= "arccw_go_" then continue end
+            t.Sway = math.Clamp(t.SightTime / 1 + t.HipDispersion / 2000, 0, 1)
+        end
+    end
+
+    local ar15 = weapons.GetStored("arccw_go_ar15")
+    local function check_ar15(tbl)
+        local fcg = 0
+        local bar = 0
+        local smg = false
+        for i, v in pairs(tbl) do
+            if v.Installed == "go_perk_burst" then
+                fcg = 1
+            elseif v.Installed == "go_homemade_auto" then
+                fcg = 2
+            elseif v.Installed == "go_ar15_barrel_med" then
+                bar = 1
+            elseif v.Installed == "go_ar15_barrel_long" then
+                bar = 2
+            elseif v.Installed == "go_m4_barrel_long" then
+                bar = -1
+            elseif v.Installed == "go_m4_mag_21_9mm" or v.Installed == "go_m4_mag_30_9mm" then
+                smg = true
+            end
+        end
+        return fcg, bar, smg
+    end
+    ar15.Hook_NameChange = function(wep, name)
+        local fcg, bar, smg = check_ar15(wep.Attachments)
+        if smg and fcg == 2 then
+            return "R0635"
+        elseif smg and fcg == 1 then
+            return "R0639"
+        elseif smg then
+            return "Colt 9mm SMG"
+        elseif fcg == 2 and bar == 2 then
+            return "M16A3"
+        elseif fcg == 1 and bar == 2 then
+            return "M16A2"
+        elseif bar < 2 and fcg > 0 then
+            return "Colt Commando"
+        end
+        return "AR-15"
+    end
+    ar15.Hook_ClassChange = function(wep, name)
+        local fcg, bar, smg = check_ar15(wep.Attachments)
+        if smg then
+            return "Submachine Gun"
+        elseif fcg > 0 and bar > 0 then
+            return "Assault Rifle"
+        elseif fcg > 0 then
+            return "Assault Carbine"
+        end
+        return "Semi-Automatic Rifle"
+    end
+    ar15.Hook_DescChange = function(wep, data)
+        local fcg, bar, smg = check_ar15(wep.Attachments)
+        if smg then
+            return "A submachine gun adapted from the AR-15 platform, used on a small scale by some departments in the US, one of which is the Department of Energy, somehow."
+        elseif fcg == 2 and bar == 2 then
+            return "An AR-15 converted into the M16A3 pattern. It is identical to the A2 but capable of automatic fire, adopted by select branches of the US military."
+        elseif fcg == 1 and bar == 2 then
+            return "An AR-15 converted into the M16A2 pattern, most famously used during the Vietnam War. The burst firing mechanism was added to conserve ammo due to G.I.s spraying wildly in the jungles."
+        elseif fcg > 0 then
+            return "An automatic carbine adapted from the AR-15. The short barrel allows for high manuverability, and is mainly used by American crewmen and special forces."
+        end
+        return "A civilian version of the M4. Created by Eugene Stoner and sold originally by Armalite, it has since become the basis for the most popular rifles in the world. Semi-auto only!"
+    end
+
+    local r8 = weapons.GetStored("arccw_go_r8")
+    r8.TriggerDelay = true
+    r8.Hook_TranslateAnimation = function(wep, anim)
+        if (anim == "fire" or anim == "fire_iron")
+                and wep:GetCurrentFiremode().Override_TriggerDelay == false then
+            return "fire_alt"
+        end
+    end
+    r8.Firemodes = {
+        {
+            Mode = 1,
+            PrintName = "DACT"
+        },
+        {
+            Mode = 1,
+            PrintName = "FAN",
+            Override_TriggerDelay = false,
+            Mult_HipDispersion = 3,
+            Mult_AccuracyMOA = 3
+        },
+        {
+            Mode = 0
+        }
+    }
+    r8.Animations["fire"] = {
+        Source = "fire",
+        Time = 0.5,
+        LHIK = true,
+        LHIKIn = 0.1,
+        LHIKOut = 0.1,
+    }
+    r8.Animations["fire_alt"] = {
+        Source = {"alt1", "alt2", "alt3"},
+        Time = 0.7,
+        LHIK = true,
+        LHIKIn = 0.1,
+        LHIKOut = 0.1,
+    }
+    r8.Animations["trigger"] = {
+        Source = "prepare",
+        MinProgress = 0.25,
+    }
+    r8.Animations["untrigger"] = {
+        Source = "idle",
+    }
 
     local glock = weapons.GetStored("arccw_go_glock")
     glock.ViewModel = "models/weapons/arccw_go/v_pist_glock_extras.mdl"
@@ -710,6 +723,22 @@ local function PostLoadAtt()
         ArcCW.AttachmentTable["go_homemade_auto"].PrintName = "Automatic Internals"
         ArcCW.AttachmentTable["go_homemade_auto"].Description = "Switch in an automatic receiver, allowing the usage of semi/auto firemodes."
         ArcCW.AttachmentTable["go_homemade_auto"].Override_Firemodes = {{Mode = 2}, {Mode = 1}, {Mode = 0}}
+    end
+
+    if addSway:GetInt() >= 1 then
+        for class, t in pairs(ArcCW.AttachmentTable) do
+            if addSway:GetInt() < 2 and string.Left(class, 3) ~= "go_" then continue end
+            if (t.Mult_Range or 1) > 1 and (t.Mult_AccuracyMOA or 1) < 1 and (t.Mult_Recoil or 1) < 1 then
+                -- If it increases range, decreases precision and recoil it's probably a long barrel
+                t.Mult_Sway = math.Clamp(t.Mult_Range or 1, 1, 2)
+            elseif (t.Mult_Range or 1) < 1 and (t.Mult_AccuracyMOA or 1) > 1 and (t.Mult_Recoil or 1) > 1 then
+                -- Vice versa, probably a short barrel
+                t.Mult_Sway = math.Clamp(t.Mult_Range or 1, 0.25, 1)
+            elseif (t.Mult_SightTime or 1) > 1 and t.Holosight then
+                -- A sight of some kind
+                t.Mult_Sway = math.Clamp(t.Mult_SightTime or 1, 1, 1.5)
+            end
+        end
     end
 
     if laserColor:GetBool() then

@@ -23,11 +23,11 @@ att.Hook_NameChange = function(wep, name)
     end
 end
 
-att.Mult_RPM = 0.8
-att.Mult_Damage = 1.15
-att.Mult_DamageMin = 1.15
-att.Mult_Recoil = 1.2
-att.Mult_ShootPitch = 1.1
+att.Mult_RPM = 0.7
+att.Mult_Damage = 1.2
+att.Mult_DamageMin = 1.2
+att.Mult_Recoil = 1.5
+att.Mult_ShootPitch = 0.95
 
 att.ActivateElements = {"go_glock_mag_28"}
 att.Override_ClipSize = 30
@@ -44,7 +44,7 @@ att.Hook_SelectReloadAnimation = function(wep, anim)
 end
 
 att.Hook_GetShootSound = function(wep, snd)
-    if snd == wep.ShootSound then return "arccw_go/p250/p250_01.wav" end
+    if snd == wep.ShootSound or snd == wep.FirstShootSound then return "arccw_go/p250/p250_01.wav" end
 end
 att.Hook_GetDistantShootSound = function(wep, sound)
     if snd == wep.DistantShootSound then return "arccw_go/p250/p250-1-distant.wav" end

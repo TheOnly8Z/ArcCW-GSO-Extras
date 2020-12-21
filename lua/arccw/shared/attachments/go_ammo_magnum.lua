@@ -9,10 +9,10 @@ att.Desc_Cons = {
 att.AutoStats = true
 att.Slot = "go_ammo"
 
-att.Mult_Damage = 1.25
-att.Mult_DamageMin = 1.25
+att.Mult_Damage = 1.2
+att.Mult_DamageMin = 1.2
 --att.Mult_AccuracyMOA = 2
-att.Mult_Recoil = 1.2
+att.Mult_Recoil = 1.25
 --att.Mult_Range = 0.7
 
 att.Override_Jamming = true
@@ -31,7 +31,7 @@ end
 ]]
 att.Override_HeatDelayTime = 0.75
 att.O_Hook_Override_HeatDissipation = function(wep, data)
-    data.current = (wep.RegularClipSize or wep.Primary.ClipSize) * (wep:GetHeatLocked() and 0.25 or 0.75)
+    data.current = (wep.RegularClipSize or wep.Primary.ClipSize) * (wep:GetReloading() and 0.25 or 1) * (wep:GetHeatLocked() and 0.25 or 0.75)
 end
 att.O_Hook_Override_HeatCapacity = function(wep, data)
     data.current = (wep.RegularClipSize or wep.Primary.ClipSize) * 0.6

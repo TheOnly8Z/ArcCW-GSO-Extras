@@ -1,6 +1,6 @@
 att.PrintName = "13-Round .45ACP G21"
 att.Icon = Material("entities/acwatt_go_glock_mag_regular.png", "mips smooth")
-att.Description = "Convert the weapon to the Glock 21, firing the venerable .45 ACP. It is more powerful than 10mm Auto especially up close, but loads even less rounds due to its size."
+att.Description = "Convert the weapon to the Glock 21, firing the venerable .45 ACP. It is more powerful than 10mm Auto up close, but loads even less rounds due to its size."
 att.Desc_Pros = {
 }
 att.Desc_Cons = {

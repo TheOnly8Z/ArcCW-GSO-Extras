@@ -5,10 +5,10 @@ SWEP.AdminOnly = false
 
 SWEP.PrintName = "Galil AR"
 SWEP.Trivia_Class = "Assault Rifle"
-SWEP.Trivia_Desc = "pewpewpew"
+SWEP.Trivia_Desc = "Isareli assault rifle based off the AK pattern but firing NATO cartridges, eventually replaced by the modern ACE."
 SWEP.Trivia_Manufacturer = "Israeli Weapon Industries"
 SWEP.Trivia_Calibre = "5.56x45mm NATO"
-SWEP.Trivia_Mechanism = ""
+SWEP.Trivia_Mechanism = "Gas-Operated"
 SWEP.Trivia_Country = "Israel"
 SWEP.Trivia_Year = 1993
 
@@ -22,8 +22,8 @@ SWEP.ViewModelFOV = 60
 
 SWEP.DefaultBodygroups = "00000000000"
 
-SWEP.Damage = 24
-SWEP.DamageMin = 19 -- damage done at maximum range
+SWEP.Damage = 25
+SWEP.DamageMin = 20 -- damage done at maximum range
 SWEP.Range = 100 -- in METRES
 SWEP.Penetration = 10
 SWEP.DamageType = DMG_BULLET
@@ -37,9 +37,9 @@ SWEP.PhysBulletMuzzleVelocity = 800
 
 SWEP.Recoil = 0.200
 SWEP.RecoilSide = 0.075
-SWEP.RecoilRise = 0.1
+SWEP.RecoilRise = 0.15
 
-SWEP.Delay = 60 / 800 -- 60 / RPM.
+SWEP.Delay = 60 / 650 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
@@ -56,8 +56,8 @@ SWEP.Firemodes = {
 SWEP.NPCWeaponType = "weapon_ar2"
 SWEP.NPCWeight = 100
 
-SWEP.AccuracyMOA = 8 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
-SWEP.HipDispersion = 300 -- inaccuracy added by hip firing.
+SWEP.AccuracyMOA = 3 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
+SWEP.HipDispersion = 350 -- inaccuracy added by hip firing.
 SWEP.MoveDispersion = 120
 
 SWEP.Primary.Ammo = "smg1" -- what ammo type the gun uses
@@ -67,7 +67,7 @@ SWEP.ShootVol = 110 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
 SWEP.FirstShootSound = "arccw_go/galil_arm/galil-1.wav"
-SWEP.ShootSound = "arccw_go/galil_arm/agalil_01.wav"
+SWEP.ShootSound = "arccw_go/galil_arm/galil-1.wav"
 SWEP.ShootSoundSilenced = "arccw_go/m4a1/m4a1_silencer_01.wav"
 SWEP.DistantShootSound = "arccw_go/galil_arm/galil-1-distant.wav"
 
@@ -85,9 +85,9 @@ SWEP.ShellRotateAngle = Angle(0, 180, 0)
 SWEP.MuzzleEffectAttachment = 1 -- which attachment to put the muzzle on
 SWEP.CaseEffectAttachment = 2 -- which attachment to put the case effect on
 
-SWEP.SpeedMult = 0.94
+SWEP.SpeedMult = 0.93
 SWEP.SightedSpeedMult = 0.75
-SWEP.SightTime = 0.42
+SWEP.SightTime = 0.36
 
 SWEP.IronSightStruct = {
     Pos = Vector(-5.145, -8, 2.03),
@@ -129,6 +129,11 @@ SWEP.AttachmentElements = {
     },
     ["sidemount"] = {
         VMBodygroups = {{ind = 5, bg = 1}},
+        AttPosMods = {
+            [4] = {
+                vpos = Vector(1.1, -4, 2),
+            },
+        }
     },
     ["ubrms"] = {
         VMBodygroups = {{ind = 6, bg = 1}},
@@ -143,22 +148,8 @@ SWEP.AttachmentElements = {
             {ind = 3, bg = 1},
         },
     },
-    ["go_ace_barrel_short"] = {
-        VMBodygroups = {
-            {ind = 1, bg = 1},
-            {ind = 2, bg = 1},
-        },
-        WMBodygroups = {
-            {ind = 1, bg = 1},
-            {ind = 2, bg = 1},
-        },
-        AttPosMods = {
-            [5] = {
-                vpos = Vector(0, -3.25, 16),
-            }
-        }
-    },
-    ["go_ace_barrel_med"] = {
+    ["go_galil_ar_barrel_short"] = {
+        NameChange = "Galil SAR",
         VMBodygroups = {
             {ind = 1, bg = 2},
             {ind = 2, bg = 2},
@@ -168,23 +159,23 @@ SWEP.AttachmentElements = {
             {ind = 2, bg = 2},
         },
         AttPosMods = {
-            [5] = {
-                vpos = Vector(0, -3.25, 19.5),
+            [6] = {
+                vpos = Vector(0, -3.15, 21),
             }
         }
     },
-    ["go_ace_barrel_long"] = {
+    ["go_galil_ar_barrel_long"] = {
         VMBodygroups = {
-            {ind = 1, bg = 3},
-            {ind = 2, bg = 3},
+            {ind = 1, bg = 1},
+            {ind = 2, bg = 1},
         },
         WMBodygroups = {
-            {ind = 1, bg = 3},
-            {ind = 2, bg = 3},
+            {ind = 1, bg = 1},
+            {ind = 2, bg = 1},
         },
         AttPosMods = {
-            [5] = {
-                vpos = Vector(0, -3.25, 23.5),
+            [6] = {
+                vpos = Vector(0, -3.15, 27.5),
             }
         }
     }
@@ -207,19 +198,30 @@ SWEP.Attachments = {
         Bone = "v_weapon.sg556_Parent",
         DefaultAttName = "Iron Sights",
         Offset = {
-            vpos = Vector(-0.03, -5.2, 3),
+            vpos = Vector(-0.03, -5.2, 2),
             vang = Angle(90, 0, -90),
         },
         VMScale = Vector(1, 1, 1),
         CorrectivePos = Vector(0, 0, 0),
+        CorrectiveAng = Angle(1.5, 0, 0),
         InstalledEles = {"nors", "sidemount"},
     },
     {
         PrintName = "Underbarrel",
-        Slot = {"foregrip", "ubgl"},
+        Slot = "foregrip",
         Bone = "v_weapon.sg556_Parent",
         Offset = {
-            vpos = Vector(0, -1.6, 12),
+            vpos = Vector(0, -2.22, 12),
+            vang = Angle(90, 0, -90),
+        },
+        MergeSlots = {3},
+    },
+    {
+        Hidden = true,
+        Slot = "ubgl",
+        Bone = "v_weapon.sg556_Parent",
+        Offset = {
+            vpos = Vector(0, -2.2, 9),
             vang = Angle(90, 0, -90),
         },
     },
@@ -228,14 +230,14 @@ SWEP.Attachments = {
         Slot = "tac",
         Bone = "v_weapon.sg556_Parent",
         Offset = {
-            vpos = Vector(1.15, -3.3, 10),
+            vpos = Vector(0.5, -3.3, 7),
             vang = Angle(90, 0, 0),
         },
     },
     {
         PrintName = "Barrel",
-        Slot = "go_ace_barrel",
-        DefaultAttName = "340mm ARM Barrel"
+        Slot = "go_galil_ar_barrel",
+        DefaultAttName = "460mm ARM Barrel"
     },
     {
         PrintName = "Muzzle",
@@ -243,7 +245,7 @@ SWEP.Attachments = {
         Slot = "muzzle",
         Bone = "v_weapon.sg556_Parent",
         Offset = {
-            vpos = Vector(0, -3.25, 17.5),
+            vpos = Vector(0, -3.15, 25),
             vang = Angle(90, 0, -90),
         },
         InstalledEles = {"fh_none"},
@@ -279,7 +281,7 @@ SWEP.Attachments = {
         FreeSlot = true,
         Bone = "v_weapon.sg556_Parent", -- relevant bone any attachments will be mostly referring to
         Offset = {
-            vpos = Vector(0.75, -2.5, 7), -- offset that the attachment will be relative to the bone
+            vpos = Vector(0.5, -3, 6), -- offset that the attachment will be relative to the bone
             vang = Angle(90, 0, -90),
         },
     },
@@ -307,7 +309,8 @@ SWEP.Animations = {
         Source = "ready",
         LHIK = true,
         LHIKIn = 0,
-        LHIKOut = 0.5,
+        LHIKOut = 1.7,
+        LHIKEaseOut = 1.5
     },
     ["fix"] = {
         Source = "ready",
@@ -330,8 +333,8 @@ SWEP.Animations = {
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_AR2,
         FrameRate = 30,
         LHIK = true,
-        LHIKIn = 0.7,
-        LHIKOut = 0.7,
+        LHIKIn = 0.4,
+        LHIKOut = 0.6,
         LHIKEaseOut = 0.4
     },
     ["reload_empty"] = {
@@ -339,9 +342,9 @@ SWEP.Animations = {
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_AR2,
         FrameRate = 30,
         LHIK = true,
-        LHIKIn = 0.7,
-        LHIKOut = 0.8,
-        LHIKEaseOut = 0.4
+        LHIKIn = 0.4,
+        LHIKOut = 1.7,
+        LHIKEaseOut = 1.2
     },
     ["enter_inspect"] = false,
     ["idle_inspect"] = false,

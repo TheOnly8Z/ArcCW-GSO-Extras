@@ -4,8 +4,15 @@
 ## Features
 - CS:GO or all-in-one categories for tidier spawnmenus
 - Per-player custom laser colors
+- Aim sway for GSO or all weapons/attachments
 
 ## Weapons
+
+### Galil AR
+Beta CSGO model created by PROm. Compared to the ACE, is fires significantly slower, but has overall better ranged attributes.
+
+### M16A2
+Independent weapon based off the AR-15 model. Defaults to 20-Round magazine and burst fire.
 
 ### Glock 17
 - Added 150mm G17L Slide (custom model)
@@ -23,9 +30,6 @@
 ### SSG-08
 - Added 10-Round 7.62x51mm NATO conversion
 
-### M16A2
-Independent weapon based off the AR-15 model. Defaults to 20-Round magazine and burst fire.
-
 ## New Attachments
 - API Rounds
 - Overpressure Rounds
@@ -40,7 +44,7 @@ Independent weapon based off the AR-15 model. Defaults to 20-Round magazine and 
 # Attachment Tweaks
 
 ### No / Folded / Collapsed Stocks
-Arctic never added it even though he said he liked it :(
+Arctic never added this change even though he said he liked it :(
 
 **Added:**
 - -50% Draw time
@@ -244,3 +248,6 @@ Will get renames, along with custom descriptions for M16A2, M16A3, Colt SMG vari
 
 ### AUG
 Slight increase in damage.
+
+### ACE 22
+Sight time reduced to 300ms, in-line with other rifles.
