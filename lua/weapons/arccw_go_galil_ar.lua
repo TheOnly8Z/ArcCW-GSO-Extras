@@ -5,7 +5,7 @@ SWEP.AdminOnly = false
 
 SWEP.PrintName = "Galil AR"
 SWEP.Trivia_Class = "Assault Rifle"
-SWEP.Trivia_Desc = "pewpewpw"
+SWEP.Trivia_Desc = "pewpewpew"
 SWEP.Trivia_Manufacturer = "Israeli Weapon Industries"
 SWEP.Trivia_Calibre = "5.56x45mm NATO"
 SWEP.Trivia_Mechanism = ""
@@ -66,10 +66,10 @@ SWEP.MagID = "stanag" -- the magazine pool this gun draws from
 SWEP.ShootVol = 110 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
-SWEP.FirstShootSound = "arccw_go/galilar/galil_03.wav"
-SWEP.ShootSound = "arccw_go/galilar/galil_04.wav"
+SWEP.FirstShootSound = "arccw_go/galil_arm/galil-1.wav"
+SWEP.ShootSound = "arccw_go/galil_arm/agalil_01.wav"
 SWEP.ShootSoundSilenced = "arccw_go/m4a1/m4a1_silencer_01.wav"
-SWEP.DistantShootSound = "arccw_go/galilar/galil-1-distant.wav"
+SWEP.DistantShootSound = "arccw_go/galil_arm/galil-1-distant.wav"
 
 SWEP.MeleeSwingSound = "arccw_go/m249/m249_draw.wav"
 SWEP.MeleeMissSound = "weapons/iceaxe/iceaxe_swing1.wav"
@@ -90,8 +90,8 @@ SWEP.SightedSpeedMult = 0.75
 SWEP.SightTime = 0.42
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-5.32, -8, 1.58226),
-    Ang = Angle(0, 0, 0),
+    Pos = Vector(-5.145, -8, 2.03),
+    Ang = Angle(-0.601, 0, 1.5),
     Magnification = 1.1,
     SwitchToSound = "", -- sound that plays when switching to this sight
     CrosshairInSights = false
@@ -103,7 +103,7 @@ SWEP.HoldtypeSights = "rpg"
 
 SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_AR2
 
-SWEP.ActivePos = Vector(-1, 2, -1)
+SWEP.ActivePos = Vector(-1, 2, 0)
 SWEP.ActiveAng = Angle(0, 0, 0)
 
 SWEP.CrouchPos = Vector(-4, 0, -1)
@@ -121,57 +121,26 @@ SWEP.CustomizeAng = Angle(5, 30, 30)
 SWEP.BarrelLength = 24
 
 SWEP.AttachmentElements = {
+    ["altrs"] = {
+        VMBodygroups = {{ind = 4, bg = 1}},
+    },
+    ["nors"] = {
+        VMBodygroups = {{ind = 4, bg = 2}},
+    },
+    ["sidemount"] = {
+        VMBodygroups = {{ind = 5, bg = 1}},
+    },
     ["ubrms"] = {
         VMBodygroups = {{ind = 6, bg = 1}},
         WMBodygroups = {{ind = 6, bg = 1}},
-    },
-    ["tacms"] = {
-        VMBodygroups = {{ind = 7, bg = 1}},
-        WMBodygroups = {{ind = 7, bg = 1}},
     },
     ["fh_none"] = {
         VMBodygroups = {{ind = 2, bg = 4}},
         WMBodygroups = {{ind = 2, bg = 4}},
     },
-    ["go_stock_none"] = {
-        VMBodygroups = {
-            {ind = 5, bg = 1},
-            {ind = 4, bg = 1},
-        },
-        WMBodygroups = {
-            {ind = 5, bg = 1},
-            {ind = 4, bg = 1},
-        },
-    },
     ["go_stock"] = {
         VMBodygroups = {
-            {ind = 5, bg = 1},
-        },
-    },
-    ["go_ak_stock_skeleton"] = {
-        VMBodygroups = {
-            {ind = 5, bg = 2},
-            {ind = 4, bg = 1},
-        },
-        WMBodygroups = {
-            {ind = 5, bg = 2},
-            {ind = 4, bg = 1},
-        },
-    },
-    ["go_ak_stock_basilisk"] = {
-        VMBodygroups = {
-            {ind = 5, bg = 3},
-        },
-        WMBodygroups = {
-            {ind = 5, bg = 3},
-        },
-    },
-    ["go_ak_stock_contractor"] = {
-        VMBodygroups = {
-            {ind = 5, bg = 4},
-        },
-        WMBodygroups = {
-            {ind = 5, bg = 4},
+            {ind = 3, bg = 1},
         },
     },
     ["go_ace_barrel_short"] = {
@@ -218,49 +187,6 @@ SWEP.AttachmentElements = {
                 vpos = Vector(0, -3.25, 23.5),
             }
         }
-    },
-    ["go_ace_mag_20"] = {
-        VMBodygroups = {
-            {ind = 3, bg = 1},
-        },
-        WMBodygroups = {
-            {ind = 3, bg = 1},
-        },
-    },
-    ["go_ace_mag_10_762"] = {
-        NameChange = "ACE 32",
-        VMBodygroups = {
-            {ind = 3, bg = 3},
-        },
-        WMBodygroups = {
-            {ind = 3, bg = 3},
-        },
-    },
-    ["go_ace_mag_30_762"] = {
-        NameChange = "ACE 32",
-        VMBodygroups = {
-            {ind = 3, bg = 4},
-        },
-        WMBodygroups = {
-            {ind = 3, bg = 4},
-        },
-    },
-    ["go_ace_mag_40_762"] = {
-        NameChange = "ACE 32",
-        VMBodygroups = {
-            {ind = 3, bg = 5},
-        },
-        WMBodygroups = {
-            {ind = 3, bg = 5},
-        },
-    },
-    ["go_556_ammo_60round"] = {
-        VMBodygroups = {
-            {ind = 3, bg = 2},
-        },
-        WMBodygroups = {
-            {ind = 3, bg = 2},
-        },
     }
 }
 
@@ -278,45 +204,44 @@ SWEP.Attachments = {
     {
         PrintName = "Optic",
         Slot = "optic",
-        Bone = "v_weapon.galilar_parent",
+        Bone = "v_weapon.sg556_Parent",
         DefaultAttName = "Iron Sights",
         Offset = {
-            vpos = Vector(0, -4.85, 3),
+            vpos = Vector(-0.03, -5.2, 3),
             vang = Angle(90, 0, -90),
         },
-        VMScale = Vector(1.1, 1.1, 1.1),
-        CorrectivePos = Vector(0, 0, -0.015)
+        VMScale = Vector(1, 1, 1),
+        CorrectivePos = Vector(0, 0, 0),
+        InstalledEles = {"nors", "sidemount"},
     },
     {
         PrintName = "Underbarrel",
         Slot = {"foregrip", "ubgl"},
-        Bone = "v_weapon.galilar_parent",
+        Bone = "v_weapon.sg556_Parent",
         Offset = {
             vpos = Vector(0, -1.6, 12),
             vang = Angle(90, 0, -90),
         },
-        InstalledEles = {"ubrms"},
     },
     {
         PrintName = "Tactical",
         Slot = "tac",
-        Bone = "v_weapon.galilar_parent",
+        Bone = "v_weapon.sg556_Parent",
         Offset = {
             vpos = Vector(1.15, -3.3, 10),
             vang = Angle(90, 0, 0),
         },
-        InstalledEles = {"tacms"},
     },
     {
         PrintName = "Barrel",
         Slot = "go_ace_barrel",
-        DefaultAttName = "340mm ACE Barrel"
+        DefaultAttName = "340mm ARM Barrel"
     },
     {
         PrintName = "Muzzle",
         DefaultAttName = "Standard Muzzle",
         Slot = "muzzle",
-        Bone = "v_weapon.galilar_parent",
+        Bone = "v_weapon.sg556_Parent",
         Offset = {
             vpos = Vector(0, -3.25, 17.5),
             vang = Angle(90, 0, -90),
@@ -325,18 +250,19 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Magazine",
-        Slot = {"go_ace_mag", "go_ammo_556_60"},
+        Slot = {}, -- "go_ace_mag", "go_ammo_556_60"
         DefaultAttName = "35-Round 5.56mm Galil"
     },
     {
         PrintName = "Stock",
-        Slot = {"go_ak47_stock", "go_stock_none", "go_stock"},
+        Slot = {"go_stock_none", "go_stock"},
         DefaultAttName = "Standard Stock",
-        Bone = "v_weapon.galilar_parent",
+        Bone = "v_weapon.sg556_Parent",
         Offset = {
-            vpos = Vector(0, -2.85, 0),
+            vpos = Vector(0, -3, 1.2),
             vang = Angle(90, 0, -90),
         },
+        InstalledEles = {"go_stock"},
     },
     {
         PrintName = "Ammo Type",
@@ -351,7 +277,7 @@ SWEP.Attachments = {
         PrintName = "Charm",
         Slot = "charm",
         FreeSlot = true,
-        Bone = "v_weapon.galilar_parent", -- relevant bone any attachments will be mostly referring to
+        Bone = "v_weapon.sg556_Parent", -- relevant bone any attachments will be mostly referring to
         Offset = {
             vpos = Vector(0.75, -2.5, 7), -- offset that the attachment will be relative to the bone
             vang = Angle(90, 0, -90),
@@ -423,36 +349,36 @@ SWEP.Animations = {
 }
 
 sound.Add({
-    name = "ARCCW_GO_GALIL.Draw",
+    name = "ARCCW_GO_GALIL_ARM.Draw",
     channel = 16,
     volume = 1.0,
-    sound = "arccw_go/galilar/galil_draw.wav"
+    sound = "arccw_go/galil_arm/galil_draw.wav"
 })
 
 sound.Add({
-    name = "ARCCW_GO_GALIL.Clipout",
+    name = "ARCCW_GO_GALIL_ARM.Clipout",
     channel = 16,
     volume = 1.0,
-    sound = "arccw_go/galilar/galil_clipout.wav"
+    sound = "arccw_go/galil_arm/galil_clipout.wav"
 })
 
 sound.Add({
-    name = "ARCCW_GO_GALIL.Clipin",
+    name = "ARCCW_GO_GALIL_ARM.Clipin",
     channel = 16,
     volume = 1.0,
-    sound = "arccw_go/galilar/galil_clipin.wav"
+    sound = "arccw_go/galil_arm/galil_clipin.wav"
 })
 
 sound.Add({
-    name = "ARCCW_GO_GALIL.Boltforward",
+    name = "ARCCW_GO_GALIL_ARM.Boltforward",
     channel = 16,
     volume = 1.0,
-    sound = "arccw_go/galilar/galil_boltforward.wav"
+    sound = "arccw_go/galil_arm/galil_boltforward.wav"
 })
 
 sound.Add({
-    name = "ARCCW_GO_GALIL.Boltback",
+    name = "ARCCW_GO_GALIL_ARM.Boltback",
     channel = 16,
     volume = 1.0,
-    sound = "arccw_go/galilar/galil_boltback.wav"
+    sound = "arccw_go/galil_arm/galil_boltback.wav"
 })

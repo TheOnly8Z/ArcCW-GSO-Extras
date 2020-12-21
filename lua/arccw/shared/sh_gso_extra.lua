@@ -245,6 +245,10 @@ local balanceList = {
     ["arccw_go_nade_molotov"] = {
         Category = "Gear",
     },
+    -- GSO Extras
+    ["arccw_go_galil_ar"] = {
+        Category = "Rifles",
+    },
 }
 
 local function GSOE()
