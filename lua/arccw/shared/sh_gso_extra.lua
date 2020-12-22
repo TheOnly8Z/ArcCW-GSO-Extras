@@ -739,6 +739,12 @@ local function PostLoadAtt()
                 t.Mult_Sway = math.Clamp(t.Mult_SightTime or 1, 1, 1.5)
             end
         end
+
+        ArcCW.AttachmentTable["go_flashlight"].FlashlightBrightness = 2
+        ArcCW.AttachmentTable["go_flashlight"].FlashlightFarZ = 2048
+
+        ArcCW.AttachmentTable["go_flashlight_combo"].FlashlightBrightness = 2
+        ArcCW.AttachmentTable["go_flashlight_combo"].FlashlightFarZ = 2048
     end
 
     if laserColor:GetBool() then

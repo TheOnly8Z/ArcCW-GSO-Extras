@@ -214,6 +214,9 @@ Making these reduce mag cap was a bad idea.
 **Added:**
 - -15% Sight time
 
+### Flashlight / Combo Flashlight
+Lower brightness and longer far Z range.
+
 # Weapon Tweaks
 
 ## Pistols
