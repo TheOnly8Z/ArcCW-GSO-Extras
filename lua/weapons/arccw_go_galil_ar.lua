@@ -160,7 +160,7 @@ SWEP.AttachmentElements = {
         },
         AttPosMods = {
             [6] = {
-                vpos = Vector(0, -3.15, 21),
+                vpos = Vector(0, -3.2, 20.5),
             }
         }
     },
@@ -175,7 +175,7 @@ SWEP.AttachmentElements = {
         },
         AttPosMods = {
             [6] = {
-                vpos = Vector(0, -3.15, 27.5),
+                vpos = Vector(0, -3.2, 27.5),
             }
         }
     }
@@ -245,7 +245,7 @@ SWEP.Attachments = {
         Slot = "muzzle",
         Bone = "v_weapon.sg556_Parent",
         Offset = {
-            vpos = Vector(0, -3.15, 25),
+            vpos = Vector(0, -3.2, 24.5),
             vang = Angle(90, 0, -90),
         },
         InstalledEles = {"fh_none"},
@@ -312,20 +312,14 @@ SWEP.Animations = {
         LHIKOut = 1.7,
         LHIKEaseOut = 1.5
     },
-    ["fix"] = {
-        Source = "ready",
-        LHIK = true,
-        LHIKIn = 0,
-        LHIKOut = 0.5,
-    },
     ["fire"] = {
         Source = "shoot1",
-        Time = 0.5,
+        Time = 0.3,
         ShellEjectAt = 0,
     },
     ["fire_iron"] = {
         Source = "ironsight_fire",
-        Time = 0.5,
+        Time = 0.3,
         ShellEjectAt = 0,
     },
     ["reload"] = {
@@ -343,8 +337,8 @@ SWEP.Animations = {
         FrameRate = 30,
         LHIK = true,
         LHIKIn = 0.4,
-        LHIKOut = 1.7,
-        LHIKEaseOut = 1.2
+        LHIKOut = 1.8,
+        LHIKEaseOut = 1.6
     },
     ["enter_inspect"] = false,
     ["idle_inspect"] = false,
