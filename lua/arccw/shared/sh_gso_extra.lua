@@ -224,6 +224,9 @@ local balanceList = {
         DamageMin = 32,
         Category = "Pistols",
     },
+    ["arccw_go_sw29"] = {
+        Category = "Pistols",
+    },
     -- Equipment
     ["arccw_go_taser"] = {
         Category = "Gear",
@@ -244,6 +247,9 @@ local balanceList = {
         Category = "Gear",
     },
     ["arccw_go_nade_smoke"] = {
+        Category = "Gear",
+    },
+    ["arccw_go_shield"] = {
         Category = "Gear",
     },
     ["arccw_go_nade_molotov"] = {
@@ -473,7 +479,7 @@ local function GSOE()
 
             if attach.Laser then
                 local color = attach.LaserColor or attach.ColorOptionsTable[k.ColorOptionIndex or 1]
-                if laserColor:GetInt() > 0 and (k.Installed == "go_flashlight_combo" or string.find(k.Installed, "go_laser")) then
+                if self:GetOwner():IsPlayer() and laserColor:GetInt() > 0 and (k.Installed == "go_flashlight_combo" or string.find(k.Installed, "go_laser")) then
                     local mode = self:GetOwner():GetInfoNum("arccw_gsoe_laser_special", 0)
                     if mode == 0 then
                         local r = math.Clamp(self:GetOwner():GetInfoNum("arccw_gsoe_laser_r", 255), 1, 255)
