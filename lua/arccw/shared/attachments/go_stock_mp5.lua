@@ -9,11 +9,11 @@ att.AutoStats = true
 att.Slot = "go_stock"
 
 att.Model = "models/weapons/arccw_go/atts/stock_mp5.mdl"
-att.ModelOffset = Vector(-1.2, 0, -0.25)
+att.ModelOffset = Vector(-0.5, 0, -0.25)
 
 att.ActivateElements = {"buftube"}
 
 att.Mult_SightTime = 0.85
-att.Mult_RecoilSide = 1.15
+att.Mult_RecoilSide = 1.10
 
 att.Mult_JumpDispersion = 0.7

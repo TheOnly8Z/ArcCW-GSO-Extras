@@ -392,9 +392,7 @@ local function GSOE()
     r8.Animations["fire"] = {
         Source = "fire",
         Time = 0.5,
-        LHIK = true,
-        LHIKIn = 0.1,
-        LHIKOut = 0.1,
+        LHIK = false,
     }
     r8.Animations["fire_alt"] = {
         Source = {"alt1", "alt2", "alt3"},
@@ -464,6 +462,29 @@ local function GSOE()
     akm.AttachmentElements["go_g3_grip_black"] = {
         VMBodygroups = {{ind = 4, bg = 1},},
     }
+
+    local ssg = weapons.GetStored("arccw_go_ssg08")
+    ssg.Animations["fire"].MinProgress = 0.25
+    ssg.Animations["cycle"].MinProgress = 0.75
+
+    local awp = weapons.GetStored("arccw_go_awp")
+    awp.Animations["fire"].MinProgress = 0.4
+    awp.Animations["cycle"].MinProgress = 0.8
+
+    local m870 = weapons.GetStored("arccw_go_870")
+    m870.Animations["fire"].MinProgress = 0.15
+    m870.Animations["cycle"].Time = 0.45
+    m870.Animations["cycle"].MinProgress = 0.35
+
+    local nova = weapons.GetStored("arccw_go_nova")
+    nova.Animations["fire"].MinProgress = 0.15
+    nova.Animations["cycle"].Time = 0.5
+    nova.Animations["cycle"].MinProgress = 0.3
+
+    local mag7 = weapons.GetStored("arccw_go_mag7")
+    mag7.Animations["fire"].MinProgress = 0.2
+    mag7.Animations["cycle"].Time = 0.6
+    mag7.Animations["cycle"].MinProgress = 0.3
 
     -- Dirty dirty overwrites
     local base = weapons.GetStored("arccw_base")
@@ -564,6 +585,10 @@ local function PostLoadAtt()
         ArcCW.AttachmentTable["go_stock_pistol_bt"].Mult_Recoil = 0.85
         ArcCW.AttachmentTable["go_stock_pistol_bt"].Mult_DrawTime = 1.5
         ArcCW.AttachmentTable["go_stock_pistol_bt"].Mult_HolsterTime = 1.5
+
+        table.insert(ArcCW.AttachmentTable["go_stock_pistol_wire"].Desc_Pros, "Stabilized sighted fire")
+        ArcCW.AttachmentTable["go_stock_pistol_wire"].Mult_DrawTime = 1.25
+        ArcCW.AttachmentTable["go_stock_pistol_wire"].Mult_HolsterTime = 1.25
 
         -- AK skeleton stock
         ArcCW.AttachmentTable["go_ak_stock_skeleton"].Mult_Recoil = 1.15

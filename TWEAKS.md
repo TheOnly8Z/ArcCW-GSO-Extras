@@ -219,6 +219,9 @@ Lower brightness and longer far Z range.
 
 # Weapon Tweaks
 
+### Bolt/Pump-Actions
+Slight delay from firing animation to cycling. Shoot as soon as your finger is on the trigger/pump has been cycled.
+
 ## Pistols
 Hip dispersion and moving accuracy increased across the board, but different guns have different specialities.
 
