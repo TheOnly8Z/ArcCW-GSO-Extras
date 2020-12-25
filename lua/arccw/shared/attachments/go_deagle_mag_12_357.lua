@@ -16,6 +16,7 @@ att.Override_ClipSize = 12
 att.Mult_Damage = 0.8
 att.Mult_DamageMin = 0.8
 att.Mult_Recoil = 0.6
+att.Mult_VisualRecoilMult = 0.6
 
 att.Mult_SpeedMult = 0.95
 att.Mult_SightTime = 1.15

@@ -15,3 +15,4 @@ att.Override_ClipSize = 9
 att.Mult_Damage = 0.8
 att.Mult_DamageMin = 0.8
 att.Mult_Recoil = 0.6
+att.Mult_VisualRecoilMult = 0.6

@@ -210,6 +210,7 @@ local balanceList = {
         Category = "Pistols",
     },
     ["arccw_go_deagle"] = {
+        VisualRecoilMult = 3,
         HipDispersion = 450,
         MoveDispersion = 100,
         Damage = 65,
