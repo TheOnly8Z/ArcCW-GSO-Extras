@@ -1,6 +1,6 @@
 att.PrintName = "Folding Stock"
 att.Icon = Material("entities/acwatt_go_stock_ump.png", "mips smooth")
-att.Description = "Fucking A."
+att.Description = "Stock adapted from the UMP. Effectively reduces horizontal recoil."
 att.Desc_Pros = {
 }
 att.Desc_Cons = {
@@ -13,8 +13,6 @@ att.ModelOffset = Vector(-1.2, 0, -0.25)
 
 att.ActivateElements = {"buftube"}
 
-att.Mult_SightTime = 1.2
-att.Mult_RecoilSide = 0.85
-
-att.Mult_MoveSpeed = 0.9
-att.Mult_MoveDispersion = 0.75
+att.Mult_SightTime = 1.15
+att.Mult_MoveDispersion = 1.1
+att.Mult_RecoilSide = 0.7
