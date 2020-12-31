@@ -29,3 +29,7 @@ att.Hook_SelectReloadAnimation = function(wep, anim)
         return "reload_long_empty"
     end
 end
+
+att.Hook_GetShootSound = function(wep, snd)
+    if snd == wep.ShootSound or snd == wep.FirstShootSound then return "arccw_go/deagle/deagle_357.wav" end
+end
