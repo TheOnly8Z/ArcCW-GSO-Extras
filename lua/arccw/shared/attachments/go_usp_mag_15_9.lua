@@ -16,10 +16,10 @@ att.Mult_Damage = 0.7
 att.Mult_DamageMin = 0.9
 att.Mult_Recoil = 0.8
 att.Mult_RPM = 1.15
-att.Mult_ShootPitch = 0.85
+--att.Mult_ShootPitch = 0.85
 
 att.Hook_GetShootSound = function(wep, snd)
-    if snd == wep.ShootSound or snd == wep.FirstShootSound then return "arccw_go/hkp2000/hkp2000-1.wav" end
+    if snd == wep.ShootSound or snd == wep.FirstShootSound then return {"arccw_go/usp/usp_unsilenced_9mm_01.wav", "arccw_go/usp/usp_unsilenced_9mm_02.wav", "arccw_go/usp/usp_unsilenced_9mm_03.wav"} end
 end
 att.Hook_GetDistantShootSound = function(wep, sound)
     if snd == wep.DistantShootSound then return "arccw_go/hkp2000/hkp2000-1-distant.wav" end
