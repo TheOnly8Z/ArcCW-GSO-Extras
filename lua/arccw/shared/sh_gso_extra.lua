@@ -335,7 +335,9 @@ local function GSOE()
             return "M16A3"
         elseif fcg == 1 and bar == 2 then
             return "M16A2"
-        elseif bar < 2 and fcg > 0 then
+        elseif bar == 1 and fcg > 0 then
+            return "M4A1"
+        elseif bar == 0 and fcg > 0 then
             return "Colt Commando"
         end
         return "AR-15"
@@ -359,6 +361,8 @@ local function GSOE()
             return "An AR-15 converted into the M16A3 pattern. It is identical to the A2 but capable of automatic fire, adopted by select branches of the US military."
         elseif fcg == 1 and bar == 2 then
             return "An AR-15 converted into the M16A2 pattern, most famously used during the Vietnam War. The burst firing mechanism was added to conserve ammo due to G.I.s spraying wildly in the jungles."
+        elseif bar == 1 and fcg > 0 then
+            return "An automatic carbine adapted from the AR-15. Widely used in the US Military."
         elseif fcg > 0 then
             return "An automatic carbine adapted from the AR-15. The short barrel allows for high manuverability, and is mainly used by American crewmen and special forces."
         end
@@ -366,6 +370,7 @@ local function GSOE()
     end
 
     local r8 = weapons.GetStored("arccw_go_r8")
+    r8.Delay = 60 / 120
     r8.TriggerDelay = true
     r8.Hook_TranslateAnimation = function(wep, anim)
         if (anim == "fire" or anim == "fire_iron")
@@ -382,6 +387,7 @@ local function GSOE()
             Mode = 1,
             PrintName = "FAN",
             Override_TriggerDelay = false,
+            Mult_RPM = 3,
             Mult_HipDispersion = 3,
             Mult_AccuracyMOA = 3
         },
@@ -463,6 +469,7 @@ local function GSOE()
         VMBodygroups = {{ind = 4, bg = 1},},
     }
 
+    --[[]
     local ssg = weapons.GetStored("arccw_go_ssg08")
     ssg.Animations["fire"].MinProgress = 0.25
     ssg.Animations["fire_ads"].MinProgress = 0.25
@@ -490,6 +497,7 @@ local function GSOE()
     mag7.Animations["fire_ads"].MinProgress = 0.2
     mag7.Animations["cycle"].Time = 0.6
     mag7.Animations["cycle"].MinProgress = 0.3
+    ]]
 
     -- Dirty dirty overwrites
     local base = weapons.GetStored("arccw_base")
@@ -562,7 +570,6 @@ end
 hook.Add("PreGamemodeLoaded", "ArcCW_GSOE", function()
     GSOE()
 end)
---GSOE()
 
 local function PostLoadAtt()
     if attBal:GetBool() then
