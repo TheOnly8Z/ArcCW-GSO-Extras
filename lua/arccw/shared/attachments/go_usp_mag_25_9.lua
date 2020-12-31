@@ -37,7 +37,7 @@ att.Hook_SelectReloadAnimation = function(wep, anim)
 end
 
 att.Hook_GetShootSound = function(wep, snd)
-    if snd == wep.ShootSound then return "arccw_go/hkp2000/hkp2000-1.wav" end
+    if snd == wep.ShootSound or snd == wep.FirstShootSound then return "arccw_go/hkp2000/hkp2000-1.wav" end
 end
 att.Hook_GetDistantShootSound = function(wep, sound)
     if snd == wep.DistantShootSound then return "arccw_go/hkp2000/hkp2000-1-distant.wav" end
