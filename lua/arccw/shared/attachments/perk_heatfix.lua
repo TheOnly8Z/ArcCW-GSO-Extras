@@ -18,5 +18,5 @@ att.Mult_HeatDissipation = 0.5
 att.Override_HeatFix = true
 
 att.Hook_Compatible = function(wep)
-    if !(wep.Jamming or wep:GetBuff_Override("Override_Jamming")) then return false end
+    if !(wep.Jamming or wep:GetBuff_Override("Override_Jamming")) or !wep.Animations.fix then return false end
 end
