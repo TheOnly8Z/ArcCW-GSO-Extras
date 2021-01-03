@@ -1,14 +1,15 @@
 local attBal = CreateConVar("arccw_gsoe_attbal", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Custom tweaks to GSO attachments. See WS page for details.", 0, 1)
 local gunBal = CreateConVar("arccw_gsoe_gunbal", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Custom tweaks to GSO weapons. See WS page for details.", 0, 1)
 local originTweak = CreateConVar("arccw_gsoe_origintweak", 0, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Resets origin of GSO weapons, making them look more like how they are in CSGO.", 0, 1)
-local catMode = CreateConVar("arccw_gsoe_catmode", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Change GSO weapon categories. 1 - CS:GO categories, 2 - one category", 0, 2)
-local laserColor = CreateConVar("arccw_gsoe_lasermode", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Make 1mW, 3mW and 5mW lasers use custom colors defined by the player. Set to 2 to disable anti-cheese.", 0, 2)
-local addSway = CreateConVar("arccw_gsoe_addsway", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Dynamically insert aim sway to every GSO gun and attachment. Set to 2 to apply to ALL guns and attachments.", 0, 2)
+local catMode = CreateConVar("arccw_gsoe_catmode", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Change GSO weapon categories.", 0, 3)
+local laserColor = CreateConVar("arccw_gsoe_lasermode", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Make 1mW, 3mW and 5mW lasers use custom colors defined by the player.", 0, 3)
+local addSway = CreateConVar("arccw_gsoe_addsway", 0, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Dynamically insert aim sway to every GSO gun and attachment. Set to 2 to apply to ALL guns and attachments.", 0, 2)
 if CLIENT then
+    CreateClientConVar("arccw_gsoe_laser_enabled", "1", true, true, "", 0, 1)
     CreateClientConVar("arccw_gsoe_laser_r", "255", true, true, "", 0, 255)
     CreateClientConVar("arccw_gsoe_laser_g", "0", true, true, "", 0, 255)
     CreateClientConVar("arccw_gsoe_laser_b", "0", true, true, "", 0, 255)
-    CreateClientConVar("arccw_gsoe_laser_special", "0", true, true, "", 0, 1)
+    CreateClientConVar("arccw_gsoe_laser_special", "0", true, true, "", 0, 2)
 end
 
 local balanceList = {
@@ -268,13 +269,7 @@ local function GSOE()
             local stored = weapons.GetStored(class)
             if not stored then continue end
             for i, v in pairs(t) do
-                if i == "Category" then
-                    if catMode:GetInt() == 1 then
-                        stored.Category = "ArcCW - GSO (" .. v .. ")"
-                    elseif catMode:GetInt() == 2 then
-                        stored.Category = "ArcCW - GSO"
-                    end
-                else
+                if i ~= "Category" then
                     stored[i] = v
                 end
             end
@@ -285,6 +280,12 @@ local function GSOE()
                 if catMode:GetInt() == 1 then
                     wpnList[class].Category = "ArcCW - GSO (" .. t.Category .. ")"
                 elseif catMode:GetInt() == 2 then
+                    if t.Category == "Gear" then
+                        wpnList[class].Category = "ArcCW - Other"
+                    else
+                        wpnList[class].Category = "ArcCW - GSO"
+                    end
+                elseif catMode:GetInt() == 3 then
                     wpnList[class].Category = "ArcCW - GSO"
                 end
             end
@@ -508,44 +509,50 @@ local function GSOE()
 
         for _, k in pairs(self.Attachments) do
             if not k.Installed then continue end
-
             local attach = ArcCW.AttachmentTable[k.Installed]
-
-            if attach.Laser then
-                local color = attach.LaserColor or attach.ColorOptionsTable[k.ColorOptionIndex or 1]
-                if self:GetOwner():IsPlayer() and laserColor:GetInt() > 0 and (k.Installed == "go_flashlight_combo" or string.find(k.Installed, "go_laser")) then
-                    local mode = self:GetOwner():GetInfoNum("arccw_gsoe_laser_special", 0)
+            if not attach.Laser then continue end
+            local color = attach.LaserColor or attach.ColorOptionsTable[k.ColorOptionIndex or 1]
+            if self:GetOwner():IsPlayer() and laserColor:GetInt() > 0
+                    and self:GetOwner():GetInfoNum("arccw_gsoe_laser_enabled", 1) == 1
+                    and (k.Installed == "go_flashlight_combo" or string.find(k.Installed, "go_laser")) then
+                local mode = laserColor:GetInt() >= 2 and 0 or self:GetOwner():GetInfoNum("arccw_gsoe_laser_special", 0)
+                if mode == 0 or mode == 1 then
+                    local r, g, b
                     if mode == 0 then
-                        local r = math.Clamp(self:GetOwner():GetInfoNum("arccw_gsoe_laser_r", 255), 1, 255)
-                        local g = math.Clamp(self:GetOwner():GetInfoNum("arccw_gsoe_laser_g", 0), 1, 255)
-                        local b = math.Clamp(self:GetOwner():GetInfoNum("arccw_gsoe_laser_b", 0), 1, 255)
-                        local sum = math.max(Vector(r, g, b):Length(), 1)
-                        if sum < 255 and laserColor:GetInt() < 2 then -- Anti cheese
-                            local add = (255 - sum)
-                            r = r + math.ceil((r / sum) * add)
-                            g = g + math.ceil((g / sum) * add)
-                            b = b + math.ceil((b / sum) * add)
-                        end
-                        color.r = r
-                        color.g = g
-                        color.b = b
-                    elseif mode == 1 then
-                        color.r = 128 + 127 * math.Clamp(math.sin(1 * CurTime()), 0, 1)
-                        color.g = 128 + 127 * math.Clamp(math.sin(1 * (CurTime() + math.pi / 3 * 2)), 0, 1)
-                        color.b = 128 + 127 * math.Clamp(math.sin(1 * (CurTime() + math.pi / 3 * 4)), 0, 1)
+                        r = math.Clamp(self:GetOwner():GetInfoNum("arccw_gsoe_laser_r", 255), 1, 255)
+                        g = math.Clamp(self:GetOwner():GetInfoNum("arccw_gsoe_laser_g", 0), 1, 255)
+                        b = math.Clamp(self:GetOwner():GetInfoNum("arccw_gsoe_laser_b", 0), 1, 255)
+                    else
+                        local plyclr = self:GetOwner():GetPlayerColor()
+                        r = plyclr.x * 255
+                        g = plyclr.y * 255
+                        b = plyclr.z * 255
                     end
+                    local sum = math.max(Vector(r, g, b):Length(), 1)
+                    if sum < 255 and laserColor:GetInt() < 3 then -- Anti cheese
+                        local add = (255 - sum)
+                        r = r + math.ceil((r / sum) * add)
+                        g = g + math.ceil((g / sum) * add)
+                        b = b + math.ceil((b / sum) * add)
+                    end
+                    color.r = r
+                    color.g = g
+                    color.b = b
+                elseif mode == 2 then -- RAINBOWS
+                    color.r = 128 + 127 * math.Clamp(math.sin(1 * CurTime()), 0, 1)
+                    color.g = 128 + 127 * math.Clamp(math.sin(1 * (CurTime() + math.pi / 3 * 2)), 0, 1)
+                    color.b = 128 + 127 * math.Clamp(math.sin(1 * (CurTime() + math.pi / 3 * 4)), 0, 1)
                 end
+            end
 
-                if toworld then
-                    if not k.WElement then continue end
-
-                    cam.Start3D()
-                        self:DrawLaser(attach, k.WElement.Model, color, true)
-                    cam.End3D()
-                else
-                    if not k.VElement then continue end
-                    self:DrawLaser(attach, k.VElement.Model, color)
-                end
+            if toworld then
+                if not k.WElement then continue end
+                cam.Start3D()
+                    self:DrawLaser(attach, k.WElement.Model, color, true)
+                cam.End3D()
+            else
+                if not k.VElement then continue end
+                self:DrawLaser(attach, k.VElement.Model, color)
             end
         end
 
@@ -620,9 +627,9 @@ local function PostLoadAtt()
             ArcCW.AttachmentTable[i].Mult_Recoil = 0.8
             ArcCW.AttachmentTable[i].Mult_MoveDispersion = nil --1.3
             ArcCW.AttachmentTable[i].Mult_SightTime = 1.3
-            ArcCW.AttachmentTable[i].Mult_SightedSpeedMult = 0.75
-            ArcCW.AttachmentTable[i].Mult_DrawTime = 1.25
-            ArcCW.AttachmentTable[i].Mult_HolsterTime = 1.25
+            ArcCW.AttachmentTable[i].Mult_SightedSpeedMult = 0.8
+            ArcCW.AttachmentTable[i].Mult_DrawTime = 1.2
+            ArcCW.AttachmentTable[i].Mult_HolsterTime = 1.2
             ArcCW.AttachmentTable[i].Mult_SpeedMult = nil
         end
 
@@ -784,10 +791,10 @@ local function PostLoadAtt()
             end
         end
 
-        ArcCW.AttachmentTable["go_flashlight"].FlashlightBrightness = 2
+        ArcCW.AttachmentTable["go_flashlight"].FlashlightBrightness = 1
         ArcCW.AttachmentTable["go_flashlight"].FlashlightFarZ = 2048
 
-        ArcCW.AttachmentTable["go_flashlight_combo"].FlashlightBrightness = 2
+        ArcCW.AttachmentTable["go_flashlight_combo"].FlashlightBrightness = 1
         ArcCW.AttachmentTable["go_flashlight_combo"].FlashlightFarZ = 2048
     end
 
