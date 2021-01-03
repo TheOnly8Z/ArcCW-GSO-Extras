@@ -16,3 +16,7 @@ att.Mult_Damage = 0.8
 att.Mult_DamageMin = 0.8
 att.Mult_Recoil = 0.6
 att.Mult_VisualRecoilMult = 0.6
+
+att.Hook_GetShootSound = function(wep, snd)
+    if snd == wep.ShootSound or snd == wep.FirstShootSound then return "arccw_go/deagle/deagle_357.wav" end
+end

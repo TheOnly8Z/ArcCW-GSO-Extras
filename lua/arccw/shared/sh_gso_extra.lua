@@ -470,35 +470,33 @@ local function GSOE()
         VMBodygroups = {{ind = 4, bg = 1},},
     }
 
-    --[[]
     local ssg = weapons.GetStored("arccw_go_ssg08")
     ssg.Animations["fire"].MinProgress = 0.25
-    ssg.Animations["fire_ads"].MinProgress = 0.25
+    ssg.Animations["fire_iron"].MinProgress = 0.25
     ssg.Animations["cycle"].MinProgress = 0.75
 
     local awp = weapons.GetStored("arccw_go_awp")
     awp.Animations["fire"].MinProgress = 0.4
-    awp.Animations["fire_ads"].MinProgress = 0.4
+    awp.Animations["fire_iron"].MinProgress = 0.4
     awp.Animations["cycle"].MinProgress = 0.8
 
     local m870 = weapons.GetStored("arccw_go_870")
     m870.Animations["fire"].MinProgress = 0.15
-    m870.Animations["fire_ads"].MinProgress = 0.15
+    m870.Animations["fire_iron"].MinProgress = 0.15
     m870.Animations["cycle"].Time = 0.45
     m870.Animations["cycle"].MinProgress = 0.35
 
     local nova = weapons.GetStored("arccw_go_nova")
     nova.Animations["fire"].MinProgress = 0.15
-    nova.Animations["fire_ads"].MinProgress = 0.15
+    nova.Animations["fire_iron"].MinProgress = 0.15
     nova.Animations["cycle"].Time = 0.5
     nova.Animations["cycle"].MinProgress = 0.3
 
     local mag7 = weapons.GetStored("arccw_go_mag7")
     mag7.Animations["fire"].MinProgress = 0.2
-    mag7.Animations["fire_ads"].MinProgress = 0.2
+    mag7.Animations["fire_iron"].MinProgress = 0.2
     mag7.Animations["cycle"].Time = 0.6
     mag7.Animations["cycle"].MinProgress = 0.3
-    ]]
 
     -- Dirty dirty overwrites
     local base = weapons.GetStored("arccw_base")
