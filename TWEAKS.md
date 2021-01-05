@@ -27,10 +27,19 @@ Independent weapon based off the AR-15 model. Defaults to 20-Round magazine and 
 - Added 8/10-Round .44 Magnum conversion
 - Added 9/12-Round .357 Magnum conversion
 
+### FiveseveN
+- Added 25/40-Round 4.6x30mm conversion
+
 ### SSG-08
 - Added 10-Round 7.62x51mm NATO conversion
 
 ## New Attachments
+- Combat Foregrip
+- Leather Foregrip
+- Project Grip
+- Flibbertigibbet Stock
+- Folding Stock
+- Kirov Wire Stock (Pistols)
 - API Rounds
 - Overpressure Rounds
 - Flechette Shells
@@ -40,6 +49,7 @@ Independent weapon based off the AR-15 model. Defaults to 20-Round magazine and 
 - Hot Wrench (Overheating Weapons)
 - Cool Head (Overheating Weappons)
 - Air Time (Overheating Weapons)
+- Hair Trigger (Trigger Delay Weapons)
 
 # Attachment Tweaks
 
