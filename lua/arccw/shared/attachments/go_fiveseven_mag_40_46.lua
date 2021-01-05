@@ -11,6 +11,8 @@ att.AutoStats = true
 att.Slot = "go_fiveseven_mag"
 att.Override_Trivia_Calibre = "4.6x30mm"
 
+att.ActivateElements = {"go_fiveseven_mag_30"}
+
 att.Override_ClipSize = 40
 att.Mult_ReloadTime = 1.25
 att.Mult_SightTime = 1.15
