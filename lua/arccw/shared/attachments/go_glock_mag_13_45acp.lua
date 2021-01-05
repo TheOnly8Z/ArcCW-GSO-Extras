@@ -34,11 +34,11 @@ att.Mult_RPM = 0.9
 att.Mult_Damage = 1.3
 att.Mult_DamageMin = 1.1
 att.Mult_Recoil = 1.3
-att.Mult_ShootPitch = 1.1
+--att.Mult_ShootPitch = 1.1
 
 att.Hook_GetShootSound = function(wep, snd)
-    if snd == wep.ShootSound or snd == wep.FirstShootSound then return "arccw_go/usp/usp_unsilenced_02.wav" end
+    if snd == wep.ShootSound or snd == wep.FirstShootSound then return "arccw_go/glock18/glock_45.wav" end
 end
-att.Hook_GetDistantShootSound = function(wep, sound)
+--[[att.Hook_GetDistantShootSound = function(wep, sound)
     if snd == wep.DistantShootSound then return "arccw_go/usp/usp_unsil-1-distant.wav" end
-end
+end]]
