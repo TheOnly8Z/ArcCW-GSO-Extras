@@ -16,15 +16,15 @@ att.Override_ClipSize = 25
 att.Mult_Damage = 1.05
 att.Mult_DamageMin = 0.85
 att.Mult_Recoil = 0.95
-att.Mult_RPM = 1.05
+att.Mult_RPM = 1.1
 
 att.Hook_GetShootSound = function(wep, snd)
-    if snd == wep.ShootSound or snd == wep.FirstShootSound then return "arccw_go/mp7/mp7_01.wav" end
+    if snd == wep.ShootSound or snd == wep.FirstShootSound then return "arccw_go/fiveseven/fiveseven_46.wav" end
 end
 
-att.Hook_GetDistantShootSound = function(wep, snd)
+--[[att.Hook_GetDistantShootSound = function(wep, snd)
     if snd == wep.DistantShootSound then return "arccw_go/mp7/mp7-1-distant.wav" end
-end
+end]]
 
 att.Hook_NameChange = function(wep, name)
     return "Four-siX"
