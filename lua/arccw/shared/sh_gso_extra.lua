@@ -772,6 +772,12 @@ local function PostLoadAtt()
         ArcCW.AttachmentTable["go_homemade_auto"].PrintName = "Automatic Internals"
         ArcCW.AttachmentTable["go_homemade_auto"].Description = "Switch in an automatic receiver, allowing the usage of semi/auto firemodes."
         ArcCW.AttachmentTable["go_homemade_auto"].Override_Firemodes = {{Mode = 2}, {Mode = 1}, {Mode = 0}}
+
+        ArcCW.AttachmentTable["go_ammo_sg_slug"].Override_Penetration = 9
+        ArcCW.AttachmentTable["go_ammo_sg_slug"].Desc_Pros = {"pro.pen.9"}
+
+        ArcCW.AttachmentTable["go_ammo_sg_sabot"].Override_Penetration = 24
+        ArcCW.AttachmentTable["go_ammo_sg_sabot"].Desc_Pros = {"pro.pen.24"}
     end
 
     if addSway:GetInt() >= 1 then

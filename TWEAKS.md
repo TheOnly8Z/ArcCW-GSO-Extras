@@ -227,6 +227,14 @@ Making these reduce mag cap was a bad idea.
 ### Flashlight / Combo Flashlight
 Lower brightness and longer far Z range.
 
+### Slug Shells (Shotguns)
+**Added:**
+- 9mm Penetration
+
+### Sabot Shells (Shotguns)
+**Added:**
+- 24mm Penetration
+
 # Weapon Tweaks
 
 ### Bolt/Pump-Actions
