@@ -7,7 +7,7 @@ att.Desc_Cons = {
 }
 att.Slot = "go_muzzle_usp"
 
-att.RejectFlags = {"nocomp"}
+att.ExcludeFlags = {"nocomp"}
 
 att.AutoStats = true
 
