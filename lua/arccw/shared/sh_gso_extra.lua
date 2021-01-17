@@ -192,12 +192,15 @@ local balanceList = {
         Category = "Pistols",
     },
     ["arccw_go_p250"] = {
+        Delay = 60 / 400,
         HipDispersion = 300,
         MoveDispersion = 50,
         AccuracyMOA = 10,
-        Recoil = 0.45,
+        Recoil = 0.5,
         RecoilSide = 0.45,
         SightTime = 0.3,
+        Damage = 34,
+        DamageMin = 26,
         Trivia_Desc = "Compact hard-hitting handgun that incorporates numerous improvements over previous generations of SIG pistols. Its .357 SIG cartridge is more powerful, but also kicks harder.",
         Category = "Pistols",
     },
@@ -859,5 +862,10 @@ local function PostLoadAtt()
     ArcCW.AttachmentTable["go_g3_grip_black"].Description = "Alternative polymer grip that is ever so slightly more egronomical."
     ArcCW.AttachmentTable["go_g3_grip_black"].Mult_SightTime = 0.9
     ArcCW.AttachmentTable["go_g3_grip_black"].Mult_RecoilSide = 1.1
+
+    ArcCW.AttachmentTable["go_p250_mag_21"].Mult_MoveSpeed = 0.975
+    ArcCW.AttachmentTable["go_p250_mag_21"].Mult_SightTime = 1.1
+    ArcCW.AttachmentTable["go_p250_mag_21"].Mult_ReloadTime = 1.2
+
 end
 hook.Add("ArcCW_PostLoadAtts", "ArcCW_GSOE", PostLoadAtt)

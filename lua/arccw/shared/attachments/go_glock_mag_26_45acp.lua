@@ -1,4 +1,4 @@
-att.PrintName = "26-Round .45ACP G21"
+att.PrintName = "26-Round .45 ACP G21"
 att.Icon = Material("entities/acwatt_go_glock_mag_28.png", "mips smooth")
 att.Description = "Extended .45 ACP magazine for the Glock 21. Heavy, but may be worth the extra ammo."
 att.Desc_Pros = {

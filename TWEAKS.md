@@ -28,6 +28,12 @@ Independent weapon based off the AR-15 model. Defaults to 20-Round magazine and 
 - Added 9/12-Round .357 Magnum conversion
 - Added 7-Round 40ga shotshell conversion
 
+# P250
+- Added 9/15-Round .45 ACP conversion
+- Added 13/21-Round .40 S&W conversion
+- Added 15/24-Round 9mm conversion
+- Added 20/35-Round .22 LR conversion
+
 ### FiveseveN
 - Added 25/40-Round 4.6x30mm conversion
 
@@ -255,7 +261,7 @@ Hip dispersion and moving accuracy increased across the board, but different gun
 | Glock 17 | 45m | 26-19 | 0.32 | 12 | 250 | 50 | 0.2s
 | M92FS | 60m | 25-22 | 0.29 | 4 | 300 | 50 | 0.35s
 | P2000 | 40m | 25-20 | 0.2 | 10 | 100 | 25 | 0.25s
-| P250 | 50m | 37-21 | 0.5 | 10 | 300 | 50 | 0.3s
+| P250 | 50m | 34-26 | 0.5 | 10 | 300 | 50 | 0.3s
 | USP-45 | 40m | 35-24 | 0.4 | 5 | 250 | 50 | 0.3s
 | CZ-75 | 40m | 26-22 | 0.37 | 10 | 200 | 25 | 0.2s
 | FiveseveN | 80m | 24-20 | 0.23 | 3 | 250 | 25 | 0.3s
