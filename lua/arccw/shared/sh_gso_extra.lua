@@ -445,6 +445,8 @@ local function GSOE()
     local usp = weapons.GetStored("arccw_go_usp")
     usp.ViewModel = "models/weapons/arccw_go/v_pist_usp_extras.mdl"
     usp.WorldModel = "models/weapons/arccw_go/v_pist_usp_extras.mdl"
+    usp.Attachments[1].ExcludeFlags = {"go_usp_muzzle_match"}
+    usp.Attachments[1].GivesFlags = {"nocomp"}
     usp.Attachments[2].ExcludeFlags = {"go_usp_muzzle_match"}
     usp.Attachments[2].GivesFlags = {"nocomp"}
     usp.Attachments[3].ExcludeFlags = {"go_usp_muzzle_match"}
@@ -785,6 +787,21 @@ local function PostLoadAtt()
         ArcCW.AttachmentTable["go_homemade_auto"].PrintName = "Automatic Internals"
         ArcCW.AttachmentTable["go_homemade_auto"].Description = "Switch in an automatic receiver, allowing the usage of semi/auto firemodes."
         ArcCW.AttachmentTable["go_homemade_auto"].Override_Firemodes = {{Mode = 2}, {Mode = 1}, {Mode = 0}}
+
+        ArcCW.AttachmentTable["go_perk_burst"].Mult_RPM = nil
+        ArcCW.AttachmentTable["go_perk_burst"].Description = "Alters weapon fire group to support a rapid 3-round burst as well as semi-automatic fire."
+        ArcCW.AttachmentTable["go_perk_burst"].Override_Firemodes = {
+            {
+                Mode = -3,
+                Mult_RPM = 1.5,
+                Mult_RecoilSide = 0.8,
+                Mult_VisualRecoilMult = 0.8,
+                PostBurstDelay = 0.15
+            },
+            { Mode = 1 },
+            { Mode = 0 }
+        }
+        ArcCW.AttachmentTable["go_perk_burst"].Override_Firemodes_Priority = 100
 
         ArcCW.AttachmentTable["go_ammo_sg_slug"].Override_Penetration = 9
         ArcCW.AttachmentTable["go_ammo_sg_slug"].Desc_Pros = {"pro.pen.9"}

@@ -215,6 +215,11 @@ Reloads faster to compensate for lower magazine capacities.
 - Now called "Automatic Internals"
 - Auto/Semi/Safe firemodes instead of just Auto
 
+### Enhanced Burst
+**Tweaked:**
+- +50% RPM in burst (up from +15%)
+- -20% Side recoil in burst
+
 ### Black Grip (G3)
 **Tweaked:**
 - Now called "Polymer Grip"
