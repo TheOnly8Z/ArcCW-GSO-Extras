@@ -869,3 +869,69 @@ local function PostLoadAtt()
 
 end
 hook.Add("ArcCW_PostLoadAtts", "ArcCW_GSOE", PostLoadAtt)
+
+local function head(ent)
+    local pos = ent:WorldSpaceCenter()
+    if ent:GetAttachment(ent:LookupAttachment("eyes")) ~= nil then
+        pos = ent:GetAttachment(ent:LookupAttachment("eyes")).Pos
+    end
+    return pos
+end
+
+local jw_dur = 3
+hook.Add("StartCommand", "ArcCW_GSOE_JohnWick", function(ply, ucmd)
+    if SERVER then return end
+    local wep = ply:GetActiveWeapon()
+    if not IsValid(wep) or not wep.ArcCW or not wep.Attachments then return end
+    if not wep:GetBuff_Override("JohnWick") then return end
+
+    local delta = wep:GetSightDelta()
+    if (wep:GetState() == ArcCW.STATE_SIGHTS and delta > 0.05) or (wep:GetState() == ArcCW.STATE_SIGHTS and (ply.JWStart or 0) + jw_dur > CurTime()) then
+        ply.JWStart = ply.JWStart or CurTime()
+        if not ply.JWTarget or not IsValid(ply.JWTarget) or ply.JWTarget:Health() <= 0 then
+            ply.JWTarget = nil
+            local min_diff
+            for _, ent in pairs(ents.FindInCone(ply:EyePos(), ply:EyeAngles():Forward(), 4096, math.cos(math.rad(300)))) do
+                if ent == ply or (not ent:IsNPC() and not ent:IsNextBot() and not ent:IsPlayer()) or ent:Health() <= 0 then continue end
+                local tr = util.TraceLine({
+                    start = ply:EyePos(),
+                    endpos = head(ent),
+                    mask = MASK_SHOT,
+                    filter = ply
+                })
+                if tr.Entity ~= ent then continue end
+                local diff = (head(ent) - ply:EyePos()):Cross(ply:EyeAngles():Forward()):Length()
+                if not ply.JWTarget or diff < min_diff then
+                    ply.JWTarget = ent
+                    min_diff = diff
+                end
+            end
+        end
+
+        if ply.JWTarget then
+            local ang = ucmd:GetViewAngles()
+            local pos = head(ply.JWTarget)
+            local tgt = (pos - ply:EyePos()):Angle()
+            local prog = math.Clamp(1 - (ply.JWStart + jw_dur - CurTime()) / jw_dur, 0, 1)
+            ang = LerpAngle(prog, ang, tgt)
+            ucmd:SetViewAngles(ang)
+        end
+    else
+        ply.JWStart = nil
+        ply.JWTarget = nil
+    end
+end)
+
+hook.Add("OnNPCKilled", "ArcCW_GSOE_JohnWick", function(npc, attacker, inflictor)
+    if attacker:IsPlayer() and IsValid(attacker:GetActiveWeapon()) and attacker:GetActiveWeapon().ArcCW and attacker:GetActiveWeapon():GetBuff_Override("JohnWick") then
+        attacker:SendLua("LocalPlayer().JWStart = CurTime()")
+        attacker:SendLua("LocalPlayer().JWTarget = nil")
+    end
+end)
+
+hook.Add("PlayerDeath", "ArcCW_GSOE_JohnWick", function(victim, inflictor, attacker)
+    if attacker:IsPlayer() and IsValid(attacker:GetActiveWeapon()) and attacker:GetActiveWeapon().ArcCW and attacker:GetActiveWeapon():GetBuff_Override("JohnWick") then
+        attacker:SendLua("LocalPlayer().JWStart = CurTime()")
+        attacker:SendLua("LocalPlayer().JWTarget = nil")
+    end
+end)
