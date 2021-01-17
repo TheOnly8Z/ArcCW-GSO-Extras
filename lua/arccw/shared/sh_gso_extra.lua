@@ -382,7 +382,9 @@ local function GSOE()
     end
 
     local r8 = weapons.GetStored("arccw_go_r8")
-    r8.Delay = 60 / 120
+    r8.ViewModel = "models/weapons/arccw_go/v_pist_r8_extras.mdl"
+    r8.WorldModel = "models/weapons/arccw_go/v_pist_r8_extras.mdl"
+    r8.Delay = 60 / 180
     r8.TriggerDelay = true
     r8.Hook_TranslateAnimation = function(wep, anim)
         if (anim == "fire" or anim == "fire_iron")
@@ -399,9 +401,8 @@ local function GSOE()
             Mode = 1,
             PrintName = "FAN",
             Override_TriggerDelay = false,
-            Mult_RPM = 3,
+            Add_SightsDispersion = 50,
             Mult_HipDispersion = 3,
-            Mult_AccuracyMOA = 3
         },
         {
             Mode = 0
@@ -425,6 +426,16 @@ local function GSOE()
     }
     r8.Animations["untrigger"] = {
         Source = "idle",
+    }
+    r8.CaseBones = {
+        [6] = {"v_weapon.cylbullet1", "v_weapon.lodbullet1"},
+        [7] = {"v_weapon.cylbullet2", "v_weapon.lodbullet2"},
+        [8] = {"v_weapon.cylbullet3", "v_weapon.lodbullet3"},
+        [1] = {"v_weapon.cylbullet4", "v_weapon.lodbullet4"},
+        [2] = {"v_weapon.cylbullet5", "v_weapon.lodbullet5"},
+        [3] = {"v_weapon.cylbullet6", "v_weapon.lodbullet6"},
+        [4] = {"v_weapon.cylbullet7", "v_weapon.lodbullet7"},
+        [5] = {"v_weapon.cylbullet8", "v_weapon.lodbullet8"},
     }
 
     local glock = weapons.GetStored("arccw_go_glock")

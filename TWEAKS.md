@@ -264,7 +264,7 @@ Hip dispersion and moving accuracy increased across the board, but different gun
 | R8 .357 | 45m | 58-32 | 1.75 | 5 | 100 | 75 | 0.32s
 
 ### R8 .357
-Added the delayed trigger from CS:GO - works how you expect it to. Switch to FAN firemode for faster but inaccurate firing.
+Added the delayed trigger from CS:GO - works how you expect it to. Switch to FAN firemode for faster but inaccurate (even in sights) firing.
 
 ## Shotguns
 Hip dispersion, moving accuracy and recoil significantly increased across the board.
