@@ -12,11 +12,13 @@ att.ExcludeFlags = {"nocomp"}
 att.AutoStats = true
 
 att.Mult_ShootPitch = 0.9
-att.Mult_SightTime = 1.2
-att.Mult_MoveDispersion = 0.7
-att.Mult_AccuracyMOA = 0.4
-att.Mult_Recoil = 0.7
-att.Mult_RecoilSide = 0.7
+att.Mult_MoveDispersion = 0.5
+att.Mult_AccuracyMOA = 0.5
+att.Mult_Recoil = 0.75
+att.Mult_RecoilSide = 0.75
+
 att.Mult_MoveSpeed = 0.95
+att.Mult_SightTime = 1.15
+att.Mult_SightedSpeedMult = 0.85
 
 att.SortOrder = 1000

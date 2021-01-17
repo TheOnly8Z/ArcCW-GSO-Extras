@@ -65,6 +65,8 @@ local balanceList = {
         SightTime = 0.3,
         Trivia_Mechanism = "Gas-Operated",
         Category = "Rifles",
+        Damage = 28,
+        DamageMin = 19
     },
     ["arccw_go_ak47"] = {
         Category = "Rifles",
@@ -142,18 +144,20 @@ local balanceList = {
     ["arccw_go_cz75"] = {
         HipDispersion = 200,
         MoveDispersion = 25,
-        Recoil = 0.34,
+        Recoil = 0.37,
         AccuracyMOA = 10,
         Damage = 26,
         DamageMin = 22,
+        SightTime = 0.2,
         Trivia_Desc = "Czech handgun developed to export to the West during the height of the Cold War. It functions similarly to other 9mm double-stack pistols but handles better.",
         Category = "Pistols",
     },
     ["arccw_go_fiveseven"] = {
-        HipDispersion = 200,
+        HipDispersion = 250,
         MoveDispersion = 25,
-        AccuracyMOA = 5,
+        AccuracyMOA = 3,
         DamageMin = 20,
+        SightTime = 0.3,
         Trivia_Desc = "Handgun designed as a companion to the P90 PDW. Its thin but long cartridge allows for exceptional range and accuracy for a pistol, but isn't very hard hitting.",
         Category = "Pistols",
     },
@@ -161,16 +165,19 @@ local balanceList = {
         HipDispersion = 250,
         MoveDispersion = 50,
         AccuracyMOA = 12,
+        SightTime = 0.2,
         Category = "Pistols",
     },
     ["arccw_go_m9"] = {
         HipDispersion = 300,
         MoveDispersion = 50,
-        AccuracyMOA = 5,
+        AccuracyMOA = 4,
         Range = 60,
         Damage = 25,
         DamageMin = 22,
-        Trivia_Desc = "Popular full-sized Italian 9mm handgun adopted by the US military. The longer slide provides excellent accuracy at the cost of hip fire performance.",
+        SightTime = 0.3,
+        Recoil = 0.29,
+        Trivia_Desc = "Popular full-sized Italian 9mm handgun adopted by the US military. The longer slide provides excellent accuracy and recoil control at the cost of hip fire performance.",
         Category = "Pistols",
     },
     ["arccw_go_p2000"] = {
@@ -180,6 +187,7 @@ local balanceList = {
         Recoil = 0.2,
         Damage = 25,
         DamageMin = 20,
+        SightTime = 0.25,
         Trivia_Desc = "Handgun developed to meet modern police and paramilitary needs. It is comfortable to hold and provides better hip firing performance.",
         Category = "Pistols",
     },
@@ -197,14 +205,15 @@ local balanceList = {
         HipDispersion = 400,
         MoveDispersion = 50,
         AccuracyMOA = 12,
+        SightTime = 0.3,
         Trivia_Desc = "Cheap open bolt pistol notorious for its ease of conversion to full auto. Has a generous magazine capacity, but isn't particularly accurate.",
         Category = "Pistols",
     },
     ["arccw_go_usp"] = {
         HipDispersion = 250,
-        MoveDispersion = 50,
-        AccuracyMOA = 8,
-        SightTime = 0.25,
+        MoveDispersion = 75,
+        AccuracyMOA = 5,
+        SightTime = 0.3,
         Damage = 35,
         DamageMin = 24,
         Trivia_Desc = "Iconic pistol designed for police and special forces use. Accurate and powerful, but magazine capacity is smaller than most pistols.",
@@ -216,6 +225,7 @@ local balanceList = {
         MoveDispersion = 100,
         Damage = 65,
         DamageMin = 40,
+        SightTime = 0.35,
         Category = "Pistols",
     },
     ["arccw_go_r8"] = {
@@ -223,6 +233,7 @@ local balanceList = {
         MoveDispersion = 75,
         Damage = 58,
         DamageMin = 32,
+        SightTime = 0.32,
         Category = "Pistols",
     },
     ["arccw_go_sw29"] = {
@@ -503,13 +514,13 @@ local function GSOE()
     base.DoLaser = function(self, world)
         local toworld = world or false
 
-        if not self:GetNWBool("laserenabled", true) then return end
+        --if not self:GetNWBool("laserenabled", true) then return end
 
-        for _, k in pairs(self.Attachments) do
+        for slot, k in pairs(self.Attachments) do
             if not k.Installed then continue end
             local attach = ArcCW.AttachmentTable[k.Installed]
-            if not attach.Laser then continue end
-            local color = attach.LaserColor or attach.ColorOptionsTable[k.ColorOptionIndex or 1]
+            if not self:GetBuff_Stat("Laser", slot) then continue end
+            local color = self:GetBuff_Stat("LaserColor", slot) or attach.ColorOptionsTable[k.ColorOptionIndex or 1]
             if self:GetOwner():IsPlayer() and laserColor:GetInt() > 0
                     and self:GetOwner():GetInfoNum("arccw_gsoe_laser_enabled", 1) == 1
                     and (k.Installed == "go_flashlight_combo" or string.find(k.Installed, "go_laser")) then
@@ -750,11 +761,13 @@ local function PostLoadAtt()
         ArcCW.AttachmentTable["go_ammo_sg_magnum"].Mult_Recoil = 1.5
         ArcCW.AttachmentTable["go_ammo_sg_magnum"].Mult_AccuracyMOA = 1.5
         ArcCW.AttachmentTable["go_ammo_tmj"].Mult_DamageMin = 1.3
-        ArcCW.AttachmentTable["go_ammo_match"].Mult_Damage = nil
+        ArcCW.AttachmentTable["go_ammo_match"].Mult_Damage = 0.95
+        ArcCW.AttachmentTable["go_ammo_match"].Mult_DamageMin = 0.95
         ArcCW.AttachmentTable["go_ammo_match"].Mult_Recoil = nil
         ArcCW.AttachmentTable["go_ammo_match"].Mult_AccuracyMOA = 0.5
-        ArcCW.AttachmentTable["go_ammo_match"].Mult_HipDispersion = 1.2
-        ArcCW.AttachmentTable["go_ammo_match"].Description = "Precision-tooled rounds with carefully meaasured powder improves weapon accuracy and range, but is more difficult to use when hip firing."
+        ArcCW.AttachmentTable["go_ammo_match"].Mult_Range = 1.25
+        ArcCW.AttachmentTable["go_ammo_match"].Mult_HipDispersion = nil
+        ArcCW.AttachmentTable["go_ammo_match"].Description = "Precision-tooled rounds with carefully measured powder improves weapon accuracy and range, but deals slightly less damage."
 
         -- G3 Stock
         ArcCW.AttachmentTable["go_g3_stock_collapsible"].Description = "Retractable and lightweight stock for the G3, improving sight time and moving spread at the cost of recoil."
@@ -796,10 +809,10 @@ local function PostLoadAtt()
         end
 
         ArcCW.AttachmentTable["go_flashlight"].FlashlightBrightness = 1
-        ArcCW.AttachmentTable["go_flashlight"].FlashlightFarZ = 2048
+        ArcCW.AttachmentTable["go_flashlight"].FlashlightFarZ = 1024
 
         ArcCW.AttachmentTable["go_flashlight_combo"].FlashlightBrightness = 1
-        ArcCW.AttachmentTable["go_flashlight_combo"].FlashlightFarZ = 2048
+        ArcCW.AttachmentTable["go_flashlight_combo"].FlashlightFarZ = 1024
     end
 
     if laserColor:GetBool() then

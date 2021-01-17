@@ -26,6 +26,7 @@ Independent weapon based off the AR-15 model. Defaults to 20-Round magazine and 
 ### Desert Eagle
 - Added 8/10-Round .44 Magnum conversion
 - Added 9/12-Round .357 Magnum conversion
+- Added 7-Round 40ga shotshell conversion
 
 ### FiveseveN
 - Added 25/40-Round 4.6x30mm conversion
@@ -42,7 +43,7 @@ Independent weapon based off the AR-15 model. Defaults to 20-Round magazine and 
 - Kirov Wire Stock (Pistols)
 - API Rounds
 - Overpressure Rounds
-- Flechette Shells
+- Flechette Shells (Shotguns)
 - Marksman Trigger
 - Double Tapper
 - Air Time (Overheating Weapons)
@@ -173,7 +174,7 @@ Slightly more viable.
 - +20% Fire rate
 
 ### Compact pistol slides (Glock / P250)
-Making these reduce mag cap was a bad idea.
+Reloads faster to compensate for lower magazine capacities.
 
 **Tweaked:**
 - +15% Recoil (down from +25%)
@@ -183,8 +184,9 @@ Making these reduce mag cap was a bad idea.
 ### Match Ammo
 
 **Reworked:**
+- +25% Range
 - -50% Imprecision
-- +20% Hip dispersion
+- -5% Damage
 
 ### TMJ Ammo
 
@@ -243,18 +245,18 @@ Slight delay from firing animation to cycling. Shoot as soon as your finger is o
 ## Pistols
 Hip dispersion and moving accuracy increased across the board, but different guns have different specialities.
 
-| Weapon | Range | Damage | Recoil | Precision | HipDisp | MoveDisp |
-|---|---|---|---|---|---|---|
-| Glock 17 | 45m | 26-19 | 0.32 | 12MOA | 250MOA | 50MOA
-| M92FS | 60m | 25-22 | 0.4 | 5MOA | 300MOA | 50MOA
-| P2000 | 40m | 25-20 | 0.2 | 10MOA | 100MOA | 25MOA
-| P250 | 50m | 37-21 | 0.5 | 10MOA | 300MOA | 50MOA
-| USP-45 | 40m | 35-24 | 0.4 | 8MOA | 250MOA | 50MOA
-| CZ-75 | 40m | 26-22 | 0.34 | 10MOA | 200MOA | 25MOA |
-| FiveseveN | 80m | 24-20 | 0.23 | 5MOA | 200MOA | 25MOA
-| TEC-9 | 40m | 28-21 | 0.4 | 12MOA | 400MOA | 50MOA
-| Desert Eagle | 55m | 65-40 | 2.25 | 10MOA | 450MOA | 100MOA |
-| R8 .357 | 45m | 58-32 | 1.75 | 5MOA | 100MOA | 75MOA |
+| Weapon | Range | Damage | Recoil | Precision | HipDisp | MoveDisp | SightTime
+|---|---|---|---|---|---|---|---|
+| Glock 17 | 45m | 26-19 | 0.32 | 12 | 250 | 50 | 0.2s
+| M92FS | 60m | 25-22 | 0.29 | 4 | 300 | 50 | 0.35s
+| P2000 | 40m | 25-20 | 0.2 | 10 | 100 | 25 | 0.25s
+| P250 | 50m | 37-21 | 0.5 | 10 | 300 | 50 | 0.3s
+| USP-45 | 40m | 35-24 | 0.4 | 5 | 250 | 50 | 0.3s
+| CZ-75 | 40m | 26-22 | 0.37 | 10 | 200 | 25 | 0.2s
+| FiveseveN | 80m | 24-20 | 0.23 | 3 | 250 | 25 | 0.3s
+| TEC-9 | 40m | 28-21 | 0.4 | 12 | 400 | 50 | 0.3s
+| Desert Eagle | 55m | 65-40 | 2.25 | 10 | 450 | 100 | 0.35s
+| R8 .357 | 45m | 58-32 | 1.75 | 5 | 100 | 75 | 0.32s
 
 ### R8 .357
 Added the delayed trigger from CS:GO - works how you expect it to. Switch to FAN firemode for faster but inaccurate firing.
