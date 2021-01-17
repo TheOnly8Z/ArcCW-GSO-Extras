@@ -9,7 +9,8 @@ att.Desc_Cons = {
 att.SortOrder = 2
 att.AutoStats = true
 att.Slot = "go_p250_mag"
-att.Override_Trivia_Calibre = ".22 LR"
+att.Override_Trivia_Calibre = ".22 Long Rifle"
+att.Override_Trivia_Mechanism = "Blowback"
 
 att.ActivateElements = {"go_p250_mag_21"}
 att.Override_ClipSize_Priority = 2
