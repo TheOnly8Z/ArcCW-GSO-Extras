@@ -546,6 +546,7 @@ local function GSOE()
             local attach = ArcCW.AttachmentTable[k.Installed]
             if not self:GetBuff_Stat("Laser", slot) then continue end
             local color = self:GetBuff_Stat("LaserColor", slot) or attach.ColorOptionsTable[k.ColorOptionIndex or 1]
+
             if self:GetOwner():IsPlayer() and laserColor:GetInt() > 0
                     and self:GetOwner():GetInfoNum("arccw_gsoe_laser_enabled", 1) == 1
                     and (k.Installed == "go_flashlight_combo" or string.find(k.Installed, "go_laser")) then
@@ -857,11 +858,75 @@ local function PostLoadAtt()
 
     if laserColor:GetBool() then
         --ArcCW.AttachmentTable["go_laser"].LaserStrength = 0.2 * 2
-        ArcCW.AttachmentTable["go_laser"].Description = "Barely visible weak laser pointer. Improves hip-fire accuracy."
+        ArcCW.AttachmentTable["go_laser"].Description = "Barely visible laser pointer. Improves hip-fire accuracy."
+        ArcCW.AttachmentTable["go_laser"].ToggleStats = {
+            {
+                PrintName = "On",
+                Laser = true,
+                LaserColor = Color(255, 0, 0),
+                Mult_HipDispersion = 0.75,
+                AdditionalSights = {
+                    {
+                        Pos = Vector(-2, 10, -4), -- relative to where att.Model is placed
+                        Ang = Angle(0, 0, -45),
+                        GlobalPos = false,
+                        GlobalAng = true,
+                        Magnification = 1
+                    }
+                }
+            },
+            {
+                PrintName = "Off",
+            }
+        }
         --ArcCW.AttachmentTable["go_laser_peq"].LaserStrength = 1 * 2
         ArcCW.AttachmentTable["go_laser_peq"].Description = "Incredibly bright laser pointer. Improves hip fire, moving accuracy, and sight time."
+        ArcCW.AttachmentTable["go_laser_peq"].Mult_SightTime = 1.1
+        ArcCW.AttachmentTable["go_laser_peq"].ToggleStats = {
+            {
+                PrintName = "On",
+                Laser = true,
+                LaserColor = Color(0, 0, 255),
+                Mult_HipDispersion = 0.75,
+                Mult_MoveDispersion = 0.75,
+                Mult_SightTime = 0.85,
+                AdditionalSights = {
+                    {
+                        Pos = Vector(-2, 10, -4), -- relative to where att.Model is placed
+                        Ang = Angle(0, 0, -45),
+                        GlobalPos = false,
+                        GlobalAng = true,
+                        Magnification = 1
+                    }
+                }
+            },
+            {
+                PrintName = "Off",
+            }
+        }
         --ArcCW.AttachmentTable["go_laser_surefire"].LaserStrength = 0.6 * 2
-        ArcCW.AttachmentTable["go_laser_surefire"].Description = "Noticeably bright laser pointer. Improves hip fire and sight time."
+        ArcCW.AttachmentTable["go_laser_surefire"].Description = "Somewhat visible laser pointer. Improves hip fire and move dispersion."
+        ArcCW.AttachmentTable["go_laser_surefire"].ToggleStats = {
+            {
+                PrintName = "On",
+                Laser = true,
+                LaserColor = Color(0, 255, 0),
+                Mult_HipDispersion = 0.75,
+                Mult_MoveDispersion = 0.75,
+                AdditionalSights = {
+                    {
+                        Pos = Vector(-2, 10, -4), -- relative to where att.Model is placed
+                        Ang = Angle(0, 0, -45),
+                        GlobalPos = false,
+                        GlobalAng = true,
+                        Magnification = 1
+                    }
+                }
+            },
+            {
+                PrintName = "Off",
+            }
+        }
         --ArcCW.AttachmentTable["go_flashlight_combo"].LaserStrength = 0.6 * 2
     end
 
@@ -875,7 +940,6 @@ local function PostLoadAtt()
     ArcCW.AttachmentTable["go_p250_mag_21"].Mult_MoveSpeed = 0.975
     ArcCW.AttachmentTable["go_p250_mag_21"].Mult_SightTime = 1.1
     ArcCW.AttachmentTable["go_p250_mag_21"].Mult_ReloadTime = 1.2
-
 end
 hook.Add("ArcCW_PostLoadAtts", "ArcCW_GSOE", PostLoadAtt)
 
