@@ -461,7 +461,7 @@ local function GSOE()
     usp.WorldModel = "models/weapons/arccw_go/v_pist_usp_extras.mdl"
     usp.Attachments[1].ExcludeFlags = {"go_usp_muzzle_match"}
     usp.Attachments[1].GivesFlags = {"nocomp"}
-    usp.Attachments[2].ExcludeFlags = {"go_usp_muzzle_match"}
+    usp.Attachments[2].ExcludeFlags = {"go_usp_muzzle_match","go_usp_mag_8_127"}
     usp.Attachments[2].GivesFlags = {"nocomp"}
     usp.Attachments[3].ExcludeFlags = {"go_usp_muzzle_match"}
     usp.Attachments[3].GivesFlags = {"nocomp"}
@@ -476,11 +476,20 @@ local function GSOE()
             {ind = 3, bg = 1}
         }
     }
+    usp.AttachmentElements["go_usp_mag_8_127"] = {
+        -- NameChange = "USP Match",
+        VMBodygroups = {
+            {ind = 0, bg = 1},
+            {ind = 1, bg = 2},
+        }
+    }
     usp.Hook_NameChange = function(wep, name)
         if wep.Attachments[4].Installed == "go_usp_muzzle_match" then
             return "USP Match"
         elseif table.HasValue(wep:GetActiveElements(), "9mm") then
             return "USP-9"
+        elseif table.HasValue(wep:GetActiveElements(), "go_usp_mag_8_127") then
+            return "USP-X12.7 PDWS"
         else
             return "USP-45"
         end
