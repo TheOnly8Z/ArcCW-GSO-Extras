@@ -25,10 +25,6 @@ att.Mult_HolsterTime = 0.75
 
 att.Override_HoldtypeActive = "smg"
 
-att.Hook_ModifyRecoil = function(wep)
-    local fuckyeah = 1 - ( 0.25 * ( 1 - wep:GetSightDelta() ) )
-
-    return {
-        Recoil = fuckyeah
-    }
+att.Hook_ModifyRecoil = function(wep, tbl)
+    tbl.Recoil = tbl.Recoil * (1 - ( 0.25 * ( 1 - wep:GetSightDelta() ) ))
 end

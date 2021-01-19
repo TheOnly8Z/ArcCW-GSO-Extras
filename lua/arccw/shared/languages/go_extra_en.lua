@@ -7,3 +7,7 @@ L["pro.pen.12"] = "12mm Penetration"
 L["pro.pen.24"] = "24mm Penetration"
 L["pro.num.8"] = "8 pellets per shot"
 L["con.nog18"] = "Cannot use with G18 slide"
+L["pro.stock_m249"] = "-30% Recoil when not aiming"
+
+L["pro.stable"] = "Stabilized sighted fire"
+L["con.unstable"] = "Unstabilized sighted fire"

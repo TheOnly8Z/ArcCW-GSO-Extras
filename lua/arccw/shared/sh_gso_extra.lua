@@ -631,16 +631,17 @@ local function PostLoadAtt()
         for i, _ in pairs(nostock) do
             ArcCW.AttachmentTable[i].Mult_DrawTime = 0.5
             ArcCW.AttachmentTable[i].Mult_HolsterTime = 0.5
-            table.insert(ArcCW.AttachmentTable[i].Desc_Cons, "Unstabilized sighted fire")
+            table.insert(ArcCW.AttachmentTable[i].Desc_Cons, "con.unstable")
         end
 
         -- Pistol stock slows drawing but reduces more recoil
-        table.insert(ArcCW.AttachmentTable["go_stock_pistol_bt"].Desc_Pros, "Stabilized sighted fire")
+        table.insert(ArcCW.AttachmentTable["go_stock_pistol_bt"].Desc_Pros, "pro.stable")
         ArcCW.AttachmentTable["go_stock_pistol_bt"].Mult_Recoil = 0.85
+        ArcCW.AttachmentTable["go_stock_pistol_bt"].Mult_MoveDispersion = 0.7
         ArcCW.AttachmentTable["go_stock_pistol_bt"].Mult_DrawTime = 1.5
         ArcCW.AttachmentTable["go_stock_pistol_bt"].Mult_HolsterTime = 1.5
 
-        table.insert(ArcCW.AttachmentTable["go_stock_pistol_wire"].Desc_Pros, "Stabilized sighted fire")
+        table.insert(ArcCW.AttachmentTable["go_stock_pistol_wire"].Desc_Pros, "pro.stable")
         ArcCW.AttachmentTable["go_stock_pistol_wire"].Mult_DrawTime = 1.25
         ArcCW.AttachmentTable["go_stock_pistol_wire"].Mult_HolsterTime = 1.25
 

@@ -45,8 +45,10 @@ Independent weapon based off the AR-15 model. Defaults to 20-Round magazine and 
 - Leather Foregrip
 - Project Grip
 - Flibbertigibbet Stock
-- Folding Stock
+- Police Stock
 - Kirov Wire Stock (Pistols)
+- Paratrooper Stock
+- SAW Stock
 - API Rounds
 - Overpressure Rounds
 - Flechette Shells (Shotguns)
@@ -69,9 +71,10 @@ Arctic never added this change even though he said he liked it :(
 ### BT-2 Pistol Stock
 Slower but more impactful.
 
-**Added:**
+**Tweaked:**
 - +50% Draw time
-- -15% Recoil (from -10%)
+- -15% Recoil (up from -10%)
+- -30% Moving spread (up from -15%)
 
 ### Skeleton Stock (AKM)
 Fast stocks are cool.

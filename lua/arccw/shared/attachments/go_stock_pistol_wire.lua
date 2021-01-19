@@ -16,4 +16,4 @@ att.Mult_DrawSpeed = 1.25
 att.Mult_HolsterSpeed = 1.25
 
 att.Mult_Recoil = 0.95
-att.Mult_MoveDispersion = 0.95
+att.Mult_MoveDispersion = 0.9
