@@ -18,9 +18,9 @@ att.Mult_Recoil = 0.8
 att.Mult_RPM = 1.15
 --att.Mult_ShootPitch = 0.85
 
-att.Mult_MoveSpeed = 0.95
-att.Mult_SightTime = 1.15
-att.Mult_ReloadTime = 1.25
+att.Mult_MoveSpeed = 0.9
+att.Mult_SightTime = 1.25
+att.Mult_ReloadTime = 1.4
 
 att.Hook_SelectReloadAnimation = function(wep, anim)
     if anim == "reload" then

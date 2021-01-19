@@ -832,6 +832,22 @@ local function PostLoadAtt()
 
         ArcCW.AttachmentTable["go_ammo_sg_sabot"].Override_Penetration = 24
         ArcCW.AttachmentTable["go_ammo_sg_sabot"].Desc_Pros = {"pro.pen.24"}
+
+        ArcCW.AttachmentTable["go_usp_mag_20"].Mult_MoveSpeed = 0.95
+        ArcCW.AttachmentTable["go_usp_mag_20"].Mult_SightTime = 1.15
+        ArcCW.AttachmentTable["go_usp_mag_20"].Mult_ReloadTime = 1.25
+
+        ArcCW.AttachmentTable["go_usp_mag_30"].Mult_MoveSpeed = 0.9
+        ArcCW.AttachmentTable["go_usp_mag_30"].Mult_SightTime = 1.25
+        ArcCW.AttachmentTable["go_usp_mag_30"].Mult_ReloadTime = 1.4
+        ArcCW.AttachmentTable["go_usp_mag_30"].SortOrder = 19
+
+        ArcCW.AttachmentTable["go_supp_osprey_shot"].Description = "Large sound suppressor with ballistic-enhancing qualities. Unable to fully suppress shotguns due to its size, but is slightly more agile than other suppressors."
+        ArcCW.AttachmentTable["go_supp_osprey_shot"].Mult_ShootVol = 0.8
+        ArcCW.AttachmentTable["go_supp_osprey_shot"].Mult_SightTime = 1.08
+
+        ArcCW.AttachmentTable["go_muzz_brake"].Mult_Recoil = 0.95
+        ArcCW.AttachmentTable["go_muzz_brake"].Mult_RecoilSide = 0.8
     end
 
     if addSway:GetInt() >= 1 then

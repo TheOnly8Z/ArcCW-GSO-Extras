@@ -251,6 +251,25 @@ Lower brightness and longer far Z range.
 **Added:**
 - 24mm Penetration
 
+### 20-Round .45 USP
+**Tweaked:**
+- -5% Movement speed (up from -1%)
+- +15% Handling (up from +5%)
+- +25% Reload time (up from +5%)
+
+### 30-Round .45 USP
+**Tweaked:**
+- -10% Movement speed (up from -5%)
+- +25% Handling (up from +15%)
+- +40% Reload time (up from +25%)
+
+### Muzzle Brake
+Not impactful enough.
+
+**Added:**
+- -20% Horizontal recoil (up from -15%)
+- -5% Recoil
+
 # Weapon Tweaks
 
 ### Bolt/Pump-Actions
