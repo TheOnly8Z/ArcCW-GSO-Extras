@@ -847,7 +847,7 @@ local function PostLoadAtt()
         ArcCW.AttachmentTable["go_supp_osprey_shot"].Mult_SightTime = 1.08
 
         ArcCW.AttachmentTable["go_muzz_brake"].Mult_Recoil = 0.95
-        ArcCW.AttachmentTable["go_muzz_brake"].Mult_RecoilSide = 0.8
+        --ArcCW.AttachmentTable["go_muzz_brake"].Mult_RecoilSide = 0.8
     end
 
     if addSway:GetInt() >= 1 then

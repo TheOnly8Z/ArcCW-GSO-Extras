@@ -264,10 +264,7 @@ Lower brightness and longer far Z range.
 - +40% Reload time (up from +25%)
 
 ### Muzzle Brake
-Not impactful enough.
-
 **Added:**
-- -20% Horizontal recoil (up from -15%)
 - -5% Recoil
 
 # Weapon Tweaks
