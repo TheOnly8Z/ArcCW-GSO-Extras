@@ -13,6 +13,6 @@ att.ModelOffset = Vector(-1.2, 0, -0.25)
 
 att.ActivateElements = {"buftube"}
 
-att.Mult_SightTime = 1.15
+att.Mult_SightTime = 1.1
 att.Mult_MoveDispersion = 1.1
 att.Mult_RecoilSide = 0.7
