@@ -477,9 +477,8 @@ local function GSOE()
         }
     }
     usp.AttachmentElements["go_usp_mag_8_127"] = {
-        -- NameChange = "USP Match",
         VMBodygroups = {
-            {ind = 0, bg = 1},
+            {ind = 0, bg = 0},
             {ind = 1, bg = 2},
         }
     }

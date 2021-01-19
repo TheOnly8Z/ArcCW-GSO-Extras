@@ -2,9 +2,9 @@ att.PrintName = "8-Round M225 M6D"
 att.Icon = Material("entities/acwatt_go_usp_mag_20.png", "mips smooth")
 att.Description = "How did you manage to do this?\nConverts the weapon to fire the M225 12.7x40mm SAP-HE (semi-armor-piercing, high-explosive) round.\nRequires a barrel conversion."
 att.Desc_Pros = {
-    "pro.magcap"
 }
 att.Desc_Cons = {
+    "con.magcap"
 }
 att.SortOrder = 0
 att.AutoStats = true
@@ -16,7 +16,7 @@ att.Override_ClipSize = 8
 att.Mult_Damage = 1.25
 att.Mult_DamageMin = 1.25
 att.Mult_Recoil = 2
-att.Mult_RPM = 0.466
+att.Mult_RPM = 0.45
 --att.Mult_ShootPitch = 0.85
 
 att.Mult_MoveSpeed = 0.95
@@ -31,6 +31,7 @@ att.Hook_SelectReloadAnimation = function(wep, anim)
     end
 end
 
+--[[]
 att.Override_Firemodes_Priority = -2
 att.Override_Firemodes = {
     {
@@ -43,6 +44,7 @@ att.Override_Firemodes = {
         Mode = 0
     }
 }
+]]
 
 att.Hook_GetShootSound = function(wep, snd)
     if snd == wep.ShootSound or snd == wep.FirstShootSound then return "arccw_go/usp/usp_unsilenced_127.wav" end
