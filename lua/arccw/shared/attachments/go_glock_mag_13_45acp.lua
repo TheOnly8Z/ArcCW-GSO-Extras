@@ -30,7 +30,7 @@ att.Hook_NameChange = function(wep, name)
     end
 end
 
-att.Mult_RPM = 0.9
+att.Mult_RPM = 0.8
 att.Mult_Damage = 1.3
 att.Mult_DamageMin = 1.1
 att.Mult_Recoil = 1.3
