@@ -1,5 +1,5 @@
 att.PrintName = "John Wick"
-att.Icon = Material("entities/acwatt_go_perk_semi.png")
+att.Icon = Material("entities/acwatt_go_perk_johnwick.png")
 att.Description = "u kill my dog"
 att.Desc_Pros = {
 }
@@ -9,7 +9,7 @@ att.AutoStats = false
 att.Slot = "go_perk"
 att.JohnWick = true
 
-att.Ignore = true
+att.Ignore = false
 
 att.Mult_MeleeDamage = 2
 att.Mult_MeleeAttackTime = 0.5

@@ -20,8 +20,7 @@ att.ModelOffset = Vector(0.5, 0, 0)
 att.Mult_RecoilSide = 1.15
 att.Mult_SightTime = 1.05
 att.Mult_MoveSpeed = 0.95
-att.Mult_DrawTime = 0.75
-att.Mult_HolsterTime = 0.75
+att.Mult_MoveDispersion = 0.85
 
 att.Override_HoldtypeActive = "smg"
 
