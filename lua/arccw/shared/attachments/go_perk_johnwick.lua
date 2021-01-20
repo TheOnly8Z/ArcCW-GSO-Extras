@@ -1,5 +1,5 @@
 att.PrintName = "John Wick"
-att.Icon = Material("entities/acwatt_go_perk_johnwick.png")
+att.Icon = Material("entities/acwatt_go_perk_johnwick.png", "mips smooth")
 att.Description = "u kill my dog"
 att.Desc_Pros = {
 }
