@@ -18,6 +18,23 @@ local balanceList = {
         Damage = 30,
         DamageMin = 12,
         Category = "SMG",
+        --[[]
+        AttachmentElements = {
+            ["go_stock_none"] = {
+                VMBodygroups = {[1] = {bg = 2, ind = 5}},
+                VMElements = {
+                    {
+                        Model = "models/weapons/arccw_go/atts/stock_buftube.mdl",
+                        Bone = "v_weapon.mac10_Parent",
+                        Offset = {
+                            pos = Vector(0, -2.75, -3.75),
+                            ang = Angle(90, 0, -90),
+                        },
+                    }
+                },
+            }
+        }
+        ]]
     },
     ["arccw_go_mp5"] = {
         Damage = 24,
@@ -42,6 +59,7 @@ local balanceList = {
     ["arccw_go_ump"] = {
         Damage = 32,
         DamageMin = 19,
+        Recoil = 0.31,
         Category = "SMG",
     },
     ["arccw_go_bizon"] = {
@@ -283,10 +301,20 @@ local function GSOE()
             local stored = weapons.GetStored(class)
             if not stored then continue end
             for i, v in pairs(t) do
-                if i ~= "Category" then
+                if i == "AttachmentElements" then
+                    for name, ae in pairs(v) do
+                        stored.AttachmentElements[name] = ae
+                    end
+                elseif i ~= "Category" then
                     stored[i] = v
                 end
             end
+            --[[]
+            if stored.AttachmentElements and stored.AttachmentElements.go_stock then
+                stored.AttachmentElements.buftube = table.Copy(stored.AttachmentElements.go_stock)
+                stored.AttachmentElements.go_stock = nil
+            end
+            ]]
             if originTweak:GetBool() then
                 stored.ActivePos = Vector(0, 0, 0)
             end

@@ -11,7 +11,7 @@ att.Slot = "go_stock"
 att.Model = "models/weapons/arccw_go/atts/stock_ump.mdl"
 att.ModelOffset = Vector(-1.2, 0, -0.25)
 
-att.ActivateElements = {"buftube"}
+att.ActivateElements = {"go_stock_none"}
 
 att.Mult_SightTime = 1.1
 att.Mult_MoveDispersion = 1.05
