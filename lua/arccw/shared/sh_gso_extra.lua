@@ -627,21 +627,6 @@ local function GSOE()
     awp.Animations["fire"].MinProgress = 0.45
     awp.Animations["fire_iron"].MinProgress = 0.45
     awp.Animations["cycle"].MinProgress = 0.8
-    if engine.ActiveGamemode() == "terrortown" then
-        awp.Kind = WEAPON_EQUIP2
-        awp.Slot = 6
-        awp.Damage = 200
-        awp.DamageMin = 300
-        awp.Override_Ammo = "none"
-        awp.AutoSpawnable = false
-        awp.ForceDefaultClip = 0
-        awp.Primary.ClipSize = 5
-        awp.CanBuy = {ROLE_TRAITOR, ROLE_DETECTIVE}
-        awp.EquipMenuData = {
-            type = "Weapon",
-            desc = "Powerful magnum sniper rifle.\n\nHas 5 rounds and cannot be reloaded."
-        }
-    end
 
     local m870 = weapons.GetStored("arccw_go_870")
     m870.Animations["fire"].MinProgress = 0.15
@@ -660,6 +645,49 @@ local function GSOE()
     mag7.Animations["fire_iron"].MinProgress = 0.2
     mag7.Animations["cycle"].Time = 0.6
     mag7.Animations["cycle"].MinProgress = 0.3
+
+    local m1014 = weapons.GetStored("arccw_go_m1014")
+
+    if engine.ActiveGamemode() == "terrortown" then
+
+        -- Buyable AWP
+        awp.Kind = WEAPON_EQUIP2
+        awp.Slot = 6
+        awp.Range = 30
+        awp.Damage = 200
+        awp.DamageMin = 300
+        awp.Override_Ammo = "none"
+        awp.AutoSpawnable = false
+        awp.ForceDefaultClip = 0
+        awp.Primary.ClipSize = 5
+        awp.CanBuy = {ROLE_TRAITOR, ROLE_DETECTIVE}
+        awp.EquipMenuData = {
+            type = "Weapon",
+            desc = "Powerful magnum sniper rifle.\n\nHas 5 rounds and cannot be reloaded."
+        }
+
+        -- Holy shit shotguns are busted
+        m1014.Damage = 7
+        m1014.DamageMin = 4
+        m1014.Delay = 60 / 240
+        m1014.AccuracyMOA = 70
+
+        m870.Damage = 10
+        m870.DamageMin = 5
+        m870.AccuracyMOA = 50
+
+        nova.Damage = 9
+        nova.DamageMin = 6
+        nova.AccuracyMOA = 40
+
+        mag7.Damage = 10
+        mag7.DamageMin = 5
+        mag7.AccuracyMOA = 50
+
+        -- buff the scout
+        ssg.Range = 10
+        ssg.DamageMin = 120
+    end
 
     -- Dirty dirty overwrites
     local base = weapons.GetStored("arccw_base")
