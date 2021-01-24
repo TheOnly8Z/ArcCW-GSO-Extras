@@ -18,6 +18,8 @@ local balanceList = {
         Damage = 30,
         DamageMin = 12,
         Category = "SMG",
+        TTTWeight = 150,
+        TTTWeaponType = "weapon_ttt_m16",
         --[[]
         AttachmentElements = {
             ["go_stock_none"] = {
@@ -40,30 +42,42 @@ local balanceList = {
         Damage = 24,
         DamageMin = 18,
         Category = "SMG",
+        TTTWeight = 150,
+        TTTWeaponType = "weapon_ttt_m16",
     },
     ["arccw_go_mp7"] = {
         Damage = 25,
         DamageMin = 17,
         Category = "SMG",
+        TTTWeight = 150,
+        TTTWeaponType = "weapon_zm_mac10",
     },
     ["arccw_go_mp9"] = {
         Damage = 27,
         DamageMin = 15,
         Category = "SMG",
+        TTTWeight = 150,
+        TTTWeaponType = "weapon_zm_mac10",
     },
     ["arccw_go_p90"] = {
         Damage = 24,
         DamageMin = 20,
         Category = "SMG",
+        TTTWeight = 100,
+        TTTWeaponType = "weapon_zm_mac10",
     },
     ["arccw_go_ump"] = {
         Damage = 32,
         DamageMin = 19,
         Recoil = 0.31,
         Category = "SMG",
+        TTTWeight = 150,
+        TTTWeaponType = "weapon_ttt_m16",
     },
     ["arccw_go_bizon"] = {
         Category = "SMG",
+        TTTWeight = 150,
+        TTTWeaponType = "weapon_ttt_m16",
     },
     -- ARs
     ["arccw_go_ar15"] = {
@@ -73,50 +87,75 @@ local balanceList = {
         SpeedMult = 0.93,
         Range = 120,
         Category = "Rifles",
+        TTTWeight = 50,
+        TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_mac10"},
     },
     ["arccw_go_aug"] = {
         Damage = 28,
         DamageMin = 24,
         Category = "Rifles",
+        TTTWeight = 50,
+        TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_mac10"},
     },
     ["arccw_go_ace"] = {
         SightTime = 0.3,
         Trivia_Mechanism = "Gas-Operated",
         Category = "Rifles",
         Damage = 28,
-        DamageMin = 19
+        DamageMin = 19,
+        TTTWeight = 50,
+        TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_mac10"},
     },
     ["arccw_go_ak47"] = {
         Category = "Rifles",
+        TTTWeight = 50,
+        TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_mac10"},
     },
     ["arccw_go_famas"] = {
         Category = "Rifles",
+        TTTWeight = 50,
+        TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_mac10"},
     },
     ["arccw_go_m16a2"] = {
         Category = "Rifles",
+        TTTWeight = 50,
+        TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_mac10"},
     },
     ["arccw_go_m4"] = {
         Category = "Rifles",
+        TTTWeight = 50,
+        TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_mac10"},
     },
     ["arccw_go_sg556"] = {
         Category = "Rifles",
+        TTTWeight = 50,
+        TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_mac10"},
     },
     -- BRs
     ["arccw_go_fnfal"] = {
         Category = "Rifles",
+        TTTWeight = 50,
+        TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_rifle"},
     },
     ["arccw_go_g3"] = {
         Category = "Rifles",
+        TTTWeight = 50,
+        TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_rifle"},
     },
     ["arccw_go_scar"] = {
         Category = "Rifles",
+        TTTWeight = 50,
+        TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_rifle"},
     },
     -- SRs
     ["arccw_go_awp"] = {
         Category = "Rifles",
+        TTTWeight = 0,
     },
     ["arccw_go_ssg08"] = {
         Category = "Rifles",
+        TTTWeight = 200,
+        TTTWeaponType = "weapon_zm_rifle"
     },
     -- SGs
     ["arccw_go_m1014"] = {
@@ -126,6 +165,8 @@ local balanceList = {
         RecoilSide = 2,
         AccuracyMOA = 20,
         Category = "Heavy",
+        TTTWeight = 50,
+        TTTWeaponType = "weapon_zm_shotgun",
     },
     ["arccw_go_mag7"] = {
         HipDispersion = 300,
@@ -134,6 +175,8 @@ local balanceList = {
         RecoilSide = 2,
         AccuracyMOA = 30,
         Category = "Heavy",
+        TTTWeight = 100,
+        TTTWeaponType = "weapon_zm_shotgun",
     },
     ["arccw_go_870"] = {
         HipDispersion = 300,
@@ -142,6 +185,8 @@ local balanceList = {
         RecoilSide = 1.5,
         AccuracyMOA = 30,
         Category = "Heavy",
+        TTTWeight = 100,
+        TTTWeaponType = "weapon_zm_shotgun",
     },
     ["arccw_go_nova"] = {
         HipDispersion = 300,
@@ -150,13 +195,19 @@ local balanceList = {
         RecoilSide = 1.5,
         AccuracyMOA = 20,
         Category = "Heavy",
+        TTTWeight = 100,
+        TTTWeaponType = "weapon_zm_shotgun",
     },
     -- MGs
     ["arccw_go_m249para"] = {
         Category = "Heavy",
+        TTTWeight = 100,
+        TTTWeaponType = "weapon_zm_sledge",
     },
     ["arccw_go_negev"] = {
         Category = "Heavy",
+        TTTWeight = 100,
+        TTTWeaponType = "weapon_zm_sledge",
     },
     -- Pistols
     ["arccw_go_cz75"] = {
@@ -169,6 +220,8 @@ local balanceList = {
         SightTime = 0.2,
         Trivia_Desc = "Czech handgun developed to export to the West during the height of the Cold War. It functions similarly to other 9mm double-stack pistols but handles better.",
         Category = "Pistols",
+        TTTWeight = 50,
+        TTTWeaponType = {"weapon_zm_pistol", "weapon_ttt_glock"},
     },
     ["arccw_go_fiveseven"] = {
         HipDispersion = 250,
@@ -178,6 +231,8 @@ local balanceList = {
         SightTime = 0.3,
         Trivia_Desc = "Handgun designed as a companion to the P90 PDW. Its thin but long cartridge allows for exceptional range and accuracy for a pistol, but isn't very hard hitting.",
         Category = "Pistols",
+        TTTWeight = 100,
+        TTTWeaponType = "weapon_zm_pistol",
     },
     ["arccw_go_glock"] = {
         HipDispersion = 250,
@@ -185,6 +240,8 @@ local balanceList = {
         AccuracyMOA = 12,
         SightTime = 0.2,
         Category = "Pistols",
+        TTTWeight = 50,
+        TTTWeaponType = {"weapon_zm_pistol", "weapon_ttt_glock"},
     },
     ["arccw_go_m9"] = {
         HipDispersion = 300,
@@ -197,6 +254,8 @@ local balanceList = {
         Recoil = 0.29,
         Trivia_Desc = "Popular full-sized Italian 9mm handgun adopted by the US military. The longer slide provides excellent accuracy and recoil control at the cost of hip fire performance.",
         Category = "Pistols",
+        TTTWeight = 50,
+        TTTWeaponType = {"weapon_zm_pistol", "weapon_ttt_glock"},
     },
     ["arccw_go_p2000"] = {
         HipDispersion = 150,
@@ -208,6 +267,8 @@ local balanceList = {
         SightTime = 0.25,
         Trivia_Desc = "Handgun developed to meet modern police and paramilitary needs. It is comfortable to hold and provides better hip firing performance.",
         Category = "Pistols",
+        TTTWeight = 100,
+        TTTWeaponType = "weapon_zm_pistol",
     },
     ["arccw_go_p250"] = {
         Delay = 60 / 400,
@@ -221,6 +282,8 @@ local balanceList = {
         DamageMin = 26,
         Trivia_Desc = "Compact hard-hitting handgun that incorporates numerous improvements over previous generations of SIG pistols. Its .357 SIG cartridge is more powerful, but also kicks harder.",
         Category = "Pistols",
+        TTTWeight = 100,
+        TTTWeaponType = "weapon_zm_pistol",
     },
     ["arccw_go_tec9"] = {
         HipDispersion = 400,
@@ -229,6 +292,8 @@ local balanceList = {
         SightTime = 0.3,
         Trivia_Desc = "Cheap open bolt pistol notorious for its ease of conversion to full auto. Has a generous magazine capacity, but isn't particularly accurate.",
         Category = "Pistols",
+        TTTWeight = 100,
+        TTTWeaponType = "weapon_zm_pistol",
     },
     ["arccw_go_usp"] = {
         HipDispersion = 250,
@@ -239,6 +304,8 @@ local balanceList = {
         DamageMin = 24,
         Trivia_Desc = "Iconic pistol designed for police and special forces use. Accurate and powerful, but magazine capacity is smaller than most pistols.",
         Category = "Pistols",
+        TTTWeight = 100,
+        TTTWeaponType = "weapon_zm_pistol",
     },
     ["arccw_go_deagle"] = {
         VisualRecoilMult = 3,
@@ -248,6 +315,8 @@ local balanceList = {
         DamageMin = 40,
         SightTime = 0.35,
         Category = "Pistols",
+        TTTWeight = 100,
+        TTTWeaponType = "weapon_zm_revolver",
     },
     ["arccw_go_r8"] = {
         HipDispersion = 100,
@@ -256,9 +325,13 @@ local balanceList = {
         DamageMin = 32,
         SightTime = 0.32,
         Category = "Pistols",
+        TTTWeight = 100,
+        TTTWeaponType = "weapon_zm_revolver",
     },
     ["arccw_go_sw29"] = {
         Category = "Pistols",
+        TTTWeight = 100,
+        TTTWeaponType = "weapon_zm_revolver",
     },
     -- Equipment
     ["arccw_go_taser"] = {
@@ -272,25 +345,37 @@ local balanceList = {
     },
     ["arccw_go_nade_incendiary"] = {
         Category = "Gear",
+        TTTWeight = 100,
+        TTTWeaponType = "weapon_zm_molotov",
     },
     ["arccw_go_nade_frag"] = {
         Category = "Gear",
+        TTTWeight = 0,
+        --TTTWeaponType = "weapon_ttt_confgrenade",
     },
     ["arccw_go_nade_flash"] = {
         Category = "Gear",
+        TTTWeight = 100,
+        TTTWeaponType = "weapon_ttt_confgrenade",
     },
     ["arccw_go_nade_smoke"] = {
         Category = "Gear",
+        TTTWeight = 100,
+        TTTWeaponType = "weapon_ttt_smokegrenade",
     },
     ["arccw_go_shield"] = {
         Category = "Gear",
     },
     ["arccw_go_nade_molotov"] = {
         Category = "Gear",
+        TTTWeight = 100,
+        TTTWeaponType = "weapon_zm_molotov",
     },
     -- GSO Extras
     ["arccw_go_galil_ar"] = {
         Category = "Rifles",
+        TTTWeight = 50,
+        TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_mac10"},
     },
 }
 
@@ -542,6 +627,21 @@ local function GSOE()
     awp.Animations["fire"].MinProgress = 0.45
     awp.Animations["fire_iron"].MinProgress = 0.45
     awp.Animations["cycle"].MinProgress = 0.8
+    if engine.ActiveGamemode() == "terrortown" then
+        awp.Kind = WEAPON_EQUIP2
+        awp.Slot = 6
+        awp.Damage = 200
+        awp.DamageMin = 300
+        awp.Override_Ammo = "none"
+        awp.AutoSpawnable = false
+        awp.ForceDefaultClip = 0
+        awp.Primary.ClipSize = 5
+        awp.CanBuy = {ROLE_TRAITOR, ROLE_DETECTIVE}
+        awp.EquipMenuData = {
+            type = "Weapon",
+            desc = "Powerful magnum sniper rifle.\n\nHas 5 rounds and cannot be reloaded."
+        }
+    end
 
     local m870 = weapons.GetStored("arccw_go_870")
     m870.Animations["fire"].MinProgress = 0.15
