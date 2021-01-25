@@ -34,3 +34,26 @@ hook.Add("PopulateToolMenu", "ArcCW_GSOE_Options", function()
         ArcCW.GeneratePanelElements(panel, GSOEPanel_CL)
     end)
 end)
+
+hook.Add("TTTSettingsTabs", "ArcCW_GSOE_TTT", function(dtabs)
+
+    local padding = dtabs:GetPadding() * 2
+
+    local panellist = vgui.Create("DPanelList", dtabs)
+    panellist:StretchToParent(0,0,padding,0)
+    panellist:EnableVerticalScrollbar(true)
+    panellist:SetPadding(10)
+    panellist:SetSpacing(10)
+
+    local form = vgui.Create("DForm", panellist)
+    form:SetName("#arccw.menus.gsoe.cl")
+    ArcCW.GeneratePanelElements(form, GSOEPanel_CL)
+    panellist:AddItem(form)
+
+    local form2 = vgui.Create("DForm", panellist)
+    form2:SetName("#arccw.menus.gsoe.sv")
+    ArcCW.GeneratePanelElements(form2, GSOEPanel_SV)
+    panellist:AddItem(form2)
+
+    dtabs:AddSheet("ArcCW GSOE", panellist, "icon16/gun.png", false, false, "ArcCW Settings")
+end)
