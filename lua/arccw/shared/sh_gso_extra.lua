@@ -188,10 +188,9 @@ local balanceList = {
         TTTWeight = 50,
         TTTWeaponType = "weapon_zm_shotgun",
         TTT_Stats = {
-            Damage = 7,
             DamageMin = 4,
-            Range = 25,
-            Delay = 60 / 240,
+            Range = 20,
+            Delay = 60 / 180,
             AccuracyMOA = 50,
         }
     },
@@ -205,10 +204,9 @@ local balanceList = {
         TTTWeight = 100,
         TTTWeaponType = "weapon_zm_shotgun",
         TTT_Stats = {
-            Damage = 10,
-            DamageMin = 5,
+            DamageMin = 4,
             AccuracyMOA = 40,
-            Range = 30,
+            Range = 20,
         }
     },
     ["arccw_go_870"] = {
@@ -221,10 +219,9 @@ local balanceList = {
         TTTWeight = 100,
         TTTWeaponType = "weapon_zm_shotgun",
         TTT_Stats = {
-            Damage = 10,
-            DamageMin = 5,
+            DamageMin = 4,
             AccuracyMOA = 40,
-            Range = 30,
+            Range = 20,
         }
     },
     ["arccw_go_nova"] = {
@@ -237,10 +234,9 @@ local balanceList = {
         TTTWeight = 100,
         TTTWeaponType = "weapon_zm_shotgun",
         TTT_Stats = {
-            Damage = 9,
-            DamageMin = 6,
+            DamageMin = 5,
             AccuracyMOA = 30,
-            Range = 40,
+            Range = 30,
         }
     },
     -- MGs
@@ -363,7 +359,7 @@ local balanceList = {
         TTTWeight = 100,
         TTTWeaponType = "weapon_zm_revolver",
         TTT_Stats = {
-            Delay = 60 / 180
+            Delay = 60 / 120
         },
     },
     ["arccw_go_r8"] = {
@@ -443,13 +439,13 @@ local function GSOE()
                 end
             end
             if engine.ActiveGamemode() == "terrortown" then
-                if stored.TTT_Stats then
+                if t.TTT_Stats then
                     for k, v in pairs(t.TTT_Stats) do
                         stored[k] = v
                     end
                 else
                     -- TTT is very close quarters, all guns get a range nerf by default
-                    if stored.Damage > stored.DamageMin and stored.Range then
+                    if stored.Damage and stored.Range and stored.Damage > stored.DamageMin then
                         stored.Range = math.ceil(stored.Range / 2)
                     end
                 end
