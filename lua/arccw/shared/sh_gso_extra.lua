@@ -18,7 +18,7 @@ local balanceList = {
         Damage = 30,
         DamageMin = 12,
         Category = "SMG",
-        TTTWeight = 150,
+        TTTWeight = 200,
         TTTWeaponType = "weapon_ttt_m16",
         --[[]
         AttachmentElements = {
@@ -42,21 +42,21 @@ local balanceList = {
         Damage = 24,
         DamageMin = 18,
         Category = "SMG",
-        TTTWeight = 150,
+        TTTWeight = 200,
         TTTWeaponType = "weapon_ttt_m16",
     },
     ["arccw_go_mp7"] = {
         Damage = 25,
         DamageMin = 17,
         Category = "SMG",
-        TTTWeight = 150,
+        TTTWeight = 200,
         TTTWeaponType = "weapon_zm_mac10",
     },
     ["arccw_go_mp9"] = {
         Damage = 27,
         DamageMin = 15,
         Category = "SMG",
-        TTTWeight = 150,
+        TTTWeight = 200,
         TTTWeaponType = "weapon_zm_mac10",
     },
     ["arccw_go_p90"] = {
@@ -71,12 +71,12 @@ local balanceList = {
         DamageMin = 19,
         Recoil = 0.31,
         Category = "SMG",
-        TTTWeight = 150,
+        TTTWeight = 200,
         TTTWeaponType = "weapon_ttt_m16",
     },
     ["arccw_go_bizon"] = {
         Category = "SMG",
-        TTTWeight = 150,
+        TTTWeight = 200,
         TTTWeaponType = "weapon_ttt_m16",
     },
     -- ARs
@@ -380,12 +380,15 @@ local balanceList = {
     -- Equipment
     ["arccw_go_taser"] = {
         Category = "Gear",
+        TTTWeight = 0,
     },
     ["arccw_go_melee_knife"] = {
         Category = "Gear",
+        TTTWeight = 0,
     },
     ["arccw_go_nade_knife"] = {
         Category = "Gear",
+        TTTWeight = 0,
     },
     ["arccw_go_nade_incendiary"] = {
         Category = "Gear",
