@@ -151,11 +151,31 @@ local balanceList = {
     ["arccw_go_awp"] = {
         Category = "Rifles",
         TTTWeight = 0,
+        TTT_Stats = {
+            Kind = WEAPON_EQUIP2,
+            Slot = 6,
+            Range = 30,
+            Damage = 200,
+            DamageMin = 300,
+            Override_Ammo = "none",
+            AutoSpawnable = false,
+            ForceDefaultClip = 0,
+            CanBuy = {ROLE_TRAITOR, ROLE_DETECTIVE},
+            EquipMenuData = {
+                type = "Weapon",
+                desc = "Powerful magnum sniper rifle.\n\nHas 10 rounds and cannot be reloaded."
+            }
+        }
     },
     ["arccw_go_ssg08"] = {
         Category = "Rifles",
         TTTWeight = 200,
-        TTTWeaponType = "weapon_zm_rifle"
+        TTTWeaponType = "weapon_zm_rifle",
+        TTT_Stats = {
+            Range = 10,
+            DamageMin = 75,
+            SightTime = 0.28
+        },
     },
     -- SGs
     ["arccw_go_m1014"] = {
@@ -167,6 +187,13 @@ local balanceList = {
         Category = "Heavy",
         TTTWeight = 50,
         TTTWeaponType = "weapon_zm_shotgun",
+        TTT_Stats = {
+            Damage = 7,
+            DamageMin = 4,
+            Range = 25,
+            Delay = 60 / 240,
+            AccuracyMOA = 50,
+        }
     },
     ["arccw_go_mag7"] = {
         HipDispersion = 300,
@@ -177,6 +204,12 @@ local balanceList = {
         Category = "Heavy",
         TTTWeight = 100,
         TTTWeaponType = "weapon_zm_shotgun",
+        TTT_Stats = {
+            Damage = 10,
+            DamageMin = 5,
+            AccuracyMOA = 40,
+            Range = 30,
+        }
     },
     ["arccw_go_870"] = {
         HipDispersion = 300,
@@ -187,6 +220,12 @@ local balanceList = {
         Category = "Heavy",
         TTTWeight = 100,
         TTTWeaponType = "weapon_zm_shotgun",
+        TTT_Stats = {
+            Damage = 10,
+            DamageMin = 5,
+            AccuracyMOA = 40,
+            Range = 30,
+        }
     },
     ["arccw_go_nova"] = {
         HipDispersion = 300,
@@ -197,6 +236,12 @@ local balanceList = {
         Category = "Heavy",
         TTTWeight = 100,
         TTTWeaponType = "weapon_zm_shotgun",
+        TTT_Stats = {
+            Damage = 9,
+            DamageMin = 6,
+            AccuracyMOA = 30,
+            Range = 40,
+        }
     },
     -- MGs
     ["arccw_go_m249para"] = {
@@ -317,6 +362,9 @@ local balanceList = {
         Category = "Pistols",
         TTTWeight = 100,
         TTTWeaponType = "weapon_zm_revolver",
+        TTT_Stats = {
+            Delay = 60 / 180
+        },
     },
     ["arccw_go_r8"] = {
         HipDispersion = 100,
@@ -390,8 +438,20 @@ local function GSOE()
                     for name, ae in pairs(v) do
                         stored.AttachmentElements[name] = ae
                     end
-                elseif i ~= "Category" then
+                elseif i ~= "Category" and i ~= "TTT_Stats" then
                     stored[i] = v
+                end
+            end
+            if engine.ActiveGamemode() == "terrortown" then
+                if stored.TTT_Stats then
+                    for k, v in pairs(t.TTT_Stats) do
+                        stored[k] = v
+                    end
+                else
+                    -- TTT is very close quarters, all guns get a range nerf by default
+                    if stored.Damage > stored.DamageMin and stored.Range then
+                        stored.Range = math.ceil(stored.Range / 2)
+                    end
                 end
             end
             --[[]
@@ -645,49 +705,6 @@ local function GSOE()
     mag7.Animations["fire_iron"].MinProgress = 0.2
     mag7.Animations["cycle"].Time = 0.6
     mag7.Animations["cycle"].MinProgress = 0.3
-
-    local m1014 = weapons.GetStored("arccw_go_m1014")
-
-    if engine.ActiveGamemode() == "terrortown" then
-
-        -- Buyable AWP
-        awp.Kind = WEAPON_EQUIP2
-        awp.Slot = 6
-        awp.Range = 30
-        awp.Damage = 200
-        awp.DamageMin = 300
-        awp.Override_Ammo = "none"
-        awp.AutoSpawnable = false
-        awp.ForceDefaultClip = 0
-        awp.Primary.ClipSize = 5
-        awp.CanBuy = {ROLE_TRAITOR, ROLE_DETECTIVE}
-        awp.EquipMenuData = {
-            type = "Weapon",
-            desc = "Powerful magnum sniper rifle.\n\nHas 5 rounds and cannot be reloaded."
-        }
-
-        -- Holy shit shotguns are busted
-        m1014.Damage = 7
-        m1014.DamageMin = 4
-        m1014.Delay = 60 / 240
-        m1014.AccuracyMOA = 70
-
-        m870.Damage = 10
-        m870.DamageMin = 5
-        m870.AccuracyMOA = 50
-
-        nova.Damage = 9
-        nova.DamageMin = 6
-        nova.AccuracyMOA = 40
-
-        mag7.Damage = 10
-        mag7.DamageMin = 5
-        mag7.AccuracyMOA = 50
-
-        -- buff the scout
-        ssg.Range = 10
-        ssg.DamageMin = 120
-    end
 
     -- Dirty dirty overwrites
     local base = weapons.GetStored("arccw_base")
