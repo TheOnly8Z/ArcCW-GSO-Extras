@@ -9,6 +9,7 @@ att.Desc_Cons = {
 att.SortOrder = 0
 att.AutoStats = true
 att.Slot = "go_usp_mag"
+att.Ignore = true
 
 att.ActivateElements = {"go_usp_mag_20"}
 att.GivesFlags = {"nocomp"}
