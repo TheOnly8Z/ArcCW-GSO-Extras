@@ -706,6 +706,17 @@ local function GSOE()
     mag7.Animations["cycle"].Time = 0.6
     mag7.Animations["cycle"].MinProgress = 0.3
 
+    local knife = weapons.GetStored("arccw_go_melee_knife")
+    knife.Backstab = true
+    knife.Animations = {
+        ["draw"] = { Source = "draw", Time = 1},
+        ["idle"] = false,
+        ["bash"] = {Source = {"light_hit1", "light_hit2"}, Time = 1},
+        ["bash_backstab"] = {Source = "light_backstab", Time = 1},
+        ["bash2"] = {Source = "heavy_hit1", Time = 1.75},
+        ["bash2_backstab"] = {Source = "heavy_backstab", Time = 1.75}
+    }
+
     -- Dirty dirty overwrites
     local base = weapons.GetStored("arccw_base")
     base.DoLaser = function(self, world)

@@ -15,6 +15,9 @@ Beta CSGO model created by PROm. Compared to the ACE, is fires significantly slo
 ### M16A2
 Independent weapon based off the AR-15 model. Has (by default) a 20-Round magazine and burst fire.
 
+### Bayonet
+Added backstab (double damage).
+
 ### Glock 17
 - Added 150mm G17L Slide (custom model)
 - Added 15/30-Round 10mm G20 conversion
@@ -280,9 +283,6 @@ Lower brightness and longer far Z range.
 
 # Weapon Tweaks
 
-### Bolt/Pump-Actions
-Slight delay from firing animation to cycling. Shoot as soon as your finger is on the trigger/pump has been cycled.
-
 ## Pistols
 Hip dispersion and moving accuracy increased across the board, but different guns have different specialities.
 
@@ -307,6 +307,8 @@ Hip dispersion, moving accuracy and recoil significantly increased across the bo
 
 Accuracy and range nerfed for TTT.
 
+Slight delay from firing animation to cycling. Shoot as soon as pump has been cycled.
+
 ## SMGs
 Damage has been tweaked to better match caliber.
 
@@ -323,3 +325,7 @@ Sight time reduced to 300ms, in-line with other rifles.
 
 ### FAMAS G1
 Sight time reduced to 270ms, slightly better than other rifles.
+
+## Sniper Rifles
+
+Slight delay from firing animation to cycling. Shoot as soon as bolt has been cycled.
