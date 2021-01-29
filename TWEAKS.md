@@ -5,6 +5,7 @@
 - CS:GO or all-in-one categories for tidier spawnmenus
 - Per-player custom laser colors
 - Aim sway for GSO or all weapons/attachments
+- New firing sounds for several weapons
 
 ## Weapons
 
@@ -12,7 +13,7 @@
 Beta CSGO model created by PROm. Compared to the ACE, is fires significantly slower, but has overall better ranged attributes.
 
 ### M16A2
-Independent weapon based off the AR-15 model. Defaults to 20-Round magazine and burst fire.
+Independent weapon based off the AR-15 model. Has (by default) a 20-Round magazine and burst fire.
 
 ### Glock 17
 - Added 150mm G17L Slide (custom model)
@@ -115,6 +116,15 @@ Also super quiet.
 - +50% Sight time (up from -25%)
 - (For shotguns: -35% weapon volume and +25% sight time)
 
+### Osprey Suppressor
+Not as quiet, but more agile.
+
+**Tweaked:**
+- -15% Weapon volume (down from -15%)
+- -5% Handling (down from -10%)
+- +8% Hip dispersion (down from +15%)
+- (For shotguns: -15% weapon volume and +8% sight time)
+
 ### G3 5.56mm Magazines
 
 **Tweaked:**
@@ -141,7 +151,7 @@ Like other heavy stocks, but slows you down while aiming much more.
 - -20% Recoil
 - -25% Moving spread
 - -50% Sighted strafe speed
-- +15% Sight time
+- +10% Sight time
 
 ### Bayonet
 Has a proper stabbing animation.
@@ -150,7 +160,7 @@ Has a proper stabbing animation.
 Sounds and feels much better to shoot, and better fits a close-range clandestine role.
 
 **Tweaked:**
-- +15% Sight Time (up from +10%)
+- +20% Sight Time (up from +10%)
 - -10% Range (down from +25%)
 - -40% Firing Volume (up from -25%)
 
@@ -160,26 +170,27 @@ Not shit now.
 **Reworked:**
 - -50% Range
 - +200% Imprecision
-- +50% Recoil
+- +75% Recoil
 - +15% Fire rate
 - +10% Move speed
 - +20% Sighted strafe speed
-- +50% Draw time
+- +25% Draw time
+- -15% Reload time
 
 ### Shotgun Sawn-off Grip / Pistol Grip
 Slightly more viable.
 
 **Added:**
 - +25% Sighted strafe speed
-- -50% Sight time (up from -25%)
+- -40% Sight time (up from -25%)
 
 ### AUG 32-Round 9mm
 
 **Reworked:**
 - -15% Damage
 - +50% Imprecision
-- -40% Recoil
-- -40% Side recoil
+- -50% Recoil
+- -50% Side recoil
 - +20% Fire rate
 
 ### Compact pistol slides (Glock / P250)
@@ -294,6 +305,8 @@ Added the delayed trigger from CS:GO - works how you expect it to. Switch to FAN
 ## Shotguns
 Hip dispersion, moving accuracy and recoil significantly increased across the board.
 
+Accuracy and range nerfed for TTT.
+
 ## SMGs
 Damage has been tweaked to better match caliber.
 
@@ -307,3 +320,6 @@ Slight increase in damage.
 
 ### ACE 22
 Sight time reduced to 300ms, in-line with other rifles.
+
+### FAMAS G1
+Sight time reduced to 270ms, slightly better than other rifles.

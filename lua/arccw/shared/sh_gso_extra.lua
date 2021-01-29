@@ -113,6 +113,7 @@ local balanceList = {
     },
     ["arccw_go_famas"] = {
         Category = "Rifles",
+        SightTime = 0.27,
         TTTWeight = 50,
         TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_mac10"},
     },
@@ -577,7 +578,7 @@ local function GSOE()
             PrintName = "FAN",
             Override_TriggerDelay = false,
             Add_SightsDispersion = 50,
-            Mult_HipDispersion = 3,
+            Mult_HipDispersion = 4,
         },
         {
             Mode = 0
@@ -787,157 +788,200 @@ end)
 local function PostLoadAtt()
     if attBal:GetBool() then
 
-        -- Folded/removed stocks add draw/holster speed
-        local nostock = {
-            ["go_stock_none"] = true,
-            ["go_mp5_stock_in"] = true,
-            ["go_ump_stock_in"] = true,
-            ["go_negev_stock_in"] = true,
-            ["go_awp_stock_obrez"] = true,
-            ["go_870_stock_sawnoff"] = true,
-            ["go_nova_stock_pistol"] = true,
-            ["go_mac10_stock_in"] = true,
-            ["go_mp9_stock_in"] = true,
+        local bal_nostock = {
+            Mult_DrawTime = 0.5,
+            Mult_HolsterTime = 0.5
         }
-        for i, _ in pairs(nostock) do
-            ArcCW.AttachmentTable[i].Mult_DrawTime = 0.5
-            ArcCW.AttachmentTable[i].Mult_HolsterTime = 0.5
-            table.insert(ArcCW.AttachmentTable[i].Desc_Cons, "con.unstable")
-        end
 
-        -- Pistol stock slows drawing but reduces more recoil
-        table.insert(ArcCW.AttachmentTable["go_stock_pistol_bt"].Desc_Pros, "pro.stable")
-        ArcCW.AttachmentTable["go_stock_pistol_bt"].Mult_Recoil = 0.85
-        ArcCW.AttachmentTable["go_stock_pistol_bt"].Mult_MoveDispersion = 0.7
-        ArcCW.AttachmentTable["go_stock_pistol_bt"].Mult_DrawTime = 1.5
-        ArcCW.AttachmentTable["go_stock_pistol_bt"].Mult_HolsterTime = 1.5
-
-        table.insert(ArcCW.AttachmentTable["go_stock_pistol_wire"].Desc_Pros, "pro.stable")
-        ArcCW.AttachmentTable["go_stock_pistol_wire"].Mult_DrawTime = 1.25
-        ArcCW.AttachmentTable["go_stock_pistol_wire"].Mult_HolsterTime = 1.25
-
-        -- AK skeleton stock
-        ArcCW.AttachmentTable["go_ak_stock_skeleton"].Mult_Recoil = 1.15
-        ArcCW.AttachmentTable["go_ak_stock_skeleton"].Mult_SightTime = 0.85
-        ArcCW.AttachmentTable["go_ak_stock_skeleton"].Mult_DrawTime = 0.75
-        ArcCW.AttachmentTable["go_ak_stock_skeleton"].Mult_HolsterTime = 0.75
-
-        -- Weapon-specific heavy stocks reduce more recoil and move speed
-        local hstock = {
-            ["go_mac10_stock_heavy"] = true,
-            ["go_mag7_stock_heavy"] = true,
-            ["go_m4_stock_m16"] = true,
-            ["go_ak_stock_heavy"] = true,
-            ["go_mp5_stock_heavy"] = true,
+        local bal_hstock = {
+            Mult_Recoil = 0.8,
+            Mult_MoveDispersion = "nil",
+            Mult_SightTime = 1.25,
+            Mult_SightedSpeedMult = 0.8,
+            Mult_DrawTime = 1.25,
+            Mult_HolsterTime = 1.25,
+            Mult_SpeedMult = "nil",
         }
-        for i, _ in pairs(hstock) do
-            ArcCW.AttachmentTable[i].Mult_Recoil = 0.8
-            ArcCW.AttachmentTable[i].Mult_MoveDispersion = nil --1.3
-            ArcCW.AttachmentTable[i].Mult_SightTime = 1.3
-            ArcCW.AttachmentTable[i].Mult_SightedSpeedMult = 0.8
-            ArcCW.AttachmentTable[i].Mult_DrawTime = 1.2
-            ArcCW.AttachmentTable[i].Mult_HolsterTime = 1.2
-            ArcCW.AttachmentTable[i].Mult_SpeedMult = nil
-        end
 
-        local sb = {
-            ["go_ssg08_barrel_short"] = true,
-            ["go_sg_barrel_short"] = true,
-            ["go_scar_barrel_short"] = true,
-            ["go_nova_barrel_short"] = true,
-            ["go_negev_barrel_short"] = true,
-            ["go_mp5_barrel_short"] = true,
-            ["go_mag7_barrel_short"] = true,
-            ["go_m4_barrel_short"] = true,
-            ["go_m249_barrel_short"] = true,
-            ["go_m1014_barrel_short"] = true,
-            ["go_g3_barrel_short"] = true,
-            ["go_famas_barrel_short"] = true,
-            ["go_awp_barrel_short"] = true,
-            ["go_aug_barrel_short"] = true,
-            ["go_ak_barrel_short"] = true,
-            ["go_ace_barrel_short"] = true,
-            ["go_870_barrel_short"] = true,
+        local bal_sb = {
+            Mult_DrawTime = 0.85,
+            Mult_HolsterTime = 0.85,
+            Mult_ReloadTime = 0.9,
+            Mult_HipDispersion = 0.9,
         }
-        for i, _ in pairs(sb) do
-            ArcCW.AttachmentTable[i].Mult_DrawTime = 0.75
-            ArcCW.AttachmentTable[i].Mult_HolsterTime = 0.75
-            ArcCW.AttachmentTable[i].Mult_ReloadTime = 0.9
+
+        local bal_stub = {
+            Mult_Range = 0.5,
+            Mult_AccuracyMOA = 3,
+            Mult_Recoil = 1.75,
+            Mult_RPM = 1.15,
+            Mult_SpeedMult = 1.1,
+            Mult_SightedSpeedMult = 1.2,
+            Mult_ShootVol = "nil",
+            Mult_DrawTime = 0.75,
+            Mult_HolsterTime = 0.75,
+            Mult_ReloadTime = 0.85,
+        }
+
+        local baltable = {
+            -- Folded/removed stocks add draw/holster speed
+            ["go_stock_none"] = bal_nostock,
+            ["go_mp5_stock_in"] = bal_nostock,
+            ["go_ump_stock_in"] = bal_nostock,
+            ["go_negev_stock_in"] = bal_nostock,
+            ["go_awp_stock_obrez"] = bal_nostock,
+            ["go_870_stock_sawnoff"] = bal_nostock,
+            ["go_nova_stock_pistol"] = bal_nostock,
+            ["go_mac10_stock_in"] = bal_nostock,
+            ["go_mp9_stock_in"] = bal_nostock,
+
+            -- Pistol stock slows drawing but reduces more recoil
+            ["go_stock_pistol_bt"] = {
+                Desc_Pros = {"pro.stable"},
+                Mult_Recoil = 0.85,
+                Mult_MoveDispersion = 0.7,
+                Mult_DrawTime = 1.5,
+                Mult_HolsterTime = 1.5,
+            },
+            ["go_stock_pistol_wire"] = {
+                Desc_Pros = {"pro.stable"},
+                Mult_DrawTime = 1.25,
+                Mult_HolsterTime = 1.25,
+            },
+
+            ["go_ak_stock_skeleton"] = {
+                Mult_Recoil = 1.15,
+                Mult_SightTime = 0.85,
+                Mult_DrawTime = 0.75,
+                Mult_HolsterTime = 0.75,
+            },
+
+            -- Weapon-specific heavy stocks reduce more recoil and move speed
+            ["go_mac10_stock_heavy"] = bal_hstock,
+            ["go_mag7_stock_heavy"] = bal_hstock,
+            ["go_m4_stock_m16"] = bal_hstock,
+            ["go_ak_stock_heavy"] = bal_hstock,
+            ["go_mp5_stock_heavy"] = bal_hstock,
+
+            -- Short barrels give draw/holster speed and reload speed
+            ["go_ssg08_barrel_short"] = bal_sb,
+            ["go_sg_barrel_short"] = bal_sb,
+            ["go_scar_barrel_short"] = bal_sb,
+            ["go_nova_barrel_short"] = bal_sb,
+            ["go_negev_barrel_short"] = bal_sb,
+            ["go_mp5_barrel_short"] = bal_sb,
+            ["go_mag7_barrel_short"] = bal_sb,
+            ["go_m4_barrel_short"] = bal_sb,
+            ["go_m249_barrel_short"] = bal_sb,
+            ["go_m1014_barrel_short"] = bal_sb,
+            ["go_g3_barrel_short"] = bal_sb,
+            ["go_famas_barrel_short"] = bal_sb,
+            ["go_awp_barrel_short"] = bal_sb,
+            ["go_aug_barrel_short"] = bal_sb,
+            ["go_ak_barrel_short"] = bal_sb,
+            ["go_ace_barrel_short"] = bal_sb,
+            ["go_870_barrel_short"] = bal_sb,
+
+            -- SSQ is quieter but has a bigger range penalty
+            ["go_supp_ssq"] = {
+                Mult_ShootVol = 0.65,
+                Mult_Range = 0.75,
+            },
+
+            -- Monolith is quieter but has a bigger sight time penalty
+            ["go_supp_monolith"] = {
+                Mult_ShootVol = 0.65,
+                Mult_SightTime = 1.5,
+            },
+            ["go_supp_monolith_shot"] = {
+                Mult_ShootVol = 0.65,
+                Mult_SightTime = 1.25,
+            },
+
+            -- G3 SG1 barrel matches SCAR SSR barrel
+            ["go_g3_barrel_long"] = {
+                Mult_Range = 1.5,
+                Mult_AccuracyMOA = 0.75,
+                Mult_Recoil = 0.75,
+                Mult_RPM = 0.5,
+                Mult_MoveDispersion = 0.5
+            },
+
+            -- Auto sniper barrels have less move disp
+            ["go_scar_barrel_long"] = {
+                Mult_MoveDispersion = 0.5
+            },
+
+            -- Bayonet anim edit
+            ["go_muzz_bayonet"] = {
+                Override_BashPreparePos = Vector(2, -12, -2.6),
+                Override_BashPrepareAng = Angle(8, 4, 5),
+                Override_BashPos = Vector(1.2, 7, -1.8),
+                Override_BashAng = Angle(4, 6, 0),
+            },
+
+            -- Stub barrel shouldn't be shit
+            ["go_mac10_barrel_stub"] = bal_stub,
+            ["go_m4_barrel_stub"] = bal_stub,
+
+            -- Sniper stocks
+            ["go_scar_stock_sniper"] = {
+                Mult_Recoil = 0.8,
+                Mult_MoveDispersion = 0.75,
+                Mult_SightedSpeedMult = 0.5,
+                Mult_SightTime = 1.1,
+                Description = "Precision sniper stock for the SCAR-20 DMR. Improves recoil, but is slower to manuver when aiming.",
+            },
+
+            ["go_g3_stock_padded"] = {
+                Mult_Recoil = 0.8,
+                Mult_MoveDispersion = 0.75,
+                Mult_SightedSpeedMult = 0.5,
+                Mult_SightTime = 1.1,
+                Description = "G3 sniper-style stock. Improves recoil, but is slower to manuver when aiming.",
+            },
+
+            -- Improved shotgun pistol stocks
+            ["go_nova_stock_pistol"] = {
+                Mult_SightedSpeedMult = 1.25,
+                Mult_SightTime = 0.6,
+            },
+            ["go_870_stock_sawnoff"] = {
+                Mult_SightedSpeedMult = 1.25,
+                Mult_SightTime = 0.6,
+            },
+
+            -- MP5SD rework
+            ["go_mp5_barrel_sd"] = {
+                Mult_SightTime = 1.2,
+                Mult_Range = 0.9,
+                Mult_ShootVol = 0.6,
+                Mult_ShootPitch = 1.5,
+                Description = "Integral silencer used in MP5SD models. Reduces bullet velocity to subsonic while suppressing firing sound, making the weapon whisper-quiet. Significantly better handling than standalone suppressors."
+            },
+
+            ["go_aug_ammo_9mm"] = {
+                Mult_Damage = 0.85,
+                Mult_DamageMin = 0.85,
+                Mult_AccuracyMOA = 1.5,
+                Mult_Recoil = 0.5,
+                Mult_RecoilSide = 0.5,
+                Mult_RPM = 1.2,
+            },
+        }
+
+        for i, t in pairs(baltable) do
+            if not ArcCW.AttachmentTable[i] then continue end
+            for k, v in pairs(t) do
+                if k == "Desc_Pros" or k == "Desc_Cons" then
+                    table.Add(ArcCW.AttachmentTable[i][k], v)
+                elseif v == "nil" then
+                    ArcCW.AttachmentTable[i][k] = nil
+                else
+                    ArcCW.AttachmentTable[i][k] = v
+                end
+            end
         end
-
-        -- SSQ is quieter but has a bigger range penalty
-        ArcCW.AttachmentTable["go_supp_ssq"].Mult_ShootVol = 0.65
-        ArcCW.AttachmentTable["go_supp_ssq"].Mult_Range = 0.75
-
-        -- Monolith is quieter but has a bigger sight time penalty
-        ArcCW.AttachmentTable["go_supp_monolith"].Mult_ShootVol = 0.65
-        ArcCW.AttachmentTable["go_supp_monolith"].Mult_SightTime = 1.5
-        ArcCW.AttachmentTable["go_supp_monolith_shot"].Mult_ShootVol = 0.65
-        ArcCW.AttachmentTable["go_supp_monolith_shot"].Mult_SightTime = 1.25
-
-        -- G3 SG1 barrel matches SCAR SSR barrel
-        ArcCW.AttachmentTable["go_g3_barrel_long"].Mult_Range = 1.5
-        ArcCW.AttachmentTable["go_g3_barrel_long"].Mult_AccuracyMOA = 0.75
-        ArcCW.AttachmentTable["go_g3_barrel_long"].Mult_Recoil = 0.75
-        ArcCW.AttachmentTable["go_g3_barrel_long"].Mult_RPM = 0.5
-
-        -- Auto sniper barrels have less move disp
-        ArcCW.AttachmentTable["go_g3_barrel_long"].Mult_MoveDispersion = 0.5
-        ArcCW.AttachmentTable["go_scar_barrel_long"].Mult_MoveDispersion = 0.5
-
-        -- Sniper stocks
-        ArcCW.AttachmentTable["go_scar_stock_sniper"].Mult_Recoil = 0.8
-        ArcCW.AttachmentTable["go_scar_stock_sniper"].Mult_MoveDispersion = 0.75
-        ArcCW.AttachmentTable["go_scar_stock_sniper"].Mult_SightedSpeedMult = 0.5
-        ArcCW.AttachmentTable["go_scar_stock_sniper"].Mult_SightTime = 1.15
-        ArcCW.AttachmentTable["go_scar_stock_sniper"].Description = "Precision sniper stock for the SCAR-20 DMR. Improves recoil, but is slower to manuver when aiming."
-        ArcCW.AttachmentTable["go_g3_stock_padded"].Mult_Recoil = 0.8
-        ArcCW.AttachmentTable["go_g3_stock_padded"].Mult_MoveDispersion = 0.75
-        ArcCW.AttachmentTable["go_g3_stock_padded"].Mult_SightedSpeedMult = 0.5
-        ArcCW.AttachmentTable["go_g3_stock_padded"].Mult_SightTime = 1.15
-        ArcCW.AttachmentTable["go_g3_stock_padded"].Description = "G3 sniper-style stock. Improves recoil, but is slower to manuver when aiming."
-
-        -- Bayonet anim edit
-        ArcCW.AttachmentTable["go_muzz_bayonet"].Override_BashPreparePos = Vector(2, -12, -2.6)
-        ArcCW.AttachmentTable["go_muzz_bayonet"].Override_BashPrepareAng = Angle(8, 4, 5)
-        ArcCW.AttachmentTable["go_muzz_bayonet"].Override_BashPos = Vector(1.2, 7, -1.8)
-        ArcCW.AttachmentTable["go_muzz_bayonet"].Override_BashAng = Angle(4, 6, 0)
-
-        -- MP5SD
-        ArcCW.AttachmentTable["go_mp5_barrel_sd"].Mult_SightTime = 1.15
-        ArcCW.AttachmentTable["go_mp5_barrel_sd"].Mult_Range = 0.9
-        ArcCW.AttachmentTable["go_mp5_barrel_sd"].Mult_ShootVol = 0.6
-        ArcCW.AttachmentTable["go_mp5_barrel_sd"].Mult_ShootPitch = 1.5
-        ArcCW.AttachmentTable["go_mp5_barrel_sd"].Description = "Integral silencer used in MP5SD models. Reduces bullet velocity to subsonic while suppressing firing sound, making the weapon whisper-quiet. Significantly better handling than standalone suppressors."
-
-        -- Stub barrel shouldn't be shit
-        local stub = {"go_mac10_barrel_stub", "go_m4_barrel_stub"}
-        for _, i in pairs(stub) do
-            ArcCW.AttachmentTable[i].Mult_Range = 0.5
-            ArcCW.AttachmentTable[i].Mult_AccuracyMOA = 3
-            ArcCW.AttachmentTable[i].Mult_Recoil = 1.5
-            ArcCW.AttachmentTable[i].Mult_RPM = 1.15
-            ArcCW.AttachmentTable[i].Mult_SpeedMult = 1.1
-            ArcCW.AttachmentTable[i].Mult_SightedSpeedMult = 1.2
-            ArcCW.AttachmentTable[i].Mult_ShootVol = nil
-            ArcCW.AttachmentTable[i].Mult_DrawTime = 0.5
-            ArcCW.AttachmentTable[i].Mult_HolsterTime = 0.5
-        end
-
-        -- Pistol/short shotgun grips shouldn't be shit
-        local grip = {"go_nova_stock_pistol", "go_870_stock_sawnoff"}
-        for _, i in pairs(grip) do
-            ArcCW.AttachmentTable[i].Mult_SightedSpeedMult = 1.25
-            ArcCW.AttachmentTable[i].Mult_SightTime = 0.5
-        end
-
-        -- AUG 9mm
-        ArcCW.AttachmentTable["go_aug_ammo_9mm"].Mult_Damage = 0.85
-        ArcCW.AttachmentTable["go_aug_ammo_9mm"].Mult_DamageMin = 0.85
-        ArcCW.AttachmentTable["go_aug_ammo_9mm"].Mult_AccuracyMOA = 1.5
-        ArcCW.AttachmentTable["go_aug_ammo_9mm"].Mult_Recoil = 0.6
-        ArcCW.AttachmentTable["go_aug_ammo_9mm"].Mult_RecoilSide = 0.6
-        ArcCW.AttachmentTable["go_aug_ammo_9mm"].Mult_RPM = 1.2
 
         -- G3 5.56mm recoil
         ArcCW.AttachmentTable["go_g3_mag_60_556"].Mult_Recoil = 0.4
@@ -1014,12 +1058,19 @@ local function PostLoadAtt()
         ArcCW.AttachmentTable["go_usp_mag_30"].Mult_ReloadTime = 1.4
         ArcCW.AttachmentTable["go_usp_mag_30"].SortOrder = 19
 
-        ArcCW.AttachmentTable["go_supp_osprey_shot"].Description = "Large sound suppressor with ballistic-enhancing qualities. Unable to fully suppress shotguns due to its size, but is slightly more agile than other suppressors."
-        ArcCW.AttachmentTable["go_supp_osprey_shot"].Mult_ShootVol = 0.8
+        ArcCW.AttachmentTable["go_supp_osprey"].Description = "Medium sound suppressor with some ballistic-enhancing properties. Less quiet but more agile than other suppressors."
+        ArcCW.AttachmentTable["go_supp_osprey"].Mult_ShootVol = 0.85
+        ArcCW.AttachmentTable["go_supp_osprey"].Mult_SightTime = 1.05
+        ArcCW.AttachmentTable["go_supp_osprey"].Mult_HipDispersion = 1.08
+
+        ArcCW.AttachmentTable["go_supp_osprey_shot"].Description = "Medium sound suppressor with some ballistic-enhancing properties. Unable to fully suppress shotguns due to its size, but is slightly more agile than other suppressors."
+        ArcCW.AttachmentTable["go_supp_osprey_shot"].Mult_ShootVol = 0.85
         ArcCW.AttachmentTable["go_supp_osprey_shot"].Mult_SightTime = 1.08
 
         ArcCW.AttachmentTable["go_muzz_brake"].Mult_Recoil = 0.95
         --ArcCW.AttachmentTable["go_muzz_brake"].Mult_RecoilSide = 0.8
+
+        print("Applied GSOE Attachment rebalance.")
     end
 
     if addSway:GetInt() >= 1 then
