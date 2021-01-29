@@ -18,6 +18,9 @@ Independent weapon based off the AR-15 model. Has (by default) a 20-Round magazi
 ### Bayonet
 Added backstab (double damage).
 
+### Grenades
+Alt throw has half velocity.
+
 ### Glock 17
 - Added 150mm G17L Slide (custom model)
 - Added 15/30-Round 10mm G20 conversion

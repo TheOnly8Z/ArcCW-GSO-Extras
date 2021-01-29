@@ -386,28 +386,43 @@ local balanceList = {
     ["arccw_go_melee_knife"] = {
         Category = "Gear",
         TTTWeight = 0,
+        Backstab = true,
+        Animations = {
+            ["draw"] = { Source = "draw", Time = 1},
+            ["idle"] = false,
+            ["bash"] = {Source = {"light_hit1", "light_hit2"}, Time = 1},
+            ["bash_backstab"] = {Source = "light_backstab", Time = 1},
+            ["bash2"] = {Source = "heavy_hit1", Time = 1.75},
+            ["bash2_backstab"] = {Source = "heavy_backstab", Time = 1.75}
+        },
     },
     ["arccw_go_nade_knife"] = {
         Category = "Gear",
         TTTWeight = 0,
+        MuzzleVelocity = 3000,
+        MuzzleVelocityAlt = 1500,
     },
     ["arccw_go_nade_incendiary"] = {
         Category = "Gear",
+        MuzzleVelocityAlt = 500,
         TTTWeight = 100,
         TTTWeaponType = "weapon_zm_molotov",
     },
     ["arccw_go_nade_frag"] = {
         Category = "Gear",
+        MuzzleVelocityAlt = 500,
         TTTWeight = 0,
         --TTTWeaponType = "weapon_ttt_confgrenade",
     },
     ["arccw_go_nade_flash"] = {
         Category = "Gear",
+        MuzzleVelocityAlt = 500,
         TTTWeight = 100,
         TTTWeaponType = "weapon_ttt_confgrenade",
     },
     ["arccw_go_nade_smoke"] = {
         Category = "Gear",
+        MuzzleVelocityAlt = 500,
         TTTWeight = 100,
         TTTWeaponType = "weapon_ttt_smokegrenade",
     },
@@ -416,6 +431,7 @@ local balanceList = {
     },
     ["arccw_go_nade_molotov"] = {
         Category = "Gear",
+        MuzzleVelocityAlt = 500,
         TTTWeight = 100,
         TTTWeaponType = "weapon_zm_molotov",
     },
@@ -705,17 +721,6 @@ local function GSOE()
     mag7.Animations["fire_iron"].MinProgress = 0.2
     mag7.Animations["cycle"].Time = 0.6
     mag7.Animations["cycle"].MinProgress = 0.3
-
-    local knife = weapons.GetStored("arccw_go_melee_knife")
-    knife.Backstab = true
-    knife.Animations = {
-        ["draw"] = { Source = "draw", Time = 1},
-        ["idle"] = false,
-        ["bash"] = {Source = {"light_hit1", "light_hit2"}, Time = 1},
-        ["bash_backstab"] = {Source = "light_backstab", Time = 1},
-        ["bash2"] = {Source = "heavy_hit1", Time = 1.75},
-        ["bash2_backstab"] = {Source = "heavy_backstab", Time = 1.75}
-    }
 
     -- Dirty dirty overwrites
     local base = weapons.GetStored("arccw_base")
