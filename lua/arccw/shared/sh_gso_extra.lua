@@ -1195,6 +1195,24 @@ local function PostLoadAtt()
     ArcCW.AttachmentTable["go_p250_mag_21"].Mult_MoveSpeed = 0.975
     ArcCW.AttachmentTable["go_p250_mag_21"].Mult_SightTime = 1.1
     ArcCW.AttachmentTable["go_p250_mag_21"].Mult_ReloadTime = 1.2
+
+    -- Scale up the horribly small sights
+    ArcCW.AttachmentTable["go_optic_compm4"].ModelScale = Vector(1.33, 1.33, 1.33)
+    ArcCW.AttachmentTable["go_optic_compm4"].AdditionalSights[1].Pos = Vector(-0.018321, 2, -1.34972)*1.33
+
+    ArcCW.AttachmentTable["go_optic_eotech"].ModelScale = Vector(1.25, 1.25, 1.25)*1.1
+    ArcCW.AttachmentTable["go_optic_eotech"].AdditionalSights[1].Pos = ArcCW.AttachmentTable["go_optic_eotech"].AdditionalSights[1].Pos*1.1
+    
+    ArcCW.AttachmentTable["go_optic_barska"].ModelScale = Vector(1.25, 1.25, 1.25)
+    ArcCW.AttachmentTable["go_optic_barska"].AdditionalSights[1].Pos = ArcCW.AttachmentTable["go_optic_barska"].AdditionalSights[1].Pos*1.25
+
+    ArcCW.AttachmentTable["go_optic_hamr"].AdditionalSights[1].Magnification = 1.3
+    ArcCW.AttachmentTable["go_optic_hamr"].AdditionalSights[1].ScopeMagnification = 4.615
+    ArcCW.AttachmentTable["go_optic_hamr"].AdditionalSights[1].Pos = Vector(0, 8, -1.56325)
+    ArcCW.AttachmentTable["go_optic_hamr"].AdditionalSights[1].HolosightData.HolosightSize = 7
+
+    ArcCW.AttachmentTable["go_optic_acog"].HolosightSize = 7
+    ArcCW.AttachmentTable["go_optic_hunter"].HolosightSize = 15
 end
 hook.Add("ArcCW_PostLoadAtts", "ArcCW_GSOE", PostLoadAtt)
 
