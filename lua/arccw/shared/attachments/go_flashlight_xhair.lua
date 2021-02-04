@@ -1,6 +1,7 @@
 att.PrintName = "Flashlight"
 att.Icon = Material("entities/acwatt_go_flashlight.png", "mips smooth")
 att.Description = "Mountable flashlight. Illuminates targets for the user, but may give away their position."
+att.Ignore = true
 att.Desc_Pros = {
 }
 att.Desc_Cons = {
