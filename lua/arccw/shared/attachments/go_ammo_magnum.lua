@@ -1,22 +1,27 @@
-att.PrintName = "Overpressure Rounds"
+att.PrintName = "Magnum Rounds"
 att.Icon = Material("entities/acwatt_go_ammo_magnum.png")
-att.Description = "Load cartridges with a dangerous amount of powder, guarenteed to strain even the most reliable of guns."
+att.Description = "Load cartridges with a dangerous amount of powder, exchanging ballistics for raw close-up power.\nCannot be used with suppressors."
 att.Desc_Pros = {
 }
 att.Desc_Cons = {
-    "Weapon will overheat"
 }
 att.AutoStats = true
 att.Slot = "go_ammo"
 
+att.Mult_Sway = 1
 att.Mult_Damage = 1.2
-att.Mult_DamageMin = 1.2
---att.Mult_AccuracyMOA = 2
-att.Mult_Recoil = 1.25
---att.Mult_Range = 0.7
+att.Mult_AccuracyMOA = 2
+att.Mult_Recoil = 1.5
+att.Mult_RecoilSide = 1.5
+att.Mult_Range = 0.75
+att.Mult_ShootVol = 1.15
 
-att.Override_Jamming = true
-att.Override_HeatLockout = true
+att.Hook_Compatible = function(wep)
+    if wep.Primary.Ammo ~= "pistol" or wep.Damage > 35 or wep:GetBuff_Override("Silencer") then return false end
+end
+
+--att.Override_Jamming = true
+--att.Override_HeatLockout = true
 --[[]
 att.O_Hook_Override_HeatDelayTime = function(wep, data)
     local cfm = wep:GetCurrentFiremode()
@@ -29,6 +34,7 @@ att.O_Hook_Override_HeatDelayTime = function(wep, data)
     data.current = t
 end
 ]]
+--[[]
 att.Override_HeatDelayTime = 0.75
 att.O_Hook_Override_HeatDissipation = function(wep, data)
     data.current = (wep.RegularClipSize or wep.Primary.ClipSize) * (wep:GetReloading() and 0.25 or 1) * (wep:GetHeatLocked() and 0.25 or 0.75)
@@ -44,3 +50,4 @@ end
 att.Hook_Compatible = function(wep)
     if wep.Jamming or (wep:GetBuff_Override("Override_ManualAction") or wep.ManualAction) or wep:GetIsShotgun() then return false end
 end
+]]

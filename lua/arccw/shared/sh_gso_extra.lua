@@ -501,7 +501,7 @@ local function GSOE()
             if not weapons.IsBasedOn(class, "arccw_base") then continue end
             if t.Throwing or t.IronSightStruct == false then continue end
             if addSway:GetInt() < 2 and string.Left(class, 9) ~= "arccw_go_" then continue end
-            t.Sway = math.Clamp(t.SightTime / 1 + t.HipDispersion / 2000, 0, 1)
+            t.Sway = math.Clamp(t.SightTime / 2 + t.HipDispersion / 2000, 0, 0.5)
         end
     end
 
@@ -1091,16 +1091,19 @@ local function PostLoadAtt()
 
     if addSway:GetInt() >= 1 then
         for class, t in pairs(ArcCW.AttachmentTable) do
-            if addSway:GetInt() < 2 and string.Left(class, 3) ~= "go_" then continue end
+            if addSway:GetInt() < 2 and string.Left(class, 3) ~= "go_" or t.Mult_Sway then continue end
             if (t.Mult_Range or 1) > 1 and (t.Mult_AccuracyMOA or 1) < 1 and (t.Mult_Recoil or 1) < 1 then
                 -- If it increases range, decreases precision and recoil it's probably a long barrel
                 t.Mult_Sway = math.Clamp(t.Mult_Range or 1, 1, 2)
+                table.insert(t.Desc_Cons, "+" .. math.Round((t.Mult_Sway - 1) * 100) .. "% Sway")
             elseif (t.Mult_Range or 1) < 1 and (t.Mult_AccuracyMOA or 1) > 1 and (t.Mult_Recoil or 1) > 1 then
                 -- Vice versa, probably a short barrel
                 t.Mult_Sway = math.Clamp(t.Mult_Range or 1, 0.25, 1)
+                table.insert(t.Desc_Pros, "-" .. math.Round((1 - t.Mult_Sway) * 100) .. "% Sway")
             elseif (t.Mult_SightTime or 1) > 1 and t.Holosight then
                 -- A sight of some kind
                 t.Mult_Sway = math.Clamp(t.Mult_SightTime or 1, 1, 1.5)
+                table.insert(t.Desc_Cons, "+" .. math.Round((t.Mult_Sway - 1) * 100) .. "% Sway")
             end
         end
 
