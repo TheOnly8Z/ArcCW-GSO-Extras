@@ -1,7 +1,7 @@
-att.PrintName = "Flashlight"
+att.PrintName = "Crosshair Flashlight"
 att.Icon = Material("entities/acwatt_go_flashlight.png", "mips smooth")
 att.Description = "Mountable flashlight. Illuminates targets for the user, but may give away their position."
-att.Ignore = true
+att.Ignore = false
 att.Desc_Pros = {
 }
 att.Desc_Cons = {
@@ -18,21 +18,23 @@ att.FlashlightFarZ = 512 -- how far it goes
 att.FlashlightNearZ = 1 -- how far away it starts
 att.FlashlightAttenuationType = ArcCW.FLASH_ATT_LINEAR -- LINEAR, CONSTANT, QUADRATIC are available
 att.FlashlightColor = Color(255, 255, 255)
-att.FlashlightTexture = "effects/flashlight001"
+att.FlashlightTexture = "effects/flashlight_xhair"
 att.FlashlightBrightness = 4
 att.FlashlightBone = "laser"
 
 att.ToggleStats = {
     {
-        PrintName = "High",
-        Flashlight = true
-    },
-    {
-        PrintName = "Eco",
+        PrintName = "On",
         Flashlight = true,
-        FlashlightFOV = 50,
-        FlashlightFarZ = 365,
-        FlashlightBrightness = 1
+        AdditionalSights = {
+            {
+                Pos = Vector(-2, 10, -4), -- relative to where att.Model is placed
+                Ang = Angle(0, 0, -45),
+                GlobalPos = false,
+                GlobalAng = true,
+                Magnification = 1
+            }
+        }
     },
     {
         PrintName = "Off",

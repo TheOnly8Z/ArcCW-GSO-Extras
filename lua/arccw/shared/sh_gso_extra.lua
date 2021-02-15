@@ -722,6 +722,38 @@ local function GSOE()
     mag7.Animations["cycle"].Time = 0.6
     mag7.Animations["cycle"].MinProgress = 0.3
 
+    local mp7 = weapons.GetStored("arccw_go_mp7")
+    mp7.Attachments[1].Slot = {"go_mp7_irons", "optic_lp", "optic"}
+
+    local awesomesauce = {
+        ["arccw_go_mp5"]        = { Slot = 2, Type = "go_extras_boondoggle" },
+        ["arccw_go_awp"]        = { Slot = 2, Type = "go_extras_boondoggle" },
+        ["arccw_go_scar"]        = { Slot = 2, Type = "go_extras_boondoggle2" },
+        ["arccw_go_ump"]        = { Slot = 2, Type = "go_extras_boondoggle" },
+        ["arccw_go_fnfal"]      = { Slot = 2, Type = "go_extras_boondoggle2" }
+    }
+    for i, v in pairs(awesomesauce) do
+        local here = weapons.GetStored(i)
+        here.Attachments[awesomesauce[i].Slot].EmptyFallback = awesomesauce[i].Type
+        here.Attachments[awesomesauce[i].Slot].Installed = awesomesauce[i].Type
+    end
+
+    local mp5 = weapons.GetStored("arccw_go_mp5")
+    mp5.Attachments[2].EmptyFallback = "go_extras_boondoggle"
+    mp5.Attachments[2].Installed = "go_extras_boondoggle"
+    function mp5:Hook_TranslateAnimation(anim) end
+
+    local ump = weapons.GetStored("arccw_go_ump")
+    ump.Attachments[2].EmptyFallback = "go_extras_boondoggle"
+    ump.Attachments[2].Installed = "go_extras_boondoggle"
+
+    local fal = weapons.GetStored("arccw_go_fnfal")
+    fal.Attachments[2].EmptyFallback = "go_extras_boondoggle2"
+    fal.Attachments[2].Installed = "go_extras_boondoggle2"
+
+    local bizon = weapons.GetStored("arccw_go_bizon")
+    function bizon:Hook_TranslateAnimation(anim) end
+
     -- Dirty dirty overwrites
     local base = weapons.GetStored("arccw_base")
     base.DoLaser = function(self, world)
@@ -1106,12 +1138,6 @@ local function PostLoadAtt()
                 table.insert(t.Desc_Cons, "+" .. math.Round((t.Mult_Sway - 1) * 100) .. "% Sway")
             end
         end
-
-        ArcCW.AttachmentTable["go_flashlight"].FlashlightBrightness = 1
-        ArcCW.AttachmentTable["go_flashlight"].FlashlightFarZ = 1024
-
-        ArcCW.AttachmentTable["go_flashlight_combo"].FlashlightBrightness = 1
-        ArcCW.AttachmentTable["go_flashlight_combo"].FlashlightFarZ = 1024
     end
 
     if laserColor:GetBool() then
@@ -1216,6 +1242,16 @@ local function PostLoadAtt()
 
     ArcCW.AttachmentTable["go_optic_acog"].HolosightSize = 7
     ArcCW.AttachmentTable["go_optic_hunter"].HolosightSize = 15
+
+    -- Flashlight
+    ArcCW.AttachmentTable["go_flashlight"].FlashlightBrightness = 1
+    ArcCW.AttachmentTable["go_flashlight"].FlashlightFarZ = 1024
+
+    ArcCW.AttachmentTable["go_flashlight_xhair"].FlashlightBrightness = 1
+    ArcCW.AttachmentTable["go_flashlight_xhair"].FlashlightFarZ = 1024
+
+    ArcCW.AttachmentTable["go_flashlight_combo"].FlashlightBrightness = 1
+    ArcCW.AttachmentTable["go_flashlight_combo"].FlashlightFarZ = 1024
 end
 hook.Add("ArcCW_PostLoadAtts", "ArcCW_GSOE", PostLoadAtt)
 
