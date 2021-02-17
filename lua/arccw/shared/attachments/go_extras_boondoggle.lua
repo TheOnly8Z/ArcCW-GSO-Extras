@@ -1,6 +1,7 @@
-att.PrintName = "GSOE Hand Correction"
-att.Icon = Material("entities/acwatt_go_extras_boondoggle.png", "mips smooth"
-)
+att.PrintName = "Corrected Hand"
+att.Icon = Material("entities/acwatt_go_extras_boondoggle.png", "mips smooth")
+att.Description = [[Better looking LHIK hand.]]
+--[[]
 att.Description = [[
     boon·dog·gle
     /ˈbo͞onˌdäɡəl/
