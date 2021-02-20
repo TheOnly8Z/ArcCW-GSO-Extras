@@ -739,19 +739,6 @@ local function GSOE()
         here.Attachments[awesomesauce[i].Slot].Installed = awesomesauce[i].Type
     end
 
-    local mp5 = weapons.GetStored("arccw_go_mp5")
-    mp5.Attachments[2].EmptyFallback = "go_extras_boondoggle"
-    mp5.Attachments[2].Installed = "go_extras_boondoggle"
-    function mp5:Hook_TranslateAnimation(anim) end
-
-    local ump = weapons.GetStored("arccw_go_ump")
-    ump.Attachments[2].EmptyFallback = "go_extras_boondoggle"
-    ump.Attachments[2].Installed = "go_extras_boondoggle"
-
-    local fal = weapons.GetStored("arccw_go_fnfal")
-    fal.Attachments[2].EmptyFallback = "go_extras_boondoggle2"
-    fal.Attachments[2].Installed = "go_extras_boondoggle2"
-
     local bizon = weapons.GetStored("arccw_go_bizon")
     function bizon:Hook_TranslateAnimation(anim) end
 
