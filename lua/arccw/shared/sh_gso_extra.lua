@@ -734,6 +734,7 @@ local function GSOE()
     }
     for i, v in pairs(awesomesauce) do
         local here = weapons.GetStored(i)
+        if not here then continue end
         here.Attachments[awesomesauce[i].Slot].EmptyFallback = awesomesauce[i].Type
         here.Attachments[awesomesauce[i].Slot].Installed = awesomesauce[i].Type
     end
