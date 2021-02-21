@@ -577,7 +577,7 @@ local function GSOE()
     r8.ViewModel = "models/weapons/arccw_go/v_pist_r8_extras.mdl"
     r8.WorldModel = "models/weapons/arccw_go/v_pist_r8_extras.mdl"
     r8.Delay = 60 / 180
-    r8.TriggerDelay = true
+    --r8.TriggerDelay = true
     r8.Hook_TranslateAnimation = function(wep, anim)
         if (anim == "fire" or anim == "fire_iron")
                 and wep:GetCurrentFiremode().Override_TriggerDelay == false then
@@ -587,7 +587,8 @@ local function GSOE()
     r8.Firemodes = {
         {
             Mode = 1,
-            PrintName = "DACT"
+            PrintName = "DACT",
+            Override_TriggerDelay = true,
         },
         {
             Mode = 1,
