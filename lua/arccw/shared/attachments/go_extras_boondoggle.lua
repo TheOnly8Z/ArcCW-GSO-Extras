@@ -35,9 +35,3 @@ att.LHIK_Priority = 0.5
 att.Model = "models/weapons/arccw_go/atts/extras_boondoggle 1.mdl"
 
 att.ModelOffset = Vector(-2, -0.3, 0.5)
-
-att.Hook_Compatible = function(wep)
-    if wep:CheckFlags({"go_mp5_barrel_sd","go_mp5_barrel_short"}) then
-        return false
-    end
-end
