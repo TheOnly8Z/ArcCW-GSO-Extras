@@ -727,6 +727,8 @@ local function GSOE()
 
     local awesomesauce = {
         ["arccw_go_mp5"]        = { Slot = 2, Type = "go_extras_boondoggle" },
+        ["arccw_go_ace"]        = { Slot = 2, Type = "go_extras_boondoggle3" },
+        ["arccw_go_sg556"]        = { Slot = 2, Type = "go_extras_boondoggle" },
         ["arccw_go_awp"]        = { Slot = 2, Type = "go_extras_boondoggle" },
         ["arccw_go_scar"]        = { Slot = 2, Type = "go_extras_boondoggle2" },
         ["arccw_go_ump"]        = { Slot = 2, Type = "go_extras_boondoggle" },
@@ -750,6 +752,12 @@ local function GSOE()
     local fal = weapons.GetStored("arccw_go_fnfal")
     fal.Attachments[2].EmptyFallback = "go_extras_boondoggle2"
     fal.Attachments[2].Installed = "go_extras_boondoggle2"
+	
+    local sg556 = weapons.GetStored("arccw_go_sg556")
+    sg556.Animations["reload"].LHIKEaseIn = 0.6
+    sg556.Animations["reload"].LHIKIn = 0.4
+    sg556.Animations["reload_empty"].LHIKEaseIn = 0.6
+    sg556.Animations["reload_empty"].LHIKIn = 0.4
 
     local bizon = weapons.GetStored("arccw_go_bizon")
     function bizon:Hook_TranslateAnimation(anim) end
@@ -1226,22 +1234,14 @@ local function PostLoadAtt()
     ArcCW.AttachmentTable["go_p250_mag_21"].Mult_ReloadTime = 1.2
 
     -- Scale up the horribly small sights
-    ArcCW.AttachmentTable["go_optic_compm4"].ModelScale = Vector(1.33, 1.33, 1.33)
-    ArcCW.AttachmentTable["go_optic_compm4"].AdditionalSights[1].Pos = Vector(-0.018321, 2, -1.34972)*1.33
+    ArcCW.AttachmentTable["go_optic_compm4"].ModelScale = Vector(1.4, 1.4, 1.4)
+    ArcCW.AttachmentTable["go_optic_compm4"].AdditionalSights[1].Pos = Vector(-0.018321, 2, -1.34972)*1.4
 
     ArcCW.AttachmentTable["go_optic_eotech"].ModelScale = Vector(1.25, 1.25, 1.25)*1.1
     ArcCW.AttachmentTable["go_optic_eotech"].AdditionalSights[1].Pos = ArcCW.AttachmentTable["go_optic_eotech"].AdditionalSights[1].Pos*1.1
     
     ArcCW.AttachmentTable["go_optic_barska"].ModelScale = Vector(1.25, 1.25, 1.25)
     ArcCW.AttachmentTable["go_optic_barska"].AdditionalSights[1].Pos = ArcCW.AttachmentTable["go_optic_barska"].AdditionalSights[1].Pos*1.25
-
-    ArcCW.AttachmentTable["go_optic_hamr"].AdditionalSights[1].Magnification = 1.3
-    ArcCW.AttachmentTable["go_optic_hamr"].AdditionalSights[1].ScopeMagnification = 4.615
-    ArcCW.AttachmentTable["go_optic_hamr"].AdditionalSights[1].Pos = Vector(0, 8, -1.56325)
-    ArcCW.AttachmentTable["go_optic_hamr"].AdditionalSights[1].HolosightData.HolosightSize = 7
-
-    ArcCW.AttachmentTable["go_optic_acog"].HolosightSize = 7
-    ArcCW.AttachmentTable["go_optic_hunter"].HolosightSize = 15
 
     -- Flashlight
     ArcCW.AttachmentTable["go_flashlight"].FlashlightBrightness = 1
