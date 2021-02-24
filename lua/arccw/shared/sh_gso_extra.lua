@@ -577,7 +577,7 @@ local function GSOE()
     r8.ViewModel = "models/weapons/arccw_go/v_pist_r8_extras.mdl"
     r8.WorldModel = "models/weapons/arccw_go/v_pist_r8_extras.mdl"
     r8.Delay = 60 / 180
-    r8.TriggerDelay = true
+    --r8.TriggerDelay = true
     r8.Hook_TranslateAnimation = function(wep, anim)
         if (anim == "fire" or anim == "fire_iron")
                 and wep:GetCurrentFiremode().Override_TriggerDelay == false then
@@ -587,7 +587,8 @@ local function GSOE()
     r8.Firemodes = {
         {
             Mode = 1,
-            PrintName = "DACT"
+            PrintName = "DACT",
+            Override_TriggerDelay = true,
         },
         {
             Mode = 1,
@@ -736,28 +737,10 @@ local function GSOE()
     }
     for i, v in pairs(awesomesauce) do
         local here = weapons.GetStored(i)
+        if not here then continue end
         here.Attachments[awesomesauce[i].Slot].EmptyFallback = awesomesauce[i].Type
         here.Attachments[awesomesauce[i].Slot].Installed = awesomesauce[i].Type
     end
-
-    local mp5 = weapons.GetStored("arccw_go_mp5")
-    mp5.Attachments[2].EmptyFallback = "go_extras_boondoggle"
-    mp5.Attachments[2].Installed = "go_extras_boondoggle"
-    function mp5:Hook_TranslateAnimation(anim) end
-
-    local ump = weapons.GetStored("arccw_go_ump")
-    ump.Attachments[2].EmptyFallback = "go_extras_boondoggle"
-    ump.Attachments[2].Installed = "go_extras_boondoggle"
-
-    local fal = weapons.GetStored("arccw_go_fnfal")
-    fal.Attachments[2].EmptyFallback = "go_extras_boondoggle2"
-    fal.Attachments[2].Installed = "go_extras_boondoggle2"
-	
-    local sg556 = weapons.GetStored("arccw_go_sg556")
-    sg556.Animations["reload"].LHIKEaseIn = 0.6
-    sg556.Animations["reload"].LHIKIn = 0.4
-    sg556.Animations["reload_empty"].LHIKEaseIn = 0.6
-    sg556.Animations["reload_empty"].LHIKIn = 0.4
 
     local bizon = weapons.GetStored("arccw_go_bizon")
     function bizon:Hook_TranslateAnimation(anim) end

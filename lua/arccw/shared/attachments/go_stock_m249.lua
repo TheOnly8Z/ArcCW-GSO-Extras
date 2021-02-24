@@ -21,3 +21,5 @@ att.Mult_SightTime = 1.5
 att.Hook_ModifyRecoil = function(wep, tbl)
     tbl.Recoil = tbl.Recoil * (0.7 + ( 0.3 * ( 1 - wep:GetSightDelta() ) ))
 end
+
+att.Ignore = true
