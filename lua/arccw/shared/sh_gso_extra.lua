@@ -742,6 +742,9 @@ local function GSOE()
         here.Attachments[awesomesauce[i].Slot].Installed = awesomesauce[i].Type
     end
 
+    local mp5 = weapons.GetStored("arccw_go_mp5")
+    function mp5:Hook_TranslateAnimation(anim) end
+
     local bizon = weapons.GetStored("arccw_go_bizon")
     function bizon:Hook_TranslateAnimation(anim) end
 
