@@ -10,8 +10,9 @@ att.Slot = "go_stock"
 
 att.Model = "models/weapons/arccw_go/atts/stock_bizon.mdl"
 
-att.ActivateElements = {"go_stock_none"}
-att.ModelOffset = Vector(0, 0, 0)
+att.ActivateElements = {"buftube"}
+--att.ActivateElements = {"go_stock_none"}
+att.ModelOffset = Vector(-1, 0, 0)
 
 att.Mult_SpeedMult = 1.15
 att.Mult_SightedSpeedMult = 1.15
