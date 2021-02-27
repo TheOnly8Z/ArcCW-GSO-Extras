@@ -830,7 +830,6 @@ end
 hook.Add("PreGamemodeLoaded", "ArcCW_GSOE", function()
     GSOE()
 end)
-GSOE()
 
 local function PostLoadAtt()
     if attBal:GetBool() then
