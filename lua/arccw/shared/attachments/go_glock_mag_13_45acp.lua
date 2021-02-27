@@ -5,7 +5,7 @@ att.Desc_Pros = {
 }
 att.Desc_Cons = {
     "con.magcap",
-    "con.nog18"
+    "con.gsoe.nog18"
 }
 att.SortOrder = 4.5
 att.AutoStats = true

@@ -2,7 +2,7 @@ att.PrintName = "Hair Trigger"
 att.Icon = Material("entities/acwatt_go_perk_hairtrigger.png", "smooth mips")
 att.Description = "Lightweight and fine-tuned trigger allows for a much shorter trigger delay."
 att.Desc_Pros = {
-    "pro.hairtrigger"
+    "pro.gsoe.hairtrigger"
 }
 att.Desc_Cons = {
 }

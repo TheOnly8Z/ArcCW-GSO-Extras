@@ -5,7 +5,7 @@ att.Description = "Light folding grip. Improves recoil control when aiming."
 att.SortOrder = 1
 
 att.Desc_Pros = {
-    "pro.foregrip_combat",
+    "pro.gsoe.foregrip_combat",
 }
 att.Desc_Cons = {
 }

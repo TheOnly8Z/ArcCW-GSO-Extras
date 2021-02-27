@@ -835,6 +835,7 @@ local function PostLoadAtt()
     if attBal:GetBool() then
 
         local bal_nostock = {
+            Desc_Cons = {"con.gsoe.unstable"},
             Mult_DrawTime = 0.5,
             Mult_HolsterTime = 0.5
         }
@@ -869,6 +870,14 @@ local function PostLoadAtt()
             Mult_ReloadTime = 0.85,
         }
 
+        local bal_compactpist = {
+            Desc_Cons = {"con.magcap"},
+            Mult_SightTime = 0.7,
+            Mult_ReloadTime = 0.85,
+            Mult_Recoil = 1.15,
+            Mult_RPM = 1.2,
+        }
+
         local baltable = {
             -- Folded/removed stocks add draw/holster speed
             ["go_stock_none"] = bal_nostock,
@@ -883,14 +892,14 @@ local function PostLoadAtt()
 
             -- Pistol stock slows drawing but reduces more recoil
             ["go_stock_pistol_bt"] = {
-                Desc_Pros = {"pro.stable"},
+                Desc_Pros = {"pro.gsoe.stable"},
                 Mult_Recoil = 0.85,
                 Mult_MoveDispersion = 0.7,
                 Mult_DrawTime = 1.5,
                 Mult_HolsterTime = 1.5,
             },
             ["go_stock_pistol_wire"] = {
-                Desc_Pros = {"pro.stable"},
+                Desc_Pros = {"pro.gsoe.stable"},
                 Mult_DrawTime = 1.25,
                 Mult_HolsterTime = 1.25,
             },
@@ -927,6 +936,34 @@ local function PostLoadAtt()
             ["go_ak_barrel_short"] = bal_sb,
             ["go_ace_barrel_short"] = bal_sb,
             ["go_870_barrel_short"] = bal_sb,
+
+            ["go_glock_slide_auto"] = {
+                Mult_SightTime = "nil",
+                Mult_DrawTime = "nil",
+                Mult_HolsterTime = "nil",
+                Mult_Range = "nil",
+                Mult_HipDispersion = 2,
+            },
+            ["go_cz75_slide_auto"] = {
+                Mult_RPM = 1.6,
+                Mult_HipDispersion = 2,
+            },
+            ["go_m9_slide_auto"] = {
+                Description = "Beretta 93R slide with burst fire capability and an internal compensator.",
+                Desc_Pros = {"pro.gsoe.burst"},
+                Mult_HipDispersion = 1.5,
+                Mult_RPM = "nil",
+                Override_Firemodes = {
+                    {
+                        Mode = -3,
+                        Mult_RPM = 1.8,
+                        PostBurstDelay = 0.15,
+
+                    },
+                    { Mode = 1 },
+                    { Mode = 0 }
+                }
+            },
 
             -- SSQ is quieter but has a bigger range penalty
             ["go_supp_ssq"] = {
@@ -987,6 +1024,11 @@ local function PostLoadAtt()
                 Description = "G3 sniper-style stock. Improves recoil, but is slower to manuver when aiming.",
             },
 
+            -- G3 5.56mm recoil
+            ["go_g3_mag_60_556"] = {Mult_Recoil = 0.4},
+            ["go_g3_mag_30_556"] = {Mult_Recoil = 0.4},
+            ["go_g3_mag_20_556"] = {Mult_Recoil = 0.4},
+
             -- Improved shotgun pistol stocks
             ["go_nova_stock_pistol"] = {
                 Mult_SightedSpeedMult = 1.25,
@@ -1014,6 +1056,13 @@ local function PostLoadAtt()
                 Mult_RecoilSide = 0.5,
                 Mult_RPM = 1.2,
             },
+
+            -- Compact pistol
+            ["go_glock_slide_short"] = bal_compactpist,
+            ["go_p250_slide_short"] = bal_compactpist,
+
+            ["go_tec9_barrel_short"] = {Mult_RPM = 1.15},
+            ["go_tec9_barrel_long"] = {Mult_RPM = 0.9, Mult_SightTime = 1.25},
         }
 
         for i, t in pairs(baltable) do
@@ -1027,21 +1076,6 @@ local function PostLoadAtt()
                     ArcCW.AttachmentTable[i][k] = v
                 end
             end
-        end
-
-        -- G3 5.56mm recoil
-        ArcCW.AttachmentTable["go_g3_mag_60_556"].Mult_Recoil = 0.4
-        ArcCW.AttachmentTable["go_g3_mag_30_556"].Mult_Recoil = 0.4
-        ArcCW.AttachmentTable["go_g3_mag_20_556"].Mult_Recoil = 0.4
-
-        -- Compact pistol
-        local compact = {"go_glock_slide_short", "go_p250_slide_short"}
-        for _, i in pairs(compact) do
-            ArcCW.AttachmentTable[i].Desc_Cons = {"con.magcap"}
-            ArcCW.AttachmentTable[i].Mult_SightTime = 0.7
-            ArcCW.AttachmentTable[i].Mult_ReloadTime = 0.85
-            ArcCW.AttachmentTable[i].Mult_Recoil = 1.15
-            ArcCW.AttachmentTable[i].Mult_RPM = 1.2
         end
 
         -- Ammo
@@ -1076,6 +1110,7 @@ local function PostLoadAtt()
 
         ArcCW.AttachmentTable["go_perk_burst"].Mult_RPM = nil
         ArcCW.AttachmentTable["go_perk_burst"].Description = "Alters weapon fire group to support a rapid 3-round burst as well as semi-automatic fire."
+        ArcCW.AttachmentTable["go_perk_burst"].Desc_Pros = {"pro.gsoe.burst"}
         ArcCW.AttachmentTable["go_perk_burst"].Override_Firemodes = {
             {
                 Mode = -3,
@@ -1115,6 +1150,14 @@ local function PostLoadAtt()
 
         ArcCW.AttachmentTable["go_muzz_brake"].Mult_Recoil = 0.95
         --ArcCW.AttachmentTable["go_muzz_brake"].Mult_RecoilSide = 0.8
+
+        ArcCW.AttachmentTable["go_perk_headshot"].Description = "Increases headshot damage by 50%."
+        ArcCW.AttachmentTable["go_perk_headshot"].Desc_Pros = {"pro.gsoe.perk_headshot"}
+        ArcCW.AttachmentTable["go_perk_headshot"].Hook_BulletHit = function(wep, data)
+            if SERVER and data.tr.HitGroup == HITGROUP_HEAD then
+                data.damage = data.damage * 1.5
+            end
+        end
 
         print("Applied GSOE Attachment rebalance.")
     end
@@ -1225,13 +1268,13 @@ local function PostLoadAtt()
 
     -- Scale up the horribly small sights
     ArcCW.AttachmentTable["go_optic_compm4"].ModelScale = Vector(1.4, 1.4, 1.4)
-    ArcCW.AttachmentTable["go_optic_compm4"].AdditionalSights[1].Pos = Vector(-0.018321, 2, -1.34972)*1.4
+    ArcCW.AttachmentTable["go_optic_compm4"].AdditionalSights[1].Pos = Vector(-0.018321, 2, -1.34972) * 1.4
 
-    ArcCW.AttachmentTable["go_optic_eotech"].ModelScale = Vector(1.25, 1.25, 1.25)*1.1
-    ArcCW.AttachmentTable["go_optic_eotech"].AdditionalSights[1].Pos = ArcCW.AttachmentTable["go_optic_eotech"].AdditionalSights[1].Pos*1.1
-    
+    ArcCW.AttachmentTable["go_optic_eotech"].ModelScale = Vector(1.25, 1.25, 1.25) * 1.1
+    ArcCW.AttachmentTable["go_optic_eotech"].AdditionalSights[1].Pos = ArcCW.AttachmentTable["go_optic_eotech"].AdditionalSights[1].Pos * 1.1
+
     ArcCW.AttachmentTable["go_optic_barska"].ModelScale = Vector(1.25, 1.25, 1.25)
-    ArcCW.AttachmentTable["go_optic_barska"].AdditionalSights[1].Pos = ArcCW.AttachmentTable["go_optic_barska"].AdditionalSights[1].Pos*1.25
+    ArcCW.AttachmentTable["go_optic_barska"].AdditionalSights[1].Pos = ArcCW.AttachmentTable["go_optic_barska"].AdditionalSights[1].Pos * 1.25
 
     -- Flashlight
     ArcCW.AttachmentTable["go_flashlight"].FlashlightBrightness = 1

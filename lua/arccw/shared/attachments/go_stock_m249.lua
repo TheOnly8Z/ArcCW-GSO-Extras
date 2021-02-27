@@ -2,7 +2,7 @@ att.PrintName = "SAW Stock"
 att.Icon = Material("entities/acwatt_go_stock_m249.png", "mips smooth")
 att.Description = "Long and solid stock that can be held in the hip easily. Allows for controllable hipfiring, but is really heavy."
 att.Desc_Pros = {
-    "pro.stock_m249"
+    "pro.gsoe.stock_m249"
 }
 att.Desc_Cons = {
 }

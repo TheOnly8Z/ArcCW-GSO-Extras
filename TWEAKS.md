@@ -284,6 +284,31 @@ Lower brightness and longer far Z range.
 **Added:**
 - -5% Recoil
 
+### 120mm G18 Slide
+**Tweaked:**
+- Full Auto
+- +50% Fire rate
+- +100% Hip fire spread
+
+### 120mm CZ-A Slide
+**Tweaked:**
+- Full Auto
+- +60% Fire rate
+- -5% Recoil
+- +100% Hip fire spread
+
+### 210mm M93R Slide
+**Reworked:**
+- Burst fire capability (+50% firerate in burst)
+- -5% Recoil
+- +50% Hip fire spread
+
+### TEC-9 Slides
+**Added**:
+- (Long slide) -10% Fire rate
+- (Long slide) +25% Handling (down from +50%)
+- (Short slide) +15% Fire rate
+
 # Weapon Tweaks
 
 ## Pistols
