@@ -66,6 +66,7 @@ Alt throw has half velocity.
 - Cool Head (Overheating Weappons)
 - Air Time (Overheating Weapons)
 - Hair Trigger (Trigger Delay Weapons)
+- John Wick (u kill my dog)
 
 # Attachment Tweaks
 
@@ -283,6 +284,10 @@ Lower brightness and longer far Z range.
 ### Muzzle Brake
 **Added:**
 - -5% Recoil
+
+### Surgical Shot
+**Tweaked:**
+- +50% Headshot damage (down from +200%)
 
 ### 120mm G18 Slide
 **Tweaked:**
