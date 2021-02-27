@@ -751,67 +751,69 @@ local function GSOE()
     -- Dirty dirty overwrites
     local base = weapons.GetStored("arccw_base")
     base.DoLaser = function(self, world)
-        local toworld = world or false
+        world = world or false
 
-        --if not self:GetNWBool("laserenabled", true) then return end
+        if world then
+            cam.Start3D()
+        else
+            cam.Start3D(EyePos(), EyeAngles(), self.CurrentViewModelFOV)
+        end
 
         for slot, k in pairs(self.Attachments) do
             if not k.Installed then continue end
+
             local attach = ArcCW.AttachmentTable[k.Installed]
-            if not self:GetBuff_Stat("Laser", slot) then continue end
-            local color = self:GetBuff_Stat("LaserColor", slot) or attach.ColorOptionsTable[k.ColorOptionIndex or 1]
 
-            if self:GetOwner():IsPlayer() and laserColor:GetInt() > 0
-                    and self:GetOwner():GetInfoNum("arccw_gsoe_laser_enabled", 1) == 1
-                    and (k.Installed == "go_flashlight_combo" or string.find(k.Installed, "go_laser")) then
-                local mode = laserColor:GetInt() >= 2 and 0 or self:GetOwner():GetInfoNum("arccw_gsoe_laser_special", 0)
-                if mode == 0 or mode == 1 then
-                    local r, g, b
-                    if mode == 0 then
-                        r = math.Clamp(self:GetOwner():GetInfoNum("arccw_gsoe_laser_r", 255), 1, 255)
-                        g = math.Clamp(self:GetOwner():GetInfoNum("arccw_gsoe_laser_g", 0), 1, 255)
-                        b = math.Clamp(self:GetOwner():GetInfoNum("arccw_gsoe_laser_b", 0), 1, 255)
-                    else
-                        local plyclr = self:GetOwner():GetPlayerColor()
-                        r = plyclr.x * 255
-                        g = plyclr.y * 255
-                        b = plyclr.z * 255
+            if self:GetBuff_Stat("Laser", slot) then
+                local color = self:GetBuff_Stat("LaserColor", slot) or attach.ColorOptionsTable[k.ColorOptionIndex or 1]
+                if self:GetOwner():IsPlayer() and laserColor:GetInt() > 0
+                        and self:GetOwner():GetInfoNum("arccw_gsoe_laser_enabled", 1) == 1
+                        and (k.Installed == "go_flashlight_combo" or string.find(k.Installed, "go_laser")) then
+                    local mode = laserColor:GetInt() >= 2 and 0 or self:GetOwner():GetInfoNum("arccw_gsoe_laser_special", 0)
+                    if mode == 0 or mode == 1 then
+                        local r, g, b
+                        if mode == 0 then
+                            r = math.Clamp(self:GetOwner():GetInfoNum("arccw_gsoe_laser_r", 255), 1, 255)
+                            g = math.Clamp(self:GetOwner():GetInfoNum("arccw_gsoe_laser_g", 0), 1, 255)
+                            b = math.Clamp(self:GetOwner():GetInfoNum("arccw_gsoe_laser_b", 0), 1, 255)
+                        else
+                            local plyclr = self:GetOwner():GetPlayerColor()
+                            r = plyclr.x * 255
+                            g = plyclr.y * 255
+                            b = plyclr.z * 255
+                        end
+                        local sum = math.max(Vector(r, g, b):Length(), 1)
+                        if sum < 255 and laserColor:GetInt() < 3 then -- Anti cheese
+                            local add = (255 - sum)
+                            r = r + math.ceil((r / sum) * add)
+                            g = g + math.ceil((g / sum) * add)
+                            b = b + math.ceil((b / sum) * add)
+                        end
+                        color.r = r
+                        color.g = g
+                        color.b = b
+                    elseif mode == 2 then -- RAINBOWS
+                        color.r = 128 + 127 * math.Clamp(math.sin(1 * CurTime()), 0, 1)
+                        color.g = 128 + 127 * math.Clamp(math.sin(1 * (CurTime() + math.pi / 3 * 2)), 0, 1)
+                        color.b = 128 + 127 * math.Clamp(math.sin(1 * (CurTime() + math.pi / 3 * 4)), 0, 1)
                     end
-                    local sum = math.max(Vector(r, g, b):Length(), 1)
-                    if sum < 255 and laserColor:GetInt() < 3 then -- Anti cheese
-                        local add = (255 - sum)
-                        r = r + math.ceil((r / sum) * add)
-                        g = g + math.ceil((g / sum) * add)
-                        b = b + math.ceil((b / sum) * add)
-                    end
-                    color.r = r
-                    color.g = g
-                    color.b = b
-                elseif mode == 2 then -- RAINBOWS
-                    color.r = 128 + 127 * math.Clamp(math.sin(1 * CurTime()), 0, 1)
-                    color.g = 128 + 127 * math.Clamp(math.sin(1 * (CurTime() + math.pi / 3 * 2)), 0, 1)
-                    color.b = 128 + 127 * math.Clamp(math.sin(1 * (CurTime() + math.pi / 3 * 4)), 0, 1)
                 end
-            end
 
-            if toworld then
-                if not k.WElement then continue end
-                cam.Start3D()
+                if world then
+                    if not k.WElement then continue end
                     self:DrawLaser(attach, k.WElement.Model, color, true)
-                cam.End3D()
-            else
-                if not k.VElement then continue end
-                self:DrawLaser(attach, k.VElement.Model, color)
+                else
+                    if not k.VElement then continue end
+                    self:DrawLaser(attach, k.VElement.Model, color)
+                end
             end
         end
 
         if self.Lasers then
             if world then
-                cam.Start3D()
                 for _, k in pairs(self.Lasers) do
                     self:DrawLaser(k, self.WMModel or self, k.LaserColor, true)
                 end
-                cam.End3D()
             else
                 -- cam.Start3D(nil, nil, self.ViewmodelFOV)
                 for _, k in pairs(self.Lasers) do
@@ -820,12 +822,15 @@ local function GSOE()
                 -- cam.End3D()
             end
         end
+
+        cam.End3D()
     end
 
 end
 hook.Add("PreGamemodeLoaded", "ArcCW_GSOE", function()
     GSOE()
 end)
+GSOE()
 
 local function PostLoadAtt()
     if attBal:GetBool() then

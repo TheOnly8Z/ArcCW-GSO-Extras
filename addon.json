@@ -1,0 +1,19 @@
+{
+	"title" :	"[ArcCW] Gunsmith Offensive Extras",
+	"type"  :	"weapon",
+	"tags"  :	[],
+	"ignore":
+	[
+		".gitignore",
+		"_workfolder/*",
+		".git/*",
+		"*.md",
+		"*.cmd",
+		"*.ini",
+		"*.lnk",
+		"*.url",
+		"*.psd",
+		"ArcCW GSO Extra.jpg",
+		"ArcCW GSO Extra.png"
+	]
+}
