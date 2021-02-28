@@ -32,8 +32,9 @@ if CLIENT then
         }
 
         -- If value doesn't change in 5 seconds, update to server too
+        local delay = game.SinglePlayer() and 0 or laserUpdateDelay:GetFloat()
         if timer.Exists("ArcCW_GSOE_UpdateLaserColor") then timer.Remove("ArcCW_GSOE_UpdateLaserColor") end
-        timer.Create("ArcCW_GSOE_UpdateLaserColor", laserUpdateDelay:GetFloat(), 1, function()
+        timer.Create("ArcCW_GSOE_UpdateLaserColor", delay, 1, function()
             if enable == cur_enable and clr == cur_clr and special == cur_special then
                 net.Start("ArcCW_GSOE_LaserColor")
                     net.WriteBool(enable)
@@ -51,6 +52,11 @@ if CLIENT then
     cvars.AddChangeCallback("arccw_gsoe_laser_b", ReportNewColorToServer)
     cvars.AddChangeCallback("arccw_gsoe_laser_special", ReportNewColorToServer)
 
+    net.Receive("ArcCW_GSOE_LaserColor", function()
+        local ply = net.ReadEntity()
+        ply.ArcCW_GSOE_LaserColor = net.ReadTable()
+    end)
+
     hook.Add("InitPostEntity", "ArcCW_GSOE_LaserColor", function()
         enable = GetConVar("arccw_gsoe_laser_enabled"):GetBool()
         clr = Color(GetConVar("arccw_gsoe_laser_r"):GetInt(), GetConVar("arccw_gsoe_laser_g"):GetInt(), GetConVar("arccw_gsoe_laser_b"):GetInt())
@@ -63,18 +69,13 @@ if CLIENT then
             end
         net.SendToServer()
     end)
-
-    net.Receive("ArcCW_GSOE_LaserColor", function()
-        local ply = net.ReadEntity()
-        ply.ArcCW_GSOE_LaserColor = net.ReadTable()
-    end)
 elseif SERVER then
     util.AddNetworkString("ArcCW_GSOE_LaserColor")
 
     local nextReport = {}
     net.Receive("ArcCW_GSOE_LaserColor", function(len, ply)
         if (nextReport[ply] or 0) > CurTime() then return end
-        nextReport[ply] = CurTime() + laserUpdateDelay:GetFloat()
+        nextReport[ply] = CurTime() + (game.SinglePlayer() and 0 or laserUpdateDelay:GetFloat())
         ply.ArcCW_GSOE_LaserColor = ply.ArcCW_GSOE_LaserColor or {}
         ply.ArcCW_GSOE_LaserColor.enabled = net.ReadBool()
         if ply.ArcCW_GSOE_LaserColor.enabled then
