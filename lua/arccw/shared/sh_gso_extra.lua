@@ -1,6 +1,6 @@
 local attBal = CreateConVar("arccw_gsoe_attbal", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Custom tweaks to GSO attachments. See WS page for details.", 0, 1)
 local gunBal = CreateConVar("arccw_gsoe_gunbal", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Custom tweaks to GSO weapons. See WS page for details.", 0, 1)
-local originTweak = CreateConVar("arccw_gsoe_origintweak", 0, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Resets origin of GSO weapons, making them look more like how they are in CSGO.", 0, 1)
+local originTweak = CreateConVar("arccw_gsoe_origintweak", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Resets origin of GSO weapons, making them look more like how they are in CSGO.", 0, 1)
 local catMode = CreateConVar("arccw_gsoe_catmode", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Change GSO weapon categories.", 0, 3)
 local laserColor = CreateConVar("arccw_gsoe_lasermode", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Make 1mW, 3mW and 5mW lasers use custom colors defined by the player.", 0, 3)
 local addSway = CreateConVar("arccw_gsoe_addsway", 0, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Dynamically insert aim sway to every GSO gun and attachment. Set to 2 to apply to ALL guns and attachments.", 0, 2)
@@ -87,6 +87,20 @@ elseif SERVER then
         net.Broadcast()
     end)
 end
+
+local knifeBal = {
+    Category = "Gear",
+    TTTWeight = 0,
+    Backstab = true,
+    Animations = {
+        ["draw"] = { Source = "draw", Time = 1},
+        ["idle"] = false,
+        ["bash"] = {Source = {"light_hit1", "light_hit2"}, Time = 1},
+        ["bash_backstab"] = {Source = "light_backstab", Time = 1},
+        ["bash2"] = {Source = "heavy_hit1", Time = 1.75},
+        ["bash2_backstab"] = {Source = "heavy_backstab", Time = 1.75}
+    },
+}
 
 local balanceList = {
     -- SMG
@@ -442,19 +456,7 @@ local balanceList = {
         Category = "Gear",
         TTTWeight = 0,
     },
-    ["arccw_go_melee_knife"] = {
-        Category = "Gear",
-        TTTWeight = 0,
-        Backstab = true,
-        Animations = {
-            ["draw"] = { Source = "draw", Time = 1},
-            ["idle"] = false,
-            ["bash"] = {Source = {"light_hit1", "light_hit2"}, Time = 1},
-            ["bash_backstab"] = {Source = "light_backstab", Time = 1},
-            ["bash2"] = {Source = "heavy_hit1", Time = 1.75},
-            ["bash2_backstab"] = {Source = "heavy_backstab", Time = 1.75}
-        },
-    },
+    ["arccw_go_melee_knife"] = knifeBal,
     ["arccw_go_nade_knife"] = {
         Category = "Gear",
         TTTWeight = 0,
@@ -500,56 +502,59 @@ local balanceList = {
         TTTWeight = 50,
         TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_mac10"},
     },
+    -- Additional Knives
+    ["arccw_go_knife_bowie"] = knifeBal,
+    ["arccw_go_knife_butterfly"] = knifeBal,
+    ["arccw_go_knife_t"] = knifeBal,
+    ["arccw_go_knife_karambit"] = knifeBal,
+    ["arccw_go_knife_m9bayonet"] = knifeBal,
+    ["arccw_go_knife_ct"] = knifeBal,
+    ["arccw_go_knife_stiletto"] = knifeBal,
 }
 
 local function GSOE()
-    if gunBal:GetBool() then
-        local wpnList = list.GetForEdit("Weapon")
-        for class, t in pairs(balanceList) do
-            local stored = weapons.GetStored(class)
-            if not stored then continue end
-            for i, v in pairs(t) do
-                if i == "AttachmentElements" then
-                    for name, ae in pairs(v) do
-                        stored.AttachmentElements[name] = ae
-                    end
-                elseif i ~= "Category" and i ~= "TTT_Stats" then
-                    stored[i] = v
+
+    local wpnList = list.GetForEdit("Weapon")
+    for class, t in pairs(balanceList) do
+        local stored = weapons.GetStored(class)
+        if not stored then continue end
+        for i, v in pairs(t) do
+            if i == "AttachmentElements" then
+                for name, ae in pairs(v) do
+                    stored.AttachmentElements[name] = ae
+                end
+            elseif gunBal:GetBool() and i ~= "Category" and i ~= "TTT_Stats" then
+                stored[i] = v
+            end
+        end
+        if gunBal:GetBool() and engine.ActiveGamemode() == "terrortown" then
+            if t.TTT_Stats then
+                for k, v in pairs(t.TTT_Stats) do
+                    stored[k] = v
+                end
+            else
+                -- TTT is very close quarters, all guns get a range nerf by default
+                if stored.Damage and stored.Range and stored.Damage > stored.DamageMin then
+                    stored.Range = math.ceil(stored.Range / 2)
                 end
             end
-            if engine.ActiveGamemode() == "terrortown" then
-                if t.TTT_Stats then
-                    for k, v in pairs(t.TTT_Stats) do
-                        stored[k] = v
-                    end
+        end
+
+        if originTweak:GetBool() then
+            stored.ActivePos = Vector(0, 0, 0)
+        end
+
+        if wpnList[class] then
+            if catMode:GetInt() == 1 then
+                wpnList[class].Category = "ArcCW - GSO (" .. t.Category .. ")"
+            elseif catMode:GetInt() == 2 then
+                if t.Category == "Gear" then
+                    wpnList[class].Category = "ArcCW - Other"
                 else
-                    -- TTT is very close quarters, all guns get a range nerf by default
-                    if stored.Damage and stored.Range and stored.Damage > stored.DamageMin then
-                        stored.Range = math.ceil(stored.Range / 2)
-                    end
-                end
-            end
-            --[[]
-            if stored.AttachmentElements and stored.AttachmentElements.go_stock then
-                stored.AttachmentElements.buftube = table.Copy(stored.AttachmentElements.go_stock)
-                stored.AttachmentElements.go_stock = nil
-            end
-            ]]
-            if originTweak:GetBool() then
-                stored.ActivePos = Vector(0, 0, 0)
-            end
-            if wpnList[class] then
-                if catMode:GetInt() == 1 then
-                    wpnList[class].Category = "ArcCW - GSO (" .. t.Category .. ")"
-                elseif catMode:GetInt() == 2 then
-                    if t.Category == "Gear" then
-                        wpnList[class].Category = "ArcCW - Other"
-                    else
-                        wpnList[class].Category = "ArcCW - GSO"
-                    end
-                elseif catMode:GetInt() == 3 then
                     wpnList[class].Category = "ArcCW - GSO"
                 end
+            elseif catMode:GetInt() == 3 then
+                wpnList[class].Category = "ArcCW - GSO"
             end
         end
     end
@@ -647,7 +652,7 @@ local function GSOE()
         {
             Mode = 1,
             PrintName = "DACT",
-            Override_TriggerDelay = true,
+            --Override_TriggerDelay = true,
         },
         {
             Mode = 1,
@@ -888,7 +893,6 @@ end
 hook.Add("PreGamemodeLoaded", "ArcCW_GSOE", function()
     GSOE()
 end)
-GSOE()
 
 local function PostLoadAtt()
     if attBal:GetBool() then
@@ -1164,6 +1168,7 @@ local function PostLoadAtt()
                 return {Recoil = 0.5}
             end
         end
+
         ArcCW.AttachmentTable["go_homemade_auto"].PrintName = "Automatic Internals"
         ArcCW.AttachmentTable["go_homemade_auto"].Description = "Switch in an automatic receiver, allowing the usage of semi/auto firemodes."
         ArcCW.AttachmentTable["go_homemade_auto"].Override_Firemodes = {{Mode = 2}, {Mode = 1}, {Mode = 0}}
@@ -1174,9 +1179,6 @@ local function PostLoadAtt()
         ArcCW.AttachmentTable["go_perk_burst"].Mult_RPM = nil
         ArcCW.AttachmentTable["go_perk_burst"].Description = "Alters weapon fire group to support a rapid 3-round burst as well as semi-automatic fire."
         ArcCW.AttachmentTable["go_perk_burst"].Desc_Pros = {"pro.gsoe.burst"}
-        ArcCW.AttachmentTable["go_perk_burst"].Hook_Compatible = function(wep)
-            if wep:GetIsShotgun() or wep.ManualAction or wep.TriggerDelay or wep:GetBuff_Override("Override_TriggerDelay") then return false end
-        end
         ArcCW.AttachmentTable["go_perk_burst"].Override_Firemodes = {
             {
                 Mode = -3,
@@ -1189,6 +1191,9 @@ local function PostLoadAtt()
             { Mode = 0 }
         }
         ArcCW.AttachmentTable["go_perk_burst"].Override_Firemodes_Priority = 100
+        ArcCW.AttachmentTable["go_perk_burst"].Hook_Compatible = function(wep)
+            if wep:GetIsShotgun() or wep.ManualAction or wep.TriggerDelay or wep:GetBuff_Override("Override_TriggerDelay") then return false end
+        end
 
         ArcCW.AttachmentTable["go_ammo_sg_slug"].Override_Penetration = 9
         ArcCW.AttachmentTable["go_ammo_sg_slug"].Desc_Pros = {"pro.pen.9"}
