@@ -28,5 +28,5 @@ att.Override_Firemodes = {
 }
 
 att.Hook_Compatible = function(wep)
-    if wep:GetIsShotgun() or wep.ManualAction then return false end
+    if wep:GetIsShotgun() or wep.ManualAction or wep.TriggerDelay or wep:GetBuff_Override("Override_TriggerDelay") then return false end
 end

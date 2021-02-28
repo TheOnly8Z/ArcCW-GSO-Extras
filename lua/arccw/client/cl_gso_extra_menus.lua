@@ -24,6 +24,7 @@ local GSOEPanel_CL = {
     { type = "h", text = "#arccw.clientcfg"},
     { type = "b", text = "#arccw.cvar.gsoe_laser_enabled", var = "arccw_gsoe_laser_enabled"},
     { type = "m", text = "#arccw.cvar.gsoe_laser", r = "arccw_gsoe_laser_r", g = "arccw_gsoe_laser_g", b = "arccw_gsoe_laser_b"},
+    { type = "h", text = "#arccw.cvar.gsoe_laser.desc" },
 }
 
 hook.Add("PopulateToolMenu", "ArcCW_GSOE_Options", function()

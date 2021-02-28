@@ -30,3 +30,4 @@ L["arccw.cvar.gsoe_addsway.desc"]          = "Dynamically insert aim sway to GSO
 -- Client
 L["arccw.cvar.gsoe_laser_enabled"]         = "Custom laser colors"
 L["arccw.cvar.gsoe_laser"]                 = "Laser Color"
+L["arccw.cvar.gsoe_laser.desc"]            = "To prevent server lag, laser color will take a few seconds to apply."

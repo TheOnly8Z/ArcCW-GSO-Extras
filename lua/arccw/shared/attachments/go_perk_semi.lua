@@ -19,17 +19,7 @@ att.Override_Firemodes = {
 }
 
 att.Hook_Compatible = function(wep)
-    --[[]
-    -- Search for any non-semi firemodes. If there are none, this isn't applicable
-    for i, v in pairs(wep.Firemodes) do
-        if !v then continue end
-        if v.Mode and v.Mode != 1 and v.Mode != 0 then
-            return
-        end
-    end
-    return false
-    ]]
-    if wep:GetIsShotgun() or wep.ManualAction then return false end
+    if wep:GetIsShotgun() or wep.ManualAction or wep.TriggerDelay or wep:GetBuff_Override("Override_TriggerDelay") then return false end
 end
 
 att.Mult_AccuracyMOA = 0.6

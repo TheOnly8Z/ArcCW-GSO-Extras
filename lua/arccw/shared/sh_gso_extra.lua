@@ -4,12 +4,88 @@ local originTweak = CreateConVar("arccw_gsoe_origintweak", 0, FCVAR_ARCHIVE + FC
 local catMode = CreateConVar("arccw_gsoe_catmode", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Change GSO weapon categories.", 0, 3)
 local laserColor = CreateConVar("arccw_gsoe_lasermode", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Make 1mW, 3mW and 5mW lasers use custom colors defined by the player.", 0, 3)
 local addSway = CreateConVar("arccw_gsoe_addsway", 0, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Dynamically insert aim sway to every GSO gun and attachment. Set to 2 to apply to ALL guns and attachments.", 0, 2)
+local laserUpdateDelay = CreateConVar("arccw_gsoe_laser_updatedelay", 3, FCVAR_ARCHIVE + FCVAR_REPLICATED, "How long must a client wait before informing server of their laser color. Low values may increase server load.", 0)
+
 if CLIENT then
     CreateClientConVar("arccw_gsoe_laser_enabled", "1", true, true, "", 0, 1)
     CreateClientConVar("arccw_gsoe_laser_r", "255", true, true, "", 0, 255)
     CreateClientConVar("arccw_gsoe_laser_g", "0", true, true, "", 0, 255)
     CreateClientConVar("arccw_gsoe_laser_b", "0", true, true, "", 0, 255)
     CreateClientConVar("arccw_gsoe_laser_special", "0", true, true, "", 0, 2)
+
+    local enable, clr, special
+    local function ReportNewColorToServer(convar, oldValue, newValue)
+
+        local cur_enable = GetConVar("arccw_gsoe_laser_enabled"):GetBool()
+        local cur_clr = Color(GetConVar("arccw_gsoe_laser_r"):GetInt(), GetConVar("arccw_gsoe_laser_g"):GetInt(), GetConVar("arccw_gsoe_laser_b"):GetInt())
+        local cur_special = GetConVar("arccw_gsoe_laser_special"):GetInt()
+
+        enable = cur_enable
+        clr = cur_clr
+        special = cur_special
+
+        -- Immediately update ourselves on client
+        LocalPlayer().ArcCW_GSOE_LaserColor = {
+            enabled = enabled,
+            color = clr,
+            special = special,
+        }
+
+        -- If value doesn't change in 5 seconds, update to server too
+        if timer.Exists("ArcCW_GSOE_UpdateLaserColor") then timer.Remove("ArcCW_GSOE_UpdateLaserColor") end
+        timer.Create("ArcCW_GSOE_UpdateLaserColor", laserUpdateDelay:GetFloat(), 1, function()
+            if enable == cur_enable and clr == cur_clr and special == cur_special then
+                net.Start("ArcCW_GSOE_LaserColor")
+                    net.WriteBool(enable)
+                    if enable then
+                        net.WriteColor(clr)
+                        net.WriteUInt(special, 2)
+                    end
+                net.SendToServer()
+            end
+        end)
+    end
+    cvars.AddChangeCallback("arccw_gsoe_laser_enabled", ReportNewColorToServer)
+    cvars.AddChangeCallback("arccw_gsoe_laser_r", ReportNewColorToServer)
+    cvars.AddChangeCallback("arccw_gsoe_laser_g", ReportNewColorToServer)
+    cvars.AddChangeCallback("arccw_gsoe_laser_b", ReportNewColorToServer)
+    cvars.AddChangeCallback("arccw_gsoe_laser_special", ReportNewColorToServer)
+
+    hook.Add("InitPostEntity", "ArcCW_GSOE_LaserColor", function()
+        enable = GetConVar("arccw_gsoe_laser_enabled"):GetBool()
+        clr = Color(GetConVar("arccw_gsoe_laser_r"):GetInt(), GetConVar("arccw_gsoe_laser_g"):GetInt(), GetConVar("arccw_gsoe_laser_b"):GetInt())
+        special = GetConVar("arccw_gsoe_laser_special"):GetInt()
+        net.Start("ArcCW_GSOE_LaserColor")
+            net.WriteBool(enable)
+            if enable then
+                net.WriteColor(clr)
+                net.WriteUInt(special, 2)
+            end
+        net.SendToServer()
+    end)
+
+    net.Receive("ArcCW_GSOE_LaserColor", function()
+        local ply = net.ReadEntity()
+        ply.ArcCW_GSOE_LaserColor = net.ReadTable()
+    end)
+elseif SERVER then
+    util.AddNetworkString("ArcCW_GSOE_LaserColor")
+
+    local nextReport = {}
+    net.Receive("ArcCW_GSOE_LaserColor", function(len, ply)
+        if (nextReport[ply] or 0) > CurTime() then return end
+        nextReport[ply] = CurTime() + laserUpdateDelay:GetFloat()
+        ply.ArcCW_GSOE_LaserColor = ply.ArcCW_GSOE_LaserColor or {}
+        ply.ArcCW_GSOE_LaserColor.enabled = net.ReadBool()
+        if ply.ArcCW_GSOE_LaserColor.enabled then
+            ply.ArcCW_GSOE_LaserColor.color = net.ReadColor()
+            ply.ArcCW_GSOE_LaserColor.special = net.ReadUInt(2)
+        end
+        net.Start("ArcCW_GSOE_LaserColor")
+            net.WriteEntity(ply)
+            net.WriteTable(ply.ArcCW_GSOE_LaserColor)
+        net.Broadcast()
+    end)
 end
 
 local balanceList = {
@@ -20,23 +96,6 @@ local balanceList = {
         Category = "SMG",
         TTTWeight = 200,
         TTTWeaponType = "weapon_ttt_m16",
-        --[[]
-        AttachmentElements = {
-            ["go_stock_none"] = {
-                VMBodygroups = {[1] = {bg = 2, ind = 5}},
-                VMElements = {
-                    {
-                        Model = "models/weapons/arccw_go/atts/stock_buftube.mdl",
-                        Bone = "v_weapon.mac10_Parent",
-                        Offset = {
-                            pos = Vector(0, -2.75, -3.75),
-                            ang = Angle(90, 0, -90),
-                        },
-                    }
-                },
-            }
-        }
-        ]]
     },
     ["arccw_go_mp5"] = {
         Damage = 24,
@@ -577,7 +636,7 @@ local function GSOE()
     r8.ViewModel = "models/weapons/arccw_go/v_pist_r8_extras.mdl"
     r8.WorldModel = "models/weapons/arccw_go/v_pist_r8_extras.mdl"
     r8.Delay = 60 / 180
-    --r8.TriggerDelay = true
+    r8.TriggerDelay = true
     r8.Hook_TranslateAnimation = function(wep, anim)
         if (anim == "fire" or anim == "fire_iron")
                 and wep:GetCurrentFiremode().Override_TriggerDelay == false then
@@ -658,10 +717,8 @@ local function GSOE()
     usp.Attachments[4].Slot = {"muzzle", "go_muzzle_usp"}
     usp.AttachmentElements["9mm"] = {
         Override_Trivia_Calibre = "9x19mm Parabellum"
-        -- NameChange = "USP-9"
     }
     usp.AttachmentElements["go_usp_muzzle_match"] = {
-        -- NameChange = "USP Match",
         VMBodygroups = {
             {ind = 3, bg = 1}
         }
@@ -766,17 +823,18 @@ local function GSOE()
 
             if self:GetBuff_Stat("Laser", slot) then
                 local color = self:GetBuff_Stat("LaserColor", slot) or attach.ColorOptionsTable[k.ColorOptionIndex or 1]
-                if self:GetOwner():IsPlayer() and laserColor:GetInt() > 0
-                        and self:GetOwner():GetInfoNum("arccw_gsoe_laser_enabled", 1) == 1
+                local lasertbl = self:GetOwner().ArcCW_GSOE_LaserColor
+                if self:GetOwner():IsPlayer() and lasertbl and lasertbl.enabled and laserColor:GetInt() > 0
                         and (k.Installed == "go_flashlight_combo" or string.find(k.Installed, "go_laser")) then
-                    local mode = laserColor:GetInt() >= 2 and 0 or self:GetOwner():GetInfoNum("arccw_gsoe_laser_special", 0)
+                    local mode = laserColor:GetInt() >= 2 and 0 or lasertbl.special
                     if mode == 0 or mode == 1 then
                         local r, g, b
                         if mode == 0 then
-                            r = math.Clamp(self:GetOwner():GetInfoNum("arccw_gsoe_laser_r", 255), 1, 255)
-                            g = math.Clamp(self:GetOwner():GetInfoNum("arccw_gsoe_laser_g", 0), 1, 255)
-                            b = math.Clamp(self:GetOwner():GetInfoNum("arccw_gsoe_laser_b", 0), 1, 255)
-                        else
+                            local clr = lasertbl.color
+                            r = clr.r
+                            g = clr.g
+                            b = clr.b
+                        elseif mode == 1 then
                             local plyclr = self:GetOwner():GetPlayerColor()
                             r = plyclr.x * 255
                             g = plyclr.y * 255
@@ -830,6 +888,7 @@ end
 hook.Add("PreGamemodeLoaded", "ArcCW_GSOE", function()
     GSOE()
 end)
+GSOE()
 
 local function PostLoadAtt()
     if attBal:GetBool() then
@@ -1063,6 +1122,19 @@ local function PostLoadAtt()
 
             ["go_tec9_barrel_short"] = {Mult_RPM = 1.15},
             ["go_tec9_barrel_long"] = {Mult_RPM = 0.9, Mult_SightTime = 1.25},
+
+            ["go_ammo_sg_scatter"] = {Mult_Recoil = 0.7, Mult_AccuracyMOA = 1.5},
+            ["go_ammo_sg_magnum"] = {Mult_Recoil = 1.5, Mult_AccuracyMOA = 1.5},
+            ["go_ammo_tmj"] = {Mult_DamageMin = 1.3},
+            ["go_ammo_match"] = {
+                Mult_Damage = 0.95,
+                Mult_DamageMin = 0.95,
+                Mult_Recoil = "nil",
+                Mult_AccuracyMOA = 0.5,
+                Mult_Range = 1.25,
+                Mult_HipDispersion = "nil",
+                Description = "Precision-tooled rounds with carefully measured powder improves weapon accuracy and range, but deals slightly less damage.",
+            },
         }
 
         for i, t in pairs(baltable) do
@@ -1078,18 +1150,6 @@ local function PostLoadAtt()
             end
         end
 
-        -- Ammo
-        ArcCW.AttachmentTable["go_ammo_sg_scatter"].Mult_Recoil = 0.7
-        ArcCW.AttachmentTable["go_ammo_sg_magnum"].Mult_Recoil = 1.5
-        ArcCW.AttachmentTable["go_ammo_sg_magnum"].Mult_AccuracyMOA = 1.5
-        ArcCW.AttachmentTable["go_ammo_tmj"].Mult_DamageMin = 1.3
-        ArcCW.AttachmentTable["go_ammo_match"].Mult_Damage = 0.95
-        ArcCW.AttachmentTable["go_ammo_match"].Mult_DamageMin = 0.95
-        ArcCW.AttachmentTable["go_ammo_match"].Mult_Recoil = nil
-        ArcCW.AttachmentTable["go_ammo_match"].Mult_AccuracyMOA = 0.5
-        ArcCW.AttachmentTable["go_ammo_match"].Mult_Range = 1.25
-        ArcCW.AttachmentTable["go_ammo_match"].Mult_HipDispersion = nil
-        ArcCW.AttachmentTable["go_ammo_match"].Description = "Precision-tooled rounds with carefully measured powder improves weapon accuracy and range, but deals slightly less damage."
 
         -- G3 Stock
         ArcCW.AttachmentTable["go_g3_stock_collapsible"].Description = "Retractable and lightweight stock for the G3, improving sight time and moving spread at the cost of recoil."
@@ -1107,10 +1167,16 @@ local function PostLoadAtt()
         ArcCW.AttachmentTable["go_homemade_auto"].PrintName = "Automatic Internals"
         ArcCW.AttachmentTable["go_homemade_auto"].Description = "Switch in an automatic receiver, allowing the usage of semi/auto firemodes."
         ArcCW.AttachmentTable["go_homemade_auto"].Override_Firemodes = {{Mode = 2}, {Mode = 1}, {Mode = 0}}
+        ArcCW.AttachmentTable["go_homemade_auto"].Hook_Compatible = function(wep)
+            if wep:GetIsShotgun() or wep.ManualAction or wep.TriggerDelay or wep:GetBuff_Override("Override_TriggerDelay") then return false end
+        end
 
         ArcCW.AttachmentTable["go_perk_burst"].Mult_RPM = nil
         ArcCW.AttachmentTable["go_perk_burst"].Description = "Alters weapon fire group to support a rapid 3-round burst as well as semi-automatic fire."
         ArcCW.AttachmentTable["go_perk_burst"].Desc_Pros = {"pro.gsoe.burst"}
+        ArcCW.AttachmentTable["go_perk_burst"].Hook_Compatible = function(wep)
+            if wep:GetIsShotgun() or wep.ManualAction or wep.TriggerDelay or wep:GetBuff_Override("Override_TriggerDelay") then return false end
+        end
         ArcCW.AttachmentTable["go_perk_burst"].Override_Firemodes = {
             {
                 Mode = -3,
