@@ -2,7 +2,7 @@ att.PrintName = "Air Time"
 att.Icon = Material("entities/acwatt_perk_heatair.png", "smooth mips")
 att.Description = "Let it air! Heat will dissipate almost instantly, but slower. In addition, heat is vented from the gun and converted back into gas, increasing the cyclic rate."
 att.Desc_Pros = {
-    "Higher heat allows for faster firerate"
+    "con.gsoe.heat_fast"
 }
 att.Desc_Cons = {
 }
@@ -22,5 +22,5 @@ att.Hook_Compatible = function(wep)
 end
 
 att.M_Hook_Mult_RPM = function(wep, data)
-	data.mult = (1 + (wep:GetHeat()/wep:GetMaxHeat())*0.5 )
+	data.mult = (1 + (wep:GetHeat()/wep:GetMaxHeat())*1/2 )
 end

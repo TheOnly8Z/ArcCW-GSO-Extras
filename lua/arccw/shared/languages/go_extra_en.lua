@@ -8,6 +8,9 @@ L["pro.gsoe.burst"] = "Burst fire capability"
 L["con.gsoe.nog18"] = "Cannot use with G18 slide"
 L["con.gsoe.cook"] = "Will overheat and cook the magazine"
 
+L["con.gsoe.heat_slow"] = "Higher heat reduces firerate"
+L["con.gsoe.heat_fast"] = "Higher heat allows for faster firerate"
+
 L["pro.pen.9"] = "9mm Penetration"
 L["pro.pen.12"] = "12mm Penetration"
 L["pro.pen.24"] = "24mm Penetration"

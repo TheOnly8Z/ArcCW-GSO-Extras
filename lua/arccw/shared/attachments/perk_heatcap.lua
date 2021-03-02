@@ -4,7 +4,7 @@ att.Description = "Handle the heat! Heat capacity and disspiation rate is booste
 att.Desc_Pros = {
 }
 att.Desc_Cons = {
-    "Higher heat reduces firerate"
+    "con.gsoe.heat_slow"
 }
 att.Slot = {"perk", "go_perk"}
 
@@ -23,5 +23,5 @@ att.Hook_Compatible = function(wep)
 end
 
 att.M_Hook_Mult_RPM = function(wep, data)
-	data.mult = (1 + (wep:GetHeat()/wep:GetMaxHeat())*0.25 )
+	data.mult = (1 - (wep:GetHeat()/wep:GetMaxHeat())*1/3 )
 end
