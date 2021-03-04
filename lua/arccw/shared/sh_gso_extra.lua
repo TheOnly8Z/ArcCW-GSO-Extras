@@ -1240,13 +1240,16 @@ local function PostLoadAtt()
             if (t.Mult_Range or 1) > 1 and (t.Mult_AccuracyMOA or 1) < 1 and (t.Mult_Recoil or 1) < 1 then
                 -- If it increases range, decreases precision and recoil it's probably a long barrel
                 t.Mult_Sway = math.Clamp(t.Mult_Range or 1, 1, 2)
+                t.Desc_Cons = t.Desc_Cons or {}
                 table.insert(t.Desc_Cons, "+" .. math.Round((t.Mult_Sway - 1) * 100) .. "% Sway")
             elseif (t.Mult_Range or 1) < 1 and (t.Mult_AccuracyMOA or 1) > 1 and (t.Mult_Recoil or 1) > 1 then
                 -- Vice versa, probably a short barrel
                 t.Mult_Sway = math.Clamp(t.Mult_Range or 1, 0.25, 1)
+                t.Desc_Pros = t.Desc_Pros or {}
                 table.insert(t.Desc_Pros, "-" .. math.Round((1 - t.Mult_Sway) * 100) .. "% Sway")
             elseif (t.Mult_SightTime or 1) > 1 and t.Holosight then
                 -- A sight of some kind
+                t.Desc_Cons = t.Desc_Cons or {}
                 t.Mult_Sway = math.Clamp(t.Mult_SightTime or 1, 1, 1.5)
                 table.insert(t.Desc_Cons, "+" .. math.Round((t.Mult_Sway - 1) * 100) .. "% Sway")
             end
