@@ -11,7 +11,7 @@ att.Slot = "go_ammo"
 att.Mult_DamageMin = 0.8
 att.Mult_Penetration = 1.5
 att.Mult_Recoil = 1.3
-att.Override_DamageType = DMG_DIRECT + DMG_BULLET
+att.Override_DamageType = DMG_BURN
 att.Override_Jamming = true
 att.Override_HeatLockout = true
 
