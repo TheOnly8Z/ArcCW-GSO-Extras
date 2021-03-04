@@ -211,6 +211,7 @@ local balanceList = {
         Category = "Rifles",
         TTTWeight = 50,
         TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_rifle"},
+        ShootSound = "arccw_go/fnfal/fal-good_inc.wav"
     },
     ["arccw_go_g3"] = {
         Category = "Rifles",
