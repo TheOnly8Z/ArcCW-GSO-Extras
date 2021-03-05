@@ -1,11 +1,8 @@
 att.PrintName = "Man On Fire"
 att.Icon = Material("entities/acwatt_perk_heatcap.png", "smooth mips")
 att.Description = "Handle the heat! Heat capacity and disspiation rate is boosted, but heat reduces the cyclic rate."
-att.Desc_Pros = {
-}
-att.Desc_Cons = {
-    "con.gsoe.heat_slow"
-}
+att.Desc_Pros = {}
+att.Desc_Cons = {} -- "con.gsoe.heat_slow"
 att.Slot = {"perk", "go_perk"}
 
 att.NotForNPC = true
@@ -22,6 +19,8 @@ att.Hook_Compatible = function(wep)
     if !(wep.Jamming or wep:GetBuff_Override("Override_Jamming")) then return false end
 end
 
+--[[]
 att.M_Hook_Mult_RPM = function(wep, data)
-	data.mult = (1 - (wep:GetHeat()/wep:GetMaxHeat())*1/3 )
+    data.mult = (data.mult - (wep:GetHeat() / wep:GetMaxHeat()) * 0.25 )
 end
+]]

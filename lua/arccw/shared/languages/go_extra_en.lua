@@ -9,7 +9,8 @@ L["con.gsoe.nog18"] = "Cannot use with G18 slide"
 L["con.gsoe.cook"] = "Will overheat and cook the magazine"
 
 L["con.gsoe.heat_slow"] = "Higher heat reduces firerate"
-L["con.gsoe.heat_fast"] = "Higher heat allows for faster firerate"
+L["pro.gsoe.heat_fast"] = "Higher heat increases firerate"
+L["pro.gsoe.heat_fix"] = "Heat dissipates immediately after fixing"
 
 L["pro.pen.9"] = "9mm Penetration"
 L["pro.pen.12"] = "12mm Penetration"
@@ -19,4 +20,16 @@ L["pro.num.8"] = "8 pellets per shot"
 L["pro.gsoe.stable"] = "Stabilized sighted fire"
 L["con.gsoe.unstable"] = "Unstabilized sighted fire"
 
+L["pro.gsoe.overdrive.1"] = "Keep firing above 100% heat for overdrive"
+L["pro.gsoe.overdrive.2"] = "Damage increases as overdrive increases"
+L["pro.gsoe.overdrive.3"] = "Chance to ignite enemy during overdrive"
+
+L["con.gsoe.overdrive.1"] = "Dispersion increases as overdrive increases"
+L["con.gsoe.overdrive.2"] = "Fire rate decreases as overdrive increases"
+L["con.gsoe.overdrive.3"] = "Take self damage during overdrive"
+
+L["desc.gsoe.overdrive.1"] = "Device malfunctions at 300% and beyond"
+L["desc.gsoe.overdrive.2"] = "DO NOT BRING OVERDRIVE ABOVE 500%"
+
 L["ui.gsoe.cook"] = "COOKED! LOST %d RNDS"
+L["ui.gsoe.overdrive"] = "OVERDRIVE"

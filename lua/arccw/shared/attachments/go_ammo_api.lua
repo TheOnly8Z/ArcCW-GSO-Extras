@@ -33,7 +33,7 @@ att.O_Hook_Override_HeatDissipation = function(wep, data)
 end
 
 att.O_Hook_Override_HeatCapacity = function(wep, data)
-    data.current = (wep.RegularClipSize or wep.Primary.ClipSize) * 0.4
+    data.current = (wep.RegularClipSize or wep.Primary.ClipSize) * 0.6
 end
 
 att.Hook_AddShootSound = function(wep, data)

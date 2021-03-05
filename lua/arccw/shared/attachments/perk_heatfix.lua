@@ -2,7 +2,7 @@ att.PrintName = "Hot Wrench"
 att.Icon = Material("entities/acwatt_perk_heatfix.png", "smooth mips")
 att.Description = "Just bang on it! Overheating will be fixed instantly, but heat vents slower."
 att.Desc_Pros = {
-    "Instantly fix overheating"
+    "pro.gsoe.heat_fix"
 }
 att.Desc_Cons = {
 }
