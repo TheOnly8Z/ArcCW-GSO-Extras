@@ -6,7 +6,7 @@ L["pro.gsoe.stock_m249"] = "-30% Recoil when not aiming"
 L["pro.gsoe.perk_headshot"] = "+50% Headshot damage"
 L["pro.gsoe.burst"] = "Burst fire capability"
 L["con.gsoe.nog18"] = "Cannot use with G18 slide"
-L["con.gsoe.cook"] = "Will overheat and cook the magazine"
+L["con.gsoe.cook"] = "Can overheat and cook you and the magazine"
 
 L["con.gsoe.heat_slow"] = "Higher heat reduces firerate"
 L["pro.gsoe.heat_fast"] = "Higher heat increases firerate"
@@ -30,6 +30,9 @@ L["con.gsoe.overdrive.3"] = "Take self damage during overdrive"
 
 L["desc.gsoe.overdrive.1"] = "Device malfunctions at 300% and beyond"
 L["desc.gsoe.overdrive.2"] = "DO NOT BRING OVERDRIVE ABOVE 500%"
+
+L["pro.gsoe.dragonsbreath"] = "Fire a puff of incendiary powder"
+L["con.gsoe.dragonsbreath"] = "Projectile has low velocity and high gravity"
 
 L["ui.gsoe.cook"] = "COOKED! LOST %d RNDS"
 L["ui.gsoe.overdrive"] = "OVERDRIVE"

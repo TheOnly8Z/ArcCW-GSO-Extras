@@ -33,6 +33,8 @@ att.Override_HeatFix = false
 att.Mult_HeatDelayTime = 2
 att.Mult_HeatDissipation = 0.5
 
+att.GSOE_Overdrive = true
+
 att.Hook_Compatible = function(wep)
     if not (wep.Jamming or wep:GetBuff_Override("Override_Jamming")) then return false end
 end
@@ -141,8 +143,9 @@ local mat_grad = Material("arccw/gsoe_oapi_heat.png", "mips smooth")
 
 att.Hook_DrawHUD = function(wep)
     local pers = wep:GetHeat() / wep:GetMaxHeat()
-    if pers >= 0.7 then
-        surface.SetDrawColor(255, 0, 0, (pers - 0.7) * 25)
+    local thres = 0.8
+    if pers >= thres then
+        surface.SetDrawColor(255, 0, 0, math.Clamp((pers - thres) * 255 / (3 - thres), 0, 255))
         surface.SetMaterial(mat_grad)
         surface.DrawTexturedRect(ScrW() / 2, ScrH() / 2, ScrW() / 2, ScrH() / 2)
     end
