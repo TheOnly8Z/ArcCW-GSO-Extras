@@ -75,6 +75,7 @@ att.M_Hook_Mult_HipDispersion = function(wep, data)
 end
 
 att.Hook_BulletHit = function(wep, data)
+    if CLIENT or not IsValid(wep:GetOwner()) then return end
     if wep:GetHeat() >= wep:GetMaxHeat() then
         data.damage = data.damage * ((wep:GetHeat() / wep:GetMaxHeat() - 1) * 0.3 + 1)
 
@@ -88,6 +89,7 @@ att.Hook_BulletHit = function(wep, data)
 end
 
 att.Hook_PostFireBullets = function(wep)
+    if CLIENT or not IsValid(wep:GetOwner()) then return end
     if wep:GetHeat() >= wep:GetMaxHeat() * 5 then
         wep:SetHeat(0)
         local dmg = DamageInfo()

@@ -53,12 +53,22 @@ att.Hook_PhysBulletHit = function(wep, data)
 
         local dmg = DamageInfo()
         dmg:SetDamage(Lerp(delta, bullet.DamageMax, bullet.DamageMin))
-        dmg:SetDamageType(DMG_DIRECT)
+        dmg:SetDamageType(DMG_BURN + DMG_BULLET)
         dmg:SetInflictor(wep)
         dmg:SetAttacker(wep:GetOwner())
         tr.Entity:TakeDamageInfo(dmg)
 
+        if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() then
+            local tr2 = util.TraceLine({
+                start = bullet.Pos,
+                endpos  = bullet.Pos + bullet.Vel:GetNormalized() * (bullet.Vel:Length() + 16),
+                filter = table.GetKeys(bullet.Damaged),
+            })
+            ArcCW:DoPenetration(tr2, dmg, bullet, bullet.Penleft, true, bullet.Damaged)
+        end
+
         -- Fire a fake bullet for the sole purpose of penetration
+        --[[]
         wep:GetOwner():FireBullets({
             Src = bullet.Pos,
             Dir = bullet.Vel:GetNormalized(),
@@ -70,6 +80,7 @@ att.Hook_PhysBulletHit = function(wep, data)
                 ArcCW:DoPenetration(ctr, cdmg, bullet, bullet.Penleft, true, bullet.Damaged)
             end
         }, true)
+        ]]
     end
 
     if CLIENT then
