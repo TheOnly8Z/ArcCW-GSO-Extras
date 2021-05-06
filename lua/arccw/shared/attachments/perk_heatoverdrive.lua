@@ -25,9 +25,10 @@ att.NotForNPC = true
 att.SortOrder = 1
 att.AutoStats = true
 
-att.Ignore = true
+att.Ignore = false
 
 att.Override_HeatLockout = false
+att.Override_HeatLockout_Priority = 100
 att.Override_HeatFix = false
 
 att.Mult_HeatDelayTime = 2
@@ -45,7 +46,10 @@ end
 
 att.M_Hook_Mult_HeatDissipation = function(wep, data)
     if wep:GetHeat() >= wep:GetMaxHeat() then
-        data.mult = data.mult * (1 - math.Clamp((wep:GetHeat() / wep:GetMaxHeat() - 1) * 0.3, 0, 0.9))
+        data.mult = data.mult * (1 - math.Clamp(wep:GetHeat() / wep:GetMaxHeat() * 0.3, 0, 0.9))
+    end
+    if not wep:GetBuff_Override("GSOE_API") and wep:GetReloading() then
+        data.mult = data.mult * 0.25
     end
 end
 
@@ -56,15 +60,15 @@ att.Hook_AddShootSound = function(wep, data)
     end
 end
 
-att.M_Hook_Mult_RPM = function(wep, data)
+att.Hook_ModifyRPM = function(wep, delay)
     if wep:GetHeat() >= wep:GetMaxHeat() then
-        data.mult = (data.mult - math.Clamp((wep:GetHeat() / wep:GetMaxHeat() - 1) * 0.25, 0, 0.5))
+        return delay * (1 + math.Clamp((wep:GetHeat() / wep:GetMaxHeat() - 1) * 0.25, 0, 0.5))
     end
 end
 
 att.M_Hook_Mult_AccuracyMOA = function(wep, data)
     if wep:GetHeat() >= wep:GetMaxHeat() then
-        data.mult = (data.mult + math.Clamp((wep:GetHeat() / wep:GetMaxHeat() - 1) * 2, 0, 4))
+        data.mult = (data.mult + math.Clamp((wep:GetHeat() / wep:GetMaxHeat() - 1) * 3, 0, 9))
     end
 end
 
@@ -74,12 +78,20 @@ att.M_Hook_Mult_HipDispersion = function(wep, data)
     end
 end
 
+--[[]
+att.A_Hook_Add_SightsDispersion = function(wep, data)
+    if wep:GetHeat() >= wep:GetMaxHeat() then
+        data.add = (data.add + math.Clamp((wep:GetHeat() / wep:GetMaxHeat() - 1) * 100, 0, 400))
+    end
+end
+]]
+
 att.Hook_BulletHit = function(wep, data)
     if CLIENT or not IsValid(wep:GetOwner()) then return end
     if wep:GetHeat() >= wep:GetMaxHeat() then
         data.damage = data.damage * ((wep:GetHeat() / wep:GetMaxHeat() - 1) * 0.3 + 1)
 
-        if IsValid(data.tr.Entity) and math.random() <= wep:GetHeat() / wep:GetMaxHeat() / 4
+        if IsValid(data.tr.Entity) and math.random() <= (wep:GetHeat() / wep:GetMaxHeat() - 1) / 2
                 and (data.tr.Entity.ArcCW_GSOE_Ignited or 0) ~= CurTime() then
             data.tr.Entity.ArcCW_GSOE_Ignited = CurTime()
             data.tr.Entity:Ignite(3)
@@ -123,7 +135,6 @@ att.Hook_PostFireBullets = function(wep)
             local cloud = ents.Create( "arccw_go_fire" )
             if not IsValid(cloud) then return end
             local vel = Vector(math.Rand(-1, 1), math.Rand(-1, 1), math.Rand(-1, 1)) * 1500
-            cloud.Order = i
             cloud:SetPos(wep:GetOwner():GetPos() + VectorRand() + Vector(0, 0, 32))
             cloud:SetAbsVelocity(vel)
             cloud:SetOwner(wep:GetOwner())
@@ -131,9 +142,9 @@ att.Hook_PostFireBullets = function(wep)
             wep:EmitSound("arccw_go/molotov/fire_ignite_5.wav", 100, 100, 1, CHAN_STATIC)
         end
         wep:GetOwner():Ignite(2)
-    elseif wep:GetHeat() >= wep:GetMaxHeat() then
+    elseif wep:GetHeat() >= wep:GetMaxHeat() * 2 then
         local dmg = DamageInfo()
-        dmg:SetDamage(math.Round(wep:GetHeat() / wep:GetMaxHeat()))
+        dmg:SetDamage(math.Round(wep:GetHeat() / wep:GetMaxHeat()) - 1)
         dmg:SetDamageType(DMG_BURN)
         dmg:SetInflictor(wep)
         dmg:SetAttacker(wep:GetOwner())

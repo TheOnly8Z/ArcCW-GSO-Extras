@@ -8,16 +8,17 @@ att.Desc_Cons = {"con.gsoe.cook"}
 
 att.AutoStats = true
 att.Slot = "go_ammo"
-att.Mult_DamageMin = 0.8
 att.Mult_Penetration = 1.5
 --att.Mult_Recoil = 1.3
 att.Override_DamageType = DMG_BURN
 att.Override_Jamming = true
 att.Override_HeatLockout = true
 
+att.GSOE_API = true
+
 att.O_Hook_Override_HeatDelayTime = function(wep, data)
     local cfm = wep:GetCurrentFiremode()
-    local t = .75
+    local t = 1
 
     if cfm.Mode == 1 then
         t = 1.5
@@ -26,17 +27,21 @@ att.O_Hook_Override_HeatDelayTime = function(wep, data)
     end
 
     data.current = t
+    return data
 end
 
 att.O_Hook_Override_HeatDissipation = function(wep, data)
-    data.current = (wep.RegularClipSize or wep.Primary.ClipSize)
-            * (wep:GetReloading() and 0.25 or 1)
-            * (wep:Clip1() <= 0 and wep:GetHeatLocked() and 0 or 0.75)
-            * (wep:GetBuff_Override("GSOE_Overdrive") and 0.5 or 1)
+    local tbl = {}
+    tbl.current = (wep.RegularClipSize or wep.Primary.ClipSize) * 0.5
+            * ((wep:Clip1() == 0 or wep:GetReloading()) and 0.25 or 1)
+            * (wep:Clip1() <= 0 and wep:GetHeatLocked() and 0 or 1)
+            * (wep:GetBuff_Override("GSOE_Overdrive") and 0.75 or 1)
+    return tbl
 end
 
 att.O_Hook_Override_HeatCapacity = function(wep, data)
-    data.current = (wep.RegularClipSize or wep.Primary.ClipSize) * (wep:GetBuff_Override("GSOE_Overdrive") and 0.8 or 0.6)
+    local tbl = {current = (wep.RegularClipSize or wep.Primary.ClipSize) * (wep:GetBuff_Override("GSOE_Overdrive") and 1.5 or 1.25)}
+    return tbl
 end
 
 att.Hook_AddShootSound = function(wep, data)
@@ -58,13 +63,20 @@ att.Hook_Overheat = function(wep, heat)
         dmg:SetInflictor(wep)
         dmg:SetAttacker(wep:GetOwner())
         wep:GetOwner():TakeDamageInfo(dmg)
-        wep:GetOwner():Ignite(2)
+        wep:GetOwner():Ignite(math.max(wep:Clip1() / wep:GetMaxClip1() * 5, 2))
         wep:SetClip1(0)
         wep:EmitSound("arccw_go/oapi_cooked.wav", 80, 100, 1, CHAN_STATIC)
 
         if wep:GetOwner():IsPlayer() then
             wep:GetOwner():SetViewPunchAngles(wep:GetOwner():GetViewPunchAngles() + Angle(1, 0, 3))
         end
+    end
+end
+
+att.Hook_BulletHit = function(wep, data)
+    if IsValid(data.tr.Entity) then
+        local p = math.Clamp(wep:GetHeat() / wep:GetMaxHeat(), 0.25, 1) * 5 * (1 - (wep.GetRangeFraction and wep:GetRangeFraction(data.range) or 1))
+        data.tr.Entity:Ignite(p)
     end
 end
 

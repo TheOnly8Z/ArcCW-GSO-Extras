@@ -2,7 +2,10 @@ att.PrintName = "Incendiary Shells"
 att.Icon = Material("entities/acwatt_go_ammo_sg_dragon.png", "smooth mips")
 att.Description = "Nicknamed 'Dragon's Breath' by many, these shotgun shells are loaded with magnesium powder that ignites anything in front as it flies. Without an actual projectile load, it does little direct damage."
 att.Desc_Pros = {"pro.gsoe.dragonsbreath"}
-att.Desc_Cons = {"con.gsoe.dragonsbreath"}
+att.Desc_Cons = {
+    "con.gsoe.dragonsbreath",
+    "con.gsoe.add_accuracymoa.25"
+}
 att.Slot = "go_ammo"
 
 att.AutoStats = true
@@ -20,7 +23,7 @@ att.Mult_Damage = 0.7
 att.Mult_DamageMin = 0.7
 att.Mult_Recoil = 0.6
 att.Add_AccuracyMOA = 25
-att.Override_Penetration = 24
+att.Override_Penetration = 96
 
 att.Hook_Compatible = function(wep)
     if !wep:GetIsShotgun() then return false end

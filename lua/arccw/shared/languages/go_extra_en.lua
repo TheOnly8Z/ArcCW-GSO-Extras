@@ -22,17 +22,19 @@ L["con.gsoe.unstable"] = "Unstabilized sighted fire"
 
 L["pro.gsoe.overdrive.1"] = "Keep firing above 100% heat for overdrive"
 L["pro.gsoe.overdrive.2"] = "Damage increases as overdrive increases"
-L["pro.gsoe.overdrive.3"] = "Chance to ignite enemy during overdrive"
+L["pro.gsoe.overdrive.3"] = "Chance to ignite enemy above 200% overdrive"
 
 L["con.gsoe.overdrive.1"] = "Dispersion increases as overdrive increases"
 L["con.gsoe.overdrive.2"] = "Fire rate decreases as overdrive increases"
-L["con.gsoe.overdrive.3"] = "Take self damage during overdrive"
+L["con.gsoe.overdrive.3"] = "Take self damage above 200% overdrive"
 
 L["desc.gsoe.overdrive.1"] = "Device malfunctions at 300% and beyond"
 L["desc.gsoe.overdrive.2"] = "DO NOT BRING OVERDRIVE ABOVE 500%"
 
 L["pro.gsoe.dragonsbreath"] = "Fire a puff of incendiary powder"
 L["con.gsoe.dragonsbreath"] = "Projectile has low velocity and high gravity"
+L["con.gsoe.add_accuracymoa.25"] = "+25MOA Imprecision"
+
 
 L["ui.gsoe.cook"] = "COOKED! LOST %d RNDS"
 L["ui.gsoe.overdrive"] = "OVERDRIVE"
