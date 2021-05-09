@@ -19,9 +19,9 @@ att.Override_PhysTracerProfile = 0
 att.Override_PhysBulletImpact = false
 att.Override_PhysBulletGravity = 3
 
-att.Mult_Damage = 0.7
-att.Mult_DamageMin = 0.7
-att.Mult_Recoil = 0.6
+att.Mult_Damage = 0.6
+att.Mult_DamageMin = 0.6
+att.Mult_Recoil = 0.5
 att.Add_AccuracyMOA = 25
 att.Override_Penetration = 96
 
@@ -46,17 +46,17 @@ att.Hook_PhysBulletHit = function(wep, data)
 
     if SERVER and IsValid(tr.Entity) then
 
-        local delta = bullet.Travelled / (bullet.Range / ArcCW.HUToM)
-        delta = math.Clamp(delta, 0, 1)
+        local delta = wep:GetRangeFraction(bullet.Travelled * ArcCW.HUToM)
 
-        if math.random() > delta * 2 and (tr.Entity.ArcCW_GSOE_Ignited or 0) ~= CurTime() then
+        if math.random() > (delta - 0.25) and (tr.Entity.ArcCW_GSOE_Ignited or 0) ~= CurTime() then
             tr.Entity.ArcCW_GSOE_Ignited = CurTime()
-            tr.Entity:Ignite(math.random() * (0.5 - delta) * 5 + 5)
+            tr.Entity:Ignite((1 - delta) * 8 + 2)
         end
 
         local dmg = DamageInfo()
         dmg:SetDamage(Lerp(delta, bullet.DamageMax, bullet.DamageMin))
         dmg:SetDamageType(DMG_BURN + DMG_BULLET)
+        dmg:SetDamagePosition(data.bullet.Pos)
         dmg:SetInflictor(wep)
         dmg:SetAttacker(wep:GetOwner())
         tr.Entity:TakeDamageInfo(dmg)

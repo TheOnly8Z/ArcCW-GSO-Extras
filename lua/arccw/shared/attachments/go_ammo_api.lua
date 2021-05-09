@@ -32,9 +32,9 @@ end
 
 att.O_Hook_Override_HeatDissipation = function(wep, data)
     local tbl = {}
-    tbl.current = (wep.RegularClipSize or wep.Primary.ClipSize) * 0.5
+    tbl.current = (wep.RegularClipSize or wep.Primary.ClipSize) * 0.25
             * ((wep:Clip1() == 0 or wep:GetReloading()) and 0.25 or 1)
-            * (wep:Clip1() <= 0 and wep:GetHeatLocked() and 0 or 1)
+            * (wep:Clip1() <= 0 and wep:GetHeatLocked() and (wep:Clip1() > 0 and 1.5 or 0) or 1)
             * (wep:GetBuff_Override("GSOE_Overdrive") and 0.75 or 1)
     return tbl
 end
@@ -50,10 +50,9 @@ att.Hook_AddShootSound = function(wep, data)
     wep:EmitSound("arccw_go/oapi_hot.wav", data.volume, 85 + 30 * (wep:GetHeat() / wep:GetMaxHeat()), pers, CHAN_STATIC)
 end
 
-att.Hook_Overheat = function(wep, heat)
-    -- even in singleplayer
+att.Hook_PostOverheat = function(wep, heat)
     if SERVER then
-        if wep:GetBuff_Override("GSOE_Overdrive") then return true end -- :trollscream:
+        --if wep:GetBuff_Override("GSOE_Overdrive") then return true end -- :trollscream:
 
         wep:SetNWInt("OAPI_FuckedUpHowMuch", wep:Clip1())
         wep:SetNWFloat("OAPI_TimeSinceLastFuckUp", CurTime())
