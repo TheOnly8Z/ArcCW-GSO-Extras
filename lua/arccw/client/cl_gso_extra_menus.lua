@@ -28,10 +28,10 @@ local GSOEPanel_CL = {
 }
 
 hook.Add("PopulateToolMenu", "ArcCW_GSOE_Options", function()
-    spawnmenu.AddToolMenuOption("Options", "ArcCW", "ArcCW_Options_GSOE_SV", "#arccw.menus.gsoe.sv", "", "", function(panel)
+    spawnmenu.AddToolMenuOption("Utilities", "ArcCW", "ArcCW_Options_GSOE_SV", "#arccw.menus.gsoe.sv", "", "", function(panel)
         ArcCW.GeneratePanelElements(panel, GSOEPanel_SV)
     end)
-    spawnmenu.AddToolMenuOption("Options", "ArcCW", "ArcCW_Options_GSOE_CL", "#arccw.menus.gsoe.cl", "", "", function(panel)
+    spawnmenu.AddToolMenuOption("Utilities", "ArcCW", "ArcCW_Options_GSOE_CL", "#arccw.menus.gsoe.cl", "", "", function(panel)
         ArcCW.GeneratePanelElements(panel, GSOEPanel_CL)
     end)
 end)
