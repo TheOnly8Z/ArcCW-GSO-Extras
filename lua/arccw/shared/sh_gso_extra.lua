@@ -1129,7 +1129,7 @@ local function PostLoadAtt()
             ["go_tec9_barrel_short"] = {Mult_RPM = 1.15},
             ["go_tec9_barrel_long"] = {Mult_RPM = 0.9, Mult_SightTime = 1.25},
 
-            ["go_ammo_sg_scatter"] = {Mult_Recoil = 0.7, Mult_AccuracyMOA = 1.5},
+            ["go_ammo_sg_scatter"] = {Mult_Recoil = 0.7, Mult_AccuracyMOA = 1.5, Mult_DamageMin = "nil", Mult_Range = 0.75},
             ["go_ammo_sg_magnum"] = {Mult_Recoil = 1.5, Mult_AccuracyMOA = 1.5},
             ["go_ammo_tmj"] = {Mult_DamageMin = 1.3},
             ["go_ammo_match"] = {
