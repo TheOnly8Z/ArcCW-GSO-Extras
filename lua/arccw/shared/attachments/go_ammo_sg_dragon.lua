@@ -4,29 +4,29 @@ att.Description = "Nicknamed 'Dragon's Breath' by many, these shotgun shells are
 att.Desc_Pros = {"pro.gsoe.dragonsbreath"}
 att.Desc_Cons = {
     "con.gsoe.dragonsbreath",
-    "con.gsoe.add_accuracymoa.25"
+    "con.gsoe.add_accuracymoa.30"
 }
 att.Slot = "go_ammo"
 
 att.AutoStats = true
 
 att.Override_Num = 20
-att.Override_DamageType = DMG_BURN
 
 att.Override_AlwaysPhysBullet = true
-att.Override_PhysBulletMuzzleVelocity = 100
+att.Override_PhysBulletMuzzleVelocity = 80
 att.Override_PhysTracerProfile = 0
 att.Override_PhysBulletImpact = false
-att.Override_PhysBulletGravity = 3
+att.Override_PhysBulletGravity = 4
+att.Override_PhysBulletDrag = 4
 
-att.Mult_Damage = 0.6
-att.Mult_DamageMin = 0.6
+att.Mult_Damage = 0.5
+att.Mult_DamageMin = 0.5
 att.Mult_Recoil = 0.5
-att.Add_AccuracyMOA = 25
-att.Override_Penetration = 96
+att.Add_AccuracyMOA = 30
+--att.Override_Penetration = 96
 
 att.Hook_Compatible = function(wep)
-    if !wep:GetIsShotgun() then return false end
+    if not wep:GetIsShotgun() then return false end
 end
 
 local fired = {
@@ -41,33 +41,39 @@ att.Hook_AddShootSound = function(wep, data)
     wep:EmitSound("arccw_go/molotov/fire_ignite_1.wav", data.volume, 200, 0.9, CHAN_STATIC)
 end
 
+att.Override_PhysBulletImpact = false
+
 att.Hook_PhysBulletHit = function(wep, data)
     local tr, bullet = data.tr, data.bullet
-
     if SERVER and IsValid(tr.Entity) then
 
         local delta = wep:GetRangeFraction(bullet.Travelled * ArcCW.HUToM)
 
-        if math.random() > (delta - 0.25) and (tr.Entity.ArcCW_GSOE_Ignited or 0) ~= CurTime() then
-            tr.Entity.ArcCW_GSOE_Ignited = CurTime()
-            tr.Entity:Ignite((1 - delta) * 8 + 2)
-        end
-
         local dmg = DamageInfo()
         dmg:SetDamage(Lerp(delta, bullet.DamageMax, bullet.DamageMin))
-        dmg:SetDamageType(DMG_BURN + DMG_BULLET)
+        dmg:SetDamageType(DMG_BURN)
         dmg:SetDamagePosition(data.bullet.Pos)
         dmg:SetInflictor(wep)
         dmg:SetAttacker(wep:GetOwner())
+        if tr.Entity:IsOnFire() and (tr.Entity.ArcCW_GSOE_Ignited or 0) ~= CurTime() then
+            dmg:ScaleDamage(1.5)
+            dmg:SetDamageType(DMG_BULLET)
+        end
         tr.Entity:TakeDamageInfo(dmg)
 
+        if delta <= 0.75 and (tr.Entity.ArcCW_GSOE_Ignited or 0) ~= CurTime() then
+            if not tr.Entity:IsOnFire() then tr.Entity.ArcCW_GSOE_Ignited = CurTime() end
+            tr.Entity:Ignite((1 - delta) * 5 + 5)
+        end
+
         if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() then
+            bullet.Damaged[tr.Entity] = true
             local tr2 = util.TraceLine({
                 start = bullet.Pos,
                 endpos  = bullet.Pos + bullet.Vel:GetNormalized() * (bullet.Vel:Length() + 16),
                 filter = table.GetKeys(bullet.Damaged),
             })
-            ArcCW:DoPenetration(tr2, dmg, bullet, bullet.Penleft, true, bullet.Damaged)
+            ArcCW:DoPenetration(tr2, dmg, bullet, bullet.Penleft + 100, true, bullet.Damaged)
         end
 
         -- Fire a fake bullet for the sole purpose of penetration
@@ -89,7 +95,7 @@ att.Hook_PhysBulletHit = function(wep, data)
     if CLIENT then
         local range = bullet.Weapon:GetBuff("Range") / ArcCW.HUToM
         local emitter = ParticleEmitter(tr.HitPos)
-        if !IsValid(emitter) then return end
+        if not IsValid(emitter) then return end
 
         local inrange = bullet.Travelled < range * 0.5
 

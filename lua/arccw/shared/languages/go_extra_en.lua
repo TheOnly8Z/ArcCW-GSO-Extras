@@ -33,7 +33,7 @@ L["desc.gsoe.overdrive.2"] = "DO NOT BRING OVERDRIVE ABOVE 500%"
 
 L["pro.gsoe.dragonsbreath"] = "Fire a puff of incendiary powder"
 L["con.gsoe.dragonsbreath"] = "Projectile has low velocity and high gravity"
-L["con.gsoe.add_accuracymoa.25"] = "+25MOA Imprecision"
+L["con.gsoe.add_accuracymoa.30"] = "+30MOA Imprecision"
 
 
 L["ui.gsoe.cook"] = "COOKED! LOST %d RNDS"
