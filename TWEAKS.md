@@ -360,5 +360,20 @@ Sight time reduced to 300ms, in-line with other rifles.
 Sight time reduced to 270ms, slightly better than other rifles.
 
 ## Sniper Rifles
-
 Slight delay from firing animation to cycling. Shoot as soon as bolt has been cycled.
+
+## Grenades
+
+### AN/M14 Thermite
+No longer does knockback.
+Does damage every 0.1s instead of 0.25s.
+Damage reduced to 50% (configurable).
+Damage ramps up from 20% to 100% over a period of 3 seconds.
+
+### Molotov Cocktail
+No longer does knockback.
+Damage reduced to 50% (configurable).
+Damage ramps up from 20% to 100% over a period of 5 seconds.
+
+### Model 5210 Smoke
+Can extinguish molotovs and thermite grenades.

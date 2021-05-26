@@ -5,6 +5,8 @@ local catMode = CreateConVar("arccw_gsoe_catmode", 1, FCVAR_ARCHIVE + FCVAR_REPL
 local laserColor = CreateConVar("arccw_gsoe_lasermode", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Make 1mW, 3mW and 5mW lasers use custom colors defined by the player.", 0, 3)
 local addSway = CreateConVar("arccw_gsoe_addsway", 0, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Dynamically insert aim sway to every GSO gun and attachment. Set to 2 to apply to ALL guns and attachments.", 0, 2)
 local laserUpdateDelay = CreateConVar("arccw_gsoe_laser_updatedelay", 3, FCVAR_ARCHIVE + FCVAR_REPLICATED, "How long must a client wait before informing server of their laser color. Low values may increase server load.", 0)
+local fireMult = CreateConVar("arccw_gsoe_mult_fire", 0.5, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Fire damage multiplier for molotov.", 0)
+local thermMult = CreateConVar("arccw_gsoe_mult_thermite", 0.5, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Fire damage multiplier for thermite.", 0)
 
 if CLIENT then
     CreateClientConVar("arccw_gsoe_laser_enabled", "1", true, true, "", 0, 1)
@@ -891,8 +893,177 @@ local function GSOE()
         cam.End3D()
     end
 
+    local function myfiredamage(s, dmg, origin, radius)
+        local infl = dmg:GetInflictor()
+        local old_val = dmg:GetDamage()
+        for _, ent in pairs(ents.FindInSphere(origin, radius)) do
+            if not IsValid(ent) or ent:IsWorld() or ent:WaterLevel() >= 2 then continue end
+            local t = util.TraceLine({
+                start = origin,
+                endpos = ent:GetPos(),
+                filter = {s, ent},
+                mask = MASK_SHOT_HULL
+            })
+            if IsValid(t.Entity) then
+                t = util.TraceLine({
+                    start = origin,
+                    endpos = ent:WorldSpaceCenter(),
+                    filter = {s, ent},
+                    mask = MASK_SHOT_HULL
+                })
+            end
+            if not IsValid(t.Entity) then
+                local mult = math.pow((radius - (t.HitPos - origin):Length()) / radius, 2)
+                if math.Round(old_val * mult) > 0 then
+                    dmg:SetDamage(math.Round(old_val * mult))
+                    if ent:IsPlayer() and dmg:GetDamage() > ent:Health() then
+                        dmg:SetInflictor(dmg:GetAttacker())
+                    end
+                    -- UGLY HACK: players will be knocked back if inflictor is set
+                    -- why valve, why???????????
+                    ent:TakeDamageInfo(dmg)
+                    if ent:IsPlayer() then
+                        dmg:SetInflictor(infl)
+                    elseif ent:IsNPC() or ent:IsNextBot() then
+                        ent:Ignite(math.random() * mult * 5 + mult * 5)
+                    end
+                end
+            end
+        end
+    end
+
+    -- Overwrite molotov and thermite, only serverside since we only care about damage
+    local ent_fire = (scripted_ents.GetStored("arccw_go_fire") or {}).t
+    if SERVER and ent_fire then
+
+        local init = ent_fire.Initialize
+        ent_fire.Initialize = function(self)
+            init(self)
+            for _, ent in pairs(ents.FindInSphere(self:GetPos(), 256)) do
+                if ent:GetClass() == "arccw_smoke" and ent.ArcCW_GSOE_Smoke then
+                    local t = util.TraceLine({
+                        start = origin,
+                        endpos = ent:GetPos(),
+                        filter = {self, ent}
+                    })
+                    if t.Fraction >= 0.99 then
+                        self:EmitSound("arccw_go/molotov/molotov_extinguish.wav", 70, 100, 1)
+                        SafeRemoveEntityDelayed(self, 0)
+                        break
+                    end
+                end
+            end
+        end
+
+        ent_fire.Think = function(self)
+            if not self.SpawnTime then self.SpawnTime = CurTime() end
+
+            if self:GetVelocity():LengthSqr() <= 32 then
+                self:SetMoveType( MOVETYPE_NONE )
+            end
+
+            if self.NextDamageTick > CurTime() then return end
+            if self:WaterLevel() > 2 then self:Remove() return end
+
+            local dmg = DamageInfo()
+            dmg:SetDamageType(DMG_BURN)
+            dmg:SetDamage(math.floor(10 * fireMult:GetFloat() * math.min(1, (CurTime() - self.SpawnTime) / 5 * 0.8 + 0.2)))
+            dmg:SetDamageForce(Vector(0, 0, 0))
+            dmg:SetDamagePosition(self:GetPos())
+            dmg:SetInflictor(self)
+            dmg:SetAttacker(self:GetOwner())
+            --myfiredamage(self, dmg, self:GetPos(), 200)
+            util.BlastDamageInfo(dmg, self:GetPos(), 200)
+
+            self.NextDamageTick = CurTime() + 0.25
+
+            if self.SpawnTime + self.FireTime <= CurTime() then self:Remove() return end
+        end
+    end
+
+    local ent_thermite = (scripted_ents.GetStored("arccw_thr_go_incendiary") or {}).t
+    if SERVER and ent_thermite then
+        ent_thermite.Think = function(self)
+            if not self.SpawnTime then self.SpawnTime = CurTime() end
+
+            if CurTime() - self.SpawnTime >= self.FuseTime and not self.Armed then
+
+                for _, ent in pairs(ents.FindInSphere(self:GetPos(), 256)) do
+                    if ent:GetClass() == "arccw_smoke" and ent.ArcCW_GSOE_Smoke then
+                        local t = util.TraceLine({
+                            start = origin,
+                            endpos = ent:GetPos(),
+                            filter = {self, ent}
+                        })
+                        if t.Fraction >= 0.99 then
+                            self:EmitSound("arccw_go/molotov/molotov_extinguish.wav", 70, 100, 1)
+                            SafeRemoveEntityDelayed(self, 0)
+                            return
+                        end
+                    end
+                end
+
+                self:Detonate()
+                self:SetArmed(true)
+                self.ArmTime = CurTime()
+            end
+
+            if self:GetArmed() then
+                if self.NextDamageTick > CurTime() then return end
+                if not self.ArmTime then self.ArmTime = CurTime() end
+
+                local dmg = DamageInfo()
+                dmg:SetDamageType(DMG_BURN)
+                dmg:SetDamage(math.floor(75 * 0.4 * thermMult:GetFloat() * math.min(1, (CurTime() - self.ArmTime) / 3 * 0.8 + 0.2)))
+                dmg:SetDamageForce(Vector(0, 0, 0))
+                dmg:SetDamagePosition(self:GetPos())
+                dmg:SetInflictor(self)
+                dmg:SetAttacker(self.Owner)
+                myfiredamage(self, dmg, self:GetPos(), 256)
+                --util.BlastDamageInfo(dmg, self:GetPos(), 256)
+
+                self.NextDamageTick = CurTime() + 0.25 * 0.4
+
+                self.ArcCW_Killable = false
+            end
+        end
+    end
+
+    local ent_smoke = (scripted_ents.GetStored("arccw_thr_go_smoke") or {}).t
+    if SERVER and ent_smoke then
+        ent_smoke.Detonate = function(self)
+            if not self:IsValid() or self:WaterLevel() > 2 then return end
+            self:EmitSound("arccw_go/smokegrenade/smoke_emit.wav", 90, 100, 1, CHAN_AUTO)
+
+            for _, ent in pairs(ents.FindInSphere(self:GetPos() + Vector(0, 0, 8), 256)) do
+                if ent:GetClass() == "arccw_go_fire" or (ent:GetClass() == "arccw_thr_go_incendiary" and ent:GetArmed()) then
+                    local t = util.TraceLine({
+                        start = origin,
+                        endpos = ent:GetPos() + Vector(0, 0, 4),
+                        filter = {self, ent}
+                    })
+                    if not IsValid(t.Entity) then
+                        ent:EmitSound("arccw_go/molotov/molotov_extinguish.wav", 70, 100, 0.5)
+                        ent:Remove() -- extinguish fire
+                    end
+                end
+            end
+
+            local cloud = ents.Create( "arccw_smoke" )
+            if not IsValid(cloud) then return end
+            cloud.ArcCW_GSOE_Smoke = true
+            cloud:SetPos(self:GetPos())
+            cloud:Spawn()
+
+            self:Remove()
+        end
+    end
+
 end
 hook.Add("PreGamemodeLoaded", "ArcCW_GSOE", function()
+    GSOE()
+end)
+concommand.Add("arccw_gsoe_debug_reload", function()
     GSOE()
 end)
 
