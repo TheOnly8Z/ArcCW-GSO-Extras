@@ -269,7 +269,7 @@ local balanceList = {
         TTTWeight = 50,
         TTTWeaponType = "weapon_zm_shotgun",
         TTT_Stats = {
-            DamageMin = 4,
+            --DamageMin = 4,
             Range = 20,
             Delay = 60 / 180,
             AccuracyMOA = 50,
@@ -285,7 +285,7 @@ local balanceList = {
         TTTWeight = 100,
         TTTWeaponType = "weapon_zm_shotgun",
         TTT_Stats = {
-            DamageMin = 4,
+            --DamageMin = 4,
             AccuracyMOA = 40,
             Range = 20,
         }
@@ -300,7 +300,7 @@ local balanceList = {
         TTTWeight = 100,
         TTTWeaponType = "weapon_zm_shotgun",
         TTT_Stats = {
-            DamageMin = 4,
+            --DamageMin = 4,
             AccuracyMOA = 40,
             Range = 20,
         }
@@ -315,7 +315,7 @@ local balanceList = {
         TTTWeight = 100,
         TTTWeaponType = "weapon_zm_shotgun",
         TTT_Stats = {
-            DamageMin = 5,
+            --DamageMin = 5,
             AccuracyMOA = 30,
             Range = 30,
         }
