@@ -9,7 +9,7 @@ att.Desc_Cons = {
 att.AutoStats = true
 att.Slot = "charm"
 att.SortOrder = 100
-
+att.Ignore = true
 att.Free = false
 
 att.Model = "models/Items/battery.mdl"

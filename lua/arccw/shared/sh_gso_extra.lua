@@ -7,6 +7,8 @@ local addSway = CreateConVar("arccw_gsoe_addsway", 0, FCVAR_ARCHIVE + FCVAR_REPL
 local laserUpdateDelay = CreateConVar("arccw_gsoe_laser_updatedelay", 3, FCVAR_ARCHIVE + FCVAR_REPLICATED, "How long must a client wait before informing server of their laser color. Low values may increase server load.", 0)
 local fireMult = CreateConVar("arccw_gsoe_mult_fire", 0.5, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Fire damage multiplier for molotov.", 0)
 local thermMult = CreateConVar("arccw_gsoe_mult_thermite", 0.5, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Fire damage multiplier for thermite.", 0)
+local sgMult = CreateConVar("arccw_gsoe_mult_shotgun", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Damage multiplier for shotguns.", 0)
+
 
 if CLIENT then
     CreateClientConVar("arccw_gsoe_laser_enabled", "1", true, true, "", 0, 1)
@@ -230,18 +232,18 @@ local balanceList = {
         Category = "Rifles",
         TTTWeight = 0,
         TTT_Stats = {
-            Kind = WEAPON_EQUIP2,
+            Kind = 7, --WEAPON_EQUIP2,
             Slot = 6,
-            Range = 30,
-            Damage = 200,
-            DamageMin = 300,
+            Range = 300,
+            Damage = 120,
+            DamageMin = 100,
             Override_Ammo = "none",
             AutoSpawnable = false,
             ForceDefaultClip = 0,
-            CanBuy = {ROLE_TRAITOR, ROLE_DETECTIVE},
+            CanBuy = {1, 2}, --{ROLE_TRAITOR, ROLE_DETECTIVE},
             EquipMenuData = {
                 type = "Weapon",
-                desc = "Powerful magnum sniper rifle.\n\nHas 10 rounds and cannot be reloaded."
+                desc = "Powerful magnum sniper rifle, can kill in one hit.\n\nHas 10 rounds and cannot be reloaded."
             }
         }
     },
@@ -537,11 +539,18 @@ local function GSOE()
                     stored[k] = v
                 end
             else
+                --[[]
                 -- TTT is very close quarters, all guns get a range nerf by default
                 if stored.Damage and stored.Range and stored.Damage > stored.DamageMin then
                     stored.Range = math.ceil(stored.Range / 2)
                 end
+                ]]
             end
+        end
+
+        if (stored.Num or 1) > 1 and sgMult:GetFloat() ~= 1 then
+            stored.Damage = math.Round(stored.Damage * sgMult:GetFloat())
+            stored.DamageMin = math.Round(stored.DamageMin * sgMult:GetFloat())
         end
 
         if originTweak:GetBool() then

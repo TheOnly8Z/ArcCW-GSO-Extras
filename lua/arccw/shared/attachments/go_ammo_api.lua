@@ -73,7 +73,7 @@ att.Hook_PostOverheat = function(wep, heat)
 end
 
 att.Hook_BulletHit = function(wep, data)
-    if IsValid(data.tr.Entity) then
+    if SERVER and IsValid(data.tr.Entity) then
         local p = math.Clamp(wep:GetHeat() / wep:GetMaxHeat(), 0.25, 1) * 5 * (1 - (wep.GetRangeFraction and wep:GetRangeFraction(data.range) or 1))
         data.tr.Entity:Ignite(p)
     end

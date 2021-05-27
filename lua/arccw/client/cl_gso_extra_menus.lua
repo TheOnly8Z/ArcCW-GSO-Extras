@@ -18,6 +18,10 @@ local GSOEPanel_SV = {
     { type = "o", text = "#arccw.cvar.gsoe_addsway", var = "arccw_gsoe_addsway", sv = true,
             choices = {[0] = "#arccw.cvar.gsoe_addsway.0", [1] = "#arccw.cvar.gsoe_addsway.1", [2] = "#arccw.cvar.gsoe_addsway.2"}},
     { type = "c", text = "#arccw.cvar.gsoe_addsway.desc" },
+
+    { type = "f", text = "#arccw.cvar.gsoe_mult_fire",       var = "arccw_gsoe_mult_fire", min = 0, max = 2, sv = true },
+    { type = "f", text = "#arccw.cvar.gsoe_mult_thermite",   var = "arccw_gsoe_mult_thermite", min = 0, max = 2, sv = true },
+    { type = "f", text = "#arccw.cvar.gsoe_mult_shotgun",    var = "arccw_gsoe_mult_shotgun", min = 0, max = 2, sv = true },
 }
 
 local GSOEPanel_CL = {

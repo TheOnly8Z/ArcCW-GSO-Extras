@@ -26,6 +26,9 @@ L["arccw.cvar.gsoe_addsway.0"]             = "0 - Disabled"
 L["arccw.cvar.gsoe_addsway.1"]             = "1 - Enabled for GSO"
 L["arccw.cvar.gsoe_addsway.2"]             = "2 - Enabled for everything"
 L["arccw.cvar.gsoe_addsway.desc"]          = "Dynamically insert aim sway to GSO (or all) guns and attachments. Requires reload. Gun sway is based on hip dispersion and handling; attachment sway is based on attachment type (range for barrels and handling for optics)."
+L["arccw.cvar.gsoe_mult_fire"]             = "Molotov Damage"
+L["arccw.cvar.gsoe_mult_thermite"]         = "Thermite Damage"
+L["arccw.cvar.gsoe_mult_shotgun"]    = "GSO Shotgun Damage"
 
 -- Client
 L["arccw.cvar.gsoe_laser_enabled"]         = "Custom laser colors"
