@@ -63,7 +63,9 @@ att.Hook_PhysBulletHit = function(wep, data)
 
         if delta <= 0.75 and (tr.Entity.ArcCW_GSOE_Ignited or 0) ~= CurTime() then
             if not tr.Entity:IsOnFire() then tr.Entity.ArcCW_GSOE_Ignited = CurTime() end
-            tr.Entity:Ignite((1 - delta) * 5 + 5)
+            local dur = (1 - delta) * 5 + 5
+            if tr.Entity:IsPlayer() then dur = (1 - delta) * 3 end
+            tr.Entity:Ignite(dur)
         end
 
         if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() then
