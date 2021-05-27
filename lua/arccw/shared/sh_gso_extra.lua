@@ -1336,7 +1336,7 @@ local function PostLoadAtt()
         -- Perks
         ArcCW.AttachmentTable["go_perk_rapidfire"].Mult_RPM = 1.1
         ArcCW.AttachmentTable["go_perk_light"].Mult_SightedSpeedMult = 1.2
-        ArcCW.AttachmentTable["go_perk_diver"].Desc_Pros = {"-50% Recoil while underwater"}
+        ArcCW.AttachmentTable["go_perk_diver"].Desc_Pros = {"pro.gsoe.perk_underwater"}
         ArcCW.AttachmentTable["go_perk_diver"].Hook_ModifyRecoil = function(wep)
             if wep:GetOwner():WaterLevel() >= 2 then
                 return {Recoil = 0.5}

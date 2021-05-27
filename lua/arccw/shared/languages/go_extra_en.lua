@@ -7,6 +7,7 @@ L["pro.gsoe.perk_headshot"] = "+50% Headshot damage"
 L["pro.gsoe.burst"] = "Burst fire capability"
 L["con.gsoe.nog18"] = "Cannot use with G18 slide"
 L["con.gsoe.cook"] = "Can overheat and cook you and the magazine"
+L["pro.gsoe.perk_underwater"] = "-50% Recoil while underwater"
 
 L["con.gsoe.heat_slow"] = "Higher heat reduces firerate"
 L["pro.gsoe.heat_fast"] = "Higher heat increases firerate"
