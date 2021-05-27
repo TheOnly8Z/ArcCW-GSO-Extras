@@ -234,16 +234,17 @@ local balanceList = {
         TTT_Stats = {
             Kind = 7, --WEAPON_EQUIP2,
             Slot = 6,
-            Range = 300,
-            Damage = 120,
-            DamageMin = 100,
+            RangeMin = 10,
+            Range = 50,
+            Damage = 90,
+            DamageMin = 150,
             Override_Ammo = "none",
             AutoSpawnable = false,
             ForceDefaultClip = 0,
             CanBuy = {1, 2}, --{ROLE_TRAITOR, ROLE_DETECTIVE},
             EquipMenuData = {
                 type = "Weapon",
-                desc = "Powerful magnum sniper rifle, can kill in one hit.\n\nHas 10 rounds and cannot be reloaded."
+                desc = "Powerful magnum sniper rifle.\n\nHas 10 rounds and cannot be reloaded."
             }
         }
     },
@@ -533,18 +534,9 @@ local function GSOE()
                 stored[i] = v
             end
         end
-        if gunBal:GetBool() and engine.ActiveGamemode() == "terrortown" then
-            if t.TTT_Stats then
-                for k, v in pairs(t.TTT_Stats) do
-                    stored[k] = v
-                end
-            else
-                --[[]
-                -- TTT is very close quarters, all guns get a range nerf by default
-                if stored.Damage and stored.Range and stored.Damage > stored.DamageMin then
-                    stored.Range = math.ceil(stored.Range / 2)
-                end
-                ]]
+        if gunBal:GetBool() and engine.ActiveGamemode() == "terrortown" and t.TTT_Stats then
+            for k, v in pairs(t.TTT_Stats) do
+                stored[k] = v
             end
         end
 
@@ -981,8 +973,8 @@ local function GSOE()
             dmg:SetDamagePosition(self:GetPos())
             dmg:SetInflictor(self)
             dmg:SetAttacker(self:GetOwner())
-            --myfiredamage(self, dmg, self:GetPos(), 200)
-            util.BlastDamageInfo(dmg, self:GetPos(), 200)
+            myfiredamage(self, dmg, self:GetPos(), 200)
+            --util.BlastDamageInfo(dmg, self:GetPos(), 200)
 
             self.NextDamageTick = CurTime() + 0.25
 
