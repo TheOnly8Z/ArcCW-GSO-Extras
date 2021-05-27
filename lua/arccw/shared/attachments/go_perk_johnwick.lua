@@ -10,6 +10,7 @@ att.Slot = "go_perk"
 att.JohnWick = true
 
 att.Ignore = false
+att.NoRandom = true
 
 att.Mult_MeleeDamage = 2
 att.Mult_MeleeAttackTime = 0.5

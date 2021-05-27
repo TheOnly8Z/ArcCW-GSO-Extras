@@ -37,6 +37,7 @@ att.O_Hook_Override_PhysBulletMuzzleVelocity = function(wep, data)
 end
 att.Mult_PhysBulletGravity = 2
 att.Override_PhysTracerProfile = 0
+att.NoRandom = true
 
 att.Override_Ammo = "airsoft"
 att.Override_Ammo_Priority = 10000

@@ -26,6 +26,7 @@ att.SortOrder = 1
 att.AutoStats = true
 
 att.Ignore = false
+att.NoRandom = true
 
 att.Override_HeatLockout = false
 att.Override_HeatLockout_Priority = 100
