@@ -45,7 +45,7 @@ att.Override_Ammo_Priority = 10000
 att.AddPrefix = "Airsoft "
 
 att.Hook_GetCapacity = function(wep, cap)
-    if wep.ShotgunReload or wep.ManualAction or wep.RevolverReload or cap <= 2 then
+    if wep.ShotgunReload or wep.RevolverReload or cap <= 2 then
         return cap
     else
         return cap * 2
@@ -61,9 +61,11 @@ att.Hook_PreDoEffects = function(wep, fx)
     return true
 end
 
+att.Hook_GetShootSound_Priority = 100
 att.Hook_GetShootSound = function(wep, sound)
     return "arccw_go/airsoft2.wav"
 end
+att.Hook_GetDistantShootSound_Priority = 100
 att.Hook_GetDistantShootSound = function(wep, sound)
     return false
 end
