@@ -871,7 +871,7 @@ local tttEditList = {
     ["arccw_go_ak47"] = {
         -- 260-180 DPS
         Trivia_Desc = "High recoil rifle.",
-        HipDispersion = 900,
+        HipDispersion = 800,
         MoveDispersion = 200,
         AccuracyMOA = 10,
         Damage = 26,
@@ -901,8 +901,8 @@ local tttEditList = {
     ["arccw_go_aug"] = {
         -- 211-176 DPS
         Trivia_Desc = "Long range, low recoil rifle.",
-        HipDispersion = 750,
-        MoveDispersion = 150,
+        HipDispersion = 650,
+        MoveDispersion = 100,
         AccuracyMOA = 3,
         Damage = 18,
         DamageMin = 15,
@@ -914,13 +914,13 @@ local tttEditList = {
         RecoilSide = 0.15
     },
     ["arccw_go_sg556"] = {
-        -- 200-175 DPS
+        -- 183-158 DPS
         Trivia_Desc = "Long range, low fire rate rifle.",
-        HipDispersion = 650,
+        HipDispersion = 700,
         MoveDispersion = 150,
         AccuracyMOA = 2,
-        Damage = 24,
-        DamageMin = 21,
+        Damage = 22,
+        DamageMin = 19,
         RangeMin = 20,
         Range = 80,
         Delay = 60 / 500,
@@ -1045,7 +1045,7 @@ local tttEditList = {
     ["arccw_go_g3"] = {
         Trivia_Desc = "High power battle rifle.",
         Primary = {Ammo = "SniperPenetratedRound"},
-        HipDispersion = 1200,
+        HipDispersion = 800,
         MoveDispersion = 150,
         AccuracyMOA = 1,
         Damage = 30,
@@ -1060,7 +1060,7 @@ local tttEditList = {
     ["arccw_go_scar"] = {
         Trivia_Desc = "Low recoil battle rifle.",
         Primary = {Ammo = "SniperPenetratedRound"},
-        HipDispersion = 1100,
+        HipDispersion = 700,
         MoveDispersion = 100,
         AccuracyMOA = 2,
         Damage = 24,
