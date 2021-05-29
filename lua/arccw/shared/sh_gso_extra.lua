@@ -8,6 +8,7 @@ local laserUpdateDelay = CreateConVar("arccw_gsoe_laser_updatedelay", 3, FCVAR_A
 local fireMult = CreateConVar("arccw_gsoe_mult_fire", 0.5, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Fire damage multiplier for molotov.", 0)
 local thermMult = CreateConVar("arccw_gsoe_mult_thermite", 0.5, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Fire damage multiplier for thermite.", 0)
 local sgMult = CreateConVar("arccw_gsoe_mult_shotgun", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Damage multiplier for shotguns.", 0)
+local tttEdit = CreateConVar("arccw_gsoe_tttbal", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Apply a more drastic balance patch for TTT specifically. These should be more similar in power to vanilla TTT weapons. Set to 2 to apply even outside TTT.", 0, 2)
 
 
 if CLIENT then
@@ -220,24 +221,24 @@ local balanceList = {
     ["arccw_go_g3"] = {
         Category = "Rifles",
         TTTWeight = 50,
-        TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_rifle"},
+        TTTWeaponType = {"weapon_zm_rifle"},
     },
     ["arccw_go_scar"] = {
         Category = "Rifles",
         TTTWeight = 50,
-        TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_rifle"},
+        TTTWeaponType = {"weapon_zm_rifle"},
     },
     -- SRs
     ["arccw_go_awp"] = {
         Category = "Rifles",
         TTTWeight = 0,
-        TTT_Stats = {
+        TTT_Stats = { -- This is only applied when there TTT Edit is not enabled
             Kind = 7, --WEAPON_EQUIP2,
             Slot = 6,
-            RangeMin = 10,
-            Range = 50,
-            Damage = 90,
-            DamageMin = 150,
+            RangeMin = 5,
+            Range = 55,
+            Damage = 150,
+            DamageMin = 300,
             Override_Ammo = "none",
             AutoSpawnable = false,
             ForceDefaultClip = 0,
@@ -268,8 +269,10 @@ local balanceList = {
         Category = "Heavy",
         TTTWeight = 50,
         TTTWeaponType = "weapon_zm_shotgun",
+        RangeMin = 10,
         TTT_Stats = {
             --DamageMin = 4,
+            RangeMin = 8,
             Range = 20,
             Delay = 60 / 180,
             AccuracyMOA = 50,
@@ -283,10 +286,12 @@ local balanceList = {
         AccuracyMOA = 30,
         Category = "Heavy",
         TTTWeight = 100,
+        RangeMin = 10,
         TTTWeaponType = "weapon_zm_shotgun",
         TTT_Stats = {
             --DamageMin = 4,
             AccuracyMOA = 40,
+            RangeMin = 8,
             Range = 20,
         }
     },
@@ -298,10 +303,12 @@ local balanceList = {
         AccuracyMOA = 30,
         Category = "Heavy",
         TTTWeight = 100,
+        RangeMin = 15,
         TTTWeaponType = "weapon_zm_shotgun",
         TTT_Stats = {
             --DamageMin = 4,
             AccuracyMOA = 40,
+            RangeMin = 8,
             Range = 20,
         }
     },
@@ -313,10 +320,12 @@ local balanceList = {
         AccuracyMOA = 20,
         Category = "Heavy",
         TTTWeight = 100,
+        RangeMin = 20,
         TTTWeaponType = "weapon_zm_shotgun",
         TTT_Stats = {
             --DamageMin = 5,
             AccuracyMOA = 30,
+            RangeMin = 10,
             Range = 30,
         }
     },
@@ -408,6 +417,7 @@ local balanceList = {
         TTTWeaponType = "weapon_zm_pistol",
     },
     ["arccw_go_tec9"] = {
+        Slot = 1,
         HipDispersion = 400,
         MoveDispersion = 50,
         AccuracyMOA = 12,
@@ -444,8 +454,8 @@ local balanceList = {
         },
     },
     ["arccw_go_r8"] = {
-        HipDispersion = 100,
-        MoveDispersion = 75,
+        HipDispersion = 50,
+        MoveDispersion = 100,
         Damage = 58,
         DamageMin = 32,
         SightTime = 0.32,
@@ -519,26 +529,594 @@ local balanceList = {
     ["arccw_go_knife_stiletto"] = knifeBal,
 }
 
-local function GSOE()
+local tttEditList = {
+    --[[
+        Pistols:
+        TTT Pistol has 25 damage and 0.38 delay, aka 65DPS, ~158RPM
+        TTT Deagle has 37 damage and 0.6 delay, aka 61DPS, 100RPM
+    ]]
+    ["arccw_go_cz75"] = {
+        -- 75-40 DPS
+        Trivia_Desc = "Well-rounded pistol, more powerful up close.",
+        HipDispersion = 400,
+        MoveDispersion = 100,
+        AccuracyMOA = 10,
+        Damage = 15,
+        DamageMin = 8,
+        RangeMin = 5,
+        Range = 40,
+        Delay = 60 / 300,
+        VisualRecoilMult = 0.25,
+        Recoil = 2,
+    },
+    ["arccw_go_p2000"] = {
+        -- 60-40 DPS
+        Trivia_Desc = "Easy to handle pistol.",
+        HipDispersion = 150,
+        MoveDispersion = 100,
+        AccuracyMOA = 10,
+        Damage = 12,
+        DamageMin = 8,
+        RangeMin = 5,
+        Range = 40,
+        Delay = 60 / 300,
+        VisualRecoilMult = 0.25,
+        Recoil = 1,
+    },
+    ["arccw_go_fiveseven"] = {
+        -- 50-150 DPS
+        Trivia_Desc = "Long range pistol, less powerful up close.",
+        HipDispersion = 400,
+        MoveDispersion = 50,
+        AccuracyMOA = 3,
+        Damage = 10,
+        DamageMin = 30,
+        RangeMin = 5,
+        Range = 30,
+        Delay = 60 / 300,
+        VisualRecoilMult = 0.25,
+        Recoil = 2,
+    },
+    ["arccw_go_glock"] = {
+        -- 80-53 DPS
+        Trivia_Desc = "Close quarters pistol.",
+        HipDispersion = 250,
+        MoveDispersion = 100,
+        AccuracyMOA = 20,
+        Damage = 12,
+        DamageMin = 8,
+        RangeMin = 5,
+        Range = 40,
+        Delay = 60 / 400,
+        VisualRecoilMult = 0.25,
+        Recoil = 1.5,
+    },
+    ["arccw_go_m9"] = {
+        -- 70-50 DPS
+        Trivia_Desc = "High precision, medium range pistol.",
+        HipDispersion = 500,
+        MoveDispersion = 75,
+        AccuracyMOA = 4,
+        Damage = 14,
+        DamageMin = 10,
+        RangeMin = 10,
+        Range = 50,
+        Delay = 60 / 300,
+        VisualRecoilMult = 0.25,
+        Recoil = 2,
+    },
+    ["arccw_go_p250"] = {
+        -- 75-45 DPS
+        Trivia_Desc = "High damage pistol, slow to fire.",
+        HipDispersion = 400,
+        MoveDispersion = 75,
+        AccuracyMOA = 10,
+        Damage = 25,
+        DamageMin = 15,
+        RangeMin = 8,
+        Range = 40,
+        Delay = 60 / 180,
+        VisualRecoilMult = 0.25,
+        Recoil = 3,
+    },
+    ["arccw_go_tec9"] = {
+        -- 120-80 DPS
+        -- will be slightly lower due to mashing
+        Slot = 1,
+        Trivia_Desc = "High RPM pistol.",
+        HipDispersion = 150,
+        MoveDispersion = 150,
+        AccuracyMOA = 20,
+        Damage = 12,
+        DamageMin = 8,
+        RangeMin = 5,
+        Range = 30,
+        Delay = 60 / 600,
+        VisualRecoilMult = 0.25,
+        Recoil = 1,
+    },
+    ["arccw_go_usp"] = {
+        -- 72-48 DPS
+        Trivia_Desc = "Well-rounded pistol, slower to fire.",
+        HipDispersion = 300,
+        MoveDispersion = 50,
+        AccuracyMOA = 5,
+        Damage = 18,
+        DamageMin = 12,
+        RangeMin = 10,
+        Range = 50,
+        Delay = 60 / 240,
+        VisualRecoilMult = 0.25,
+        Recoil = 2.5,
+    },
 
+    ["arccw_go_deagle"] = {
+        -- 100-60 DPS
+        Trivia_Desc = "Powerful magnum pistol.",
+        HipDispersion = 500,
+        MoveDispersion = 50,
+        AccuracyMOA = 5,
+        Damage = 50,
+        DamageMin = 30,
+        RangeMin = 5,
+        Range = 15,
+        Delay = 60 / 120,
+        VisualRecoilMult = 0.25,
+        Recoil = 4,
+    },
+    ["arccw_go_r8"] = {
+        -- 136-106DPS
+        -- Probably much less due to trigger delay
+        Trivia_Desc = "Accurate revolver, can be fanned for faster firing.",
+        HipDispersion = 200,
+        MoveDispersion = 25,
+        AccuracyMOA = 5,
+        Damage = 45,
+        DamageMin = 35,
+        RangeMin = 10,
+        Range = 30,
+        Delay = 60 / 180,
+        VisualRecoilMult = 0.25,
+        Recoil = 3.5,
+    },
+
+    --[[
+        SMG and Rifles:
+        TTT MAC10 has 12 damage and 0.065 delay, aka 184DPS, ~900RPM
+        TTT M16 has 23 damage and 0.19 delay, aka 121DPS, ~300RPM
+        "par" DPS around 200 up close and 125 far
+        rifles can have higher because they have shit hip dispersion
+    ]]
+    ["arccw_go_mac10"] = {
+        -- 261-152 DPS
+        Trivia_Desc = "Short range bullet hose SMG.",
+        HipDispersion = 500,
+        MoveDispersion = 150,
+        AccuracyMOA = 30,
+        Damage = 12,
+        DamageMin = 7,
+        RangeMin = 5,
+        Range = 30,
+        Delay = 60 / 1300,
+        VisualRecoilMult = 1,
+        Recoil = 0.7,
+        RecoilSide = 0.5
+    },
+    ["arccw_go_mp9"] = {
+        -- 200-114 DPS
+        Trivia_Desc = "High fire rate SMG.",
+        HipDispersion = 500,
+        MoveDispersion = 125,
+        AccuracyMOA = 20,
+        Damage = 14,
+        DamageMin = 8,
+        RangeMin = 7,
+        Range = 30,
+        Delay = 60 / 850,
+        VisualRecoilMult = 1,
+        Recoil = 0.4,
+        RecoilSide = 0.3
+    },
+    ["arccw_go_mp5"] = {
+        -- 173-133 DPS
+        Trivia_Desc = "Easy to control SMG.",
+        HipDispersion = 300,
+        MoveDispersion = 50,
+        AccuracyMOA = 8,
+        Damage = 13,
+        DamageMin = 10,
+        RangeMin = 10,
+        Range = 40,
+        Delay = 60 / 800,
+        VisualRecoilMult = 1,
+        Recoil = 0.3,
+        RecoilSide = 0.1
+    },
+    ["arccw_go_mp7"] = {
+        -- 200-117 DPS
+        Trivia_Desc = "Well-rounded SMG.",
+        HipDispersion = 400,
+        MoveDispersion = 100,
+        AccuracyMOA = 15,
+        Damage = 18,
+        DamageMin = 10,
+        RangeMin = 10,
+        Range = 40,
+        Delay = 60 / 700,
+        VisualRecoilMult = 1,
+        Recoil = 0.5,
+        RecoilSide = 0.3
+    },
+    ["arccw_go_p90"] = {
+        -- 227-121 DPS
+        Trivia_Desc = "SMG suitable for rushing B.",
+        HipDispersion = 600,
+        MoveDispersion = 75,
+        AccuracyMOA = 25,
+        Damage = 15,
+        DamageMin = 8,
+        RangeMin = 12,
+        Range = 40,
+        Delay = 60 / 900,
+        VisualRecoilMult = 1,
+        Recoil = 0.5,
+        RecoilSide = 0.3
+    },
+    ["arccw_go_bizon"] = {
+        -- 175-150 DPS
+        Trivia_Desc = "High capacity SMG.",
+        HipDispersion = 300,
+        MoveDispersion = 75,
+        AccuracyMOA = 20,
+        Damage = 15,
+        DamageMin = 12,
+        RangeMin = 10,
+        Range = 40,
+        Delay = 60 / 750,
+        VisualRecoilMult = 1,
+        Recoil = 0.25,
+        RecoilSide = 0.1
+    },
+    ["arccw_go_ump"] = {
+        -- 220-180 DPS
+        Trivia_Desc = "High damage, low fire rate SMG.",
+        HipDispersion = 500,
+        MoveDispersion = 75,
+        AccuracyMOA = 7,
+        Damage = 22,
+        DamageMin = 18,
+        RangeMin = 5,
+        Range = 40,
+        Delay = 60 / 600,
+        VisualRecoilMult = 1,
+        Recoil = 0.5,
+        RecoilSide = 0.3
+    },
+    ["arccw_go_ar15"] = {
+        -- 266-213 DPS
+        -- "omg so OP!" it's semi only dummy, practical firerate probably is more like 400-600rpm
+        Trivia_Desc = "Semi-automatic rifle.",
+        HipDispersion = 500,
+        MoveDispersion = 100,
+        AccuracyMOA = 4,
+        Damage = 22,
+        DamageMin = 18,
+        RangeMin = 15,
+        Range = 60,
+        Delay = 60 / 800,
+        VisualRecoilMult = 1.5,
+        Recoil = 0.35,
+        RecoilSide = 0.15
+    },
+    ["arccw_go_ace"] = {
+        -- 213-160 DPS
+        Trivia_Desc = "Low recoil rifle.",
+        HipDispersion = 700,
+        MoveDispersion = 150,
+        AccuracyMOA = 8,
+        Damage = 16,
+        DamageMin = 12,
+        RangeMin = 15,
+        Range = 70,
+        Delay = 60 / 800,
+        VisualRecoilMult = 1.5,
+        Recoil = 0.25,
+        RecoilSide = 0.15
+    },
+    ["arccw_go_galil_ar"] = {
+        -- 209-173 DPS
+        Trivia_Desc = "Low recoil, long range rifle.",
+        HipDispersion = 700,
+        MoveDispersion = 100,
+        AccuracyMOA = 3,
+        Damage = 19,
+        DamageMin = 16,
+        RangeMin = 25,
+        Range = 60,
+        Delay = 60 / 650,
+        VisualRecoilMult = 1.5,
+        Recoil = 0.25,
+        RecoilSide = 0.1
+    },
+    ["arccw_go_famas"] = {
+        -- 303-242 DPS
+        Trivia_Desc = "Burst fire rifle.",
+        HipDispersion = 700,
+        MoveDispersion = 150,
+        AccuracyMOA = 3,
+        Damage = 20,
+        DamageMin = 16,
+        RangeMin = 20,
+        Range = 60,
+        Delay = 60 / 900,
+        VisualRecoilMult = 1.5,
+        Recoil = 0.5,
+        RecoilSide = 0.1
+    },
+    ["arccw_go_m16a2"] = {
+        -- 293-240 DPS
+        Trivia_Desc = "Burst fire rifle, low capacity.",
+        HipDispersion = 600,
+        MoveDispersion = 150,
+        AccuracyMOA = 3,
+        Damage = 22,
+        DamageMin = 15,
+        RangeMin = 20,
+        Range = 60,
+        Delay = 60 / 800,
+        VisualRecoilMult = 1.5,
+        Recoil = 0.4,
+        RecoilSide = 0.2
+    },
+    ["arccw_go_ak47"] = {
+        -- 260-180 DPS
+        Trivia_Desc = "High recoil rifle.",
+        HipDispersion = 900,
+        MoveDispersion = 200,
+        AccuracyMOA = 10,
+        Damage = 26,
+        DamageMin = 18,
+        RangeMin = 12,
+        Range = 60,
+        Delay = 60 / 600,
+        VisualRecoilMult = 1.5,
+        Recoil = 0.7,
+        RecoilSide = 0.65
+    },
+    ["arccw_go_m4"] = {
+        -- 237-168 DPS
+        Trivia_Desc = "Well-rounded rifle.",
+        HipDispersion = 600,
+        MoveDispersion = 150,
+        AccuracyMOA = 6,
+        Damage = 19,
+        DamageMin = 14,
+        RangeMin = 15,
+        Range = 50,
+        Delay = 60 / 725,
+        VisualRecoilMult = 1.5,
+        Recoil = 0.4,
+        RecoilSide = 0.2
+    },
+    ["arccw_go_aug"] = {
+        -- 211-176 DPS
+        Trivia_Desc = "Long range, low recoil rifle.",
+        HipDispersion = 750,
+        MoveDispersion = 150,
+        AccuracyMOA = 3,
+        Damage = 18,
+        DamageMin = 15,
+        RangeMin = 20,
+        Range = 80,
+        Delay = 60 / 700,
+        VisualRecoilMult = 1.5,
+        Recoil = 0.35,
+        RecoilSide = 0.15
+    },
+    ["arccw_go_sg556"] = {
+        -- 200-175 DPS
+        Trivia_Desc = "Long range, low fire rate rifle.",
+        HipDispersion = 650,
+        MoveDispersion = 150,
+        AccuracyMOA = 2,
+        Damage = 24,
+        DamageMin = 21,
+        RangeMin = 20,
+        Range = 80,
+        Delay = 60 / 500,
+        VisualRecoilMult = 1.5,
+        Recoil = 0.45,
+        RecoilSide = 0.1
+    },
+    --[[
+        Shotguns:
+        TTT Shotgun has 88 damage and 0.8 delay, aka 110DPS, 75RPM
+    ]]
+    ["arccw_go_m1014"] = {
+        -- 140-80 DPS
+        Trivia_Desc = "Semi-automatic shotgun.",
+        HipDispersion = 400,
+        MoveDispersion = 75,
+        AccuracyMOA = 40,
+        Damage = 7,
+        DamageMin = 4,
+        Num = 8,
+        RangeMin = 5,
+        Range = 30,
+        Delay = 60 / 150,
+        VisualRecoilMult = 0.5,
+        Recoil = 4,
+        RecoilSide = 3,
+    },
+    ["arccw_go_mag7"] = {
+        --
+        Trivia_Desc = "Magazine-fed close range shotgun.",
+        HipDispersion = 300,
+        MoveDispersion = 100,
+        AccuracyMOA = 50,
+        Damage = 8,
+        DamageMin = 3,
+        Num = 8,
+        RangeMin = 8,
+        Range = 20,
+        VisualRecoilMult = 0.5,
+        Recoil = 5,
+        RecoilSide = 3,
+    },
+    ["arccw_go_870"] = {
+        --
+        Trivia_Desc = "Easy to handle shotgun.",
+        HipDispersion = 200,
+        MoveDispersion = 50,
+        AccuracyMOA = 40,
+        Damage = 8,
+        DamageMin = 5,
+        Num = 8,
+        RangeMin = 8,
+        Range = 30,
+        VisualRecoilMult = 0.5,
+        Recoil = 2,
+        RecoilSide = 2,
+    },
+    ["arccw_go_nova"] = {
+        --
+        Trivia_Desc = "Low spread shotgun.",
+        HipDispersion = 400,
+        MoveDispersion = 50,
+        AccuracyMOA = 25,
+        Damage = 9,
+        DamageMin = 7,
+        Num = 8,
+        RangeMin = 10,
+        Range = 40,
+        VisualRecoilMult = 0.5,
+        Recoil = 3,
+        RecoilSide = 2,
+    },
+    --[[
+        Machine Guns:
+        TTT HUGE has 7(?) damage and 0.06 delay, aka 116DPS, 1000RPM\
+        man this thing sucks. good thing our MGs are cooler
+        our DPS are higher because our MGs slow you down and have overheat
+    ]]
+    ["arccw_go_m249para"] = {
+        -- 294-141 DPS
+        Trivia_Desc = "Close range machine gun.",
+        HipDispersion = 700,
+        MoveDispersion = 200,
+        AccuracyMOA = 25,
+        Damage = 20,
+        DamageMin = 12,
+        RangeMin = 20,
+        Range = 80,
+        Delay = 60 / 700,
+        VisualRecoilMult = 1,
+        Recoil = 0.6,
+        RecoilSide = 0.3
+    },
+    ["arccw_go_negev"] = {
+        -- 260-166 DPS
+        Trivia_Desc = "High power machine gun.",
+        HipDispersion = 800,
+        MoveDispersion = 250,
+        AccuracyMOA = 15,
+        Damage = 25,
+        DamageMin = 16,
+        RangeMin = 25,
+        Range = 100,
+        Delay = 60 / 625,
+        VisualRecoilMult = 1,
+        Recoil = 0.7,
+        RecoilSide = 0.5
+    },
+    --[[
+        Snipers and Battle Rifles:
+        TTT Rifle has 50 damage and 1.5 delay, and a 4x headshot multiplier
+    ]]
+    ["arccw_go_ssg08"] = {
+        Trivia_Desc = "Scoped bolt action rifle.",
+        HipDispersion = 500,
+        MoveDispersion = 50,
+        AccuracyMOA = 0.25,
+        Damage = 70,
+        DamageMin = 110,
+        RangeMin = 25,
+        Range = 50,
+    },
+    ["arccw_go_g3"] = {
+        -- 260-225 DPS
+        Trivia_Desc = "High power battle rifle.",
+        Primary = {Ammo = "SniperPenetratedRound"},
+        HipDispersion = 1000,
+        MoveDispersion = 150,
+        AccuracyMOA = 1,
+        Damage = 52,
+        DamageMin = 45,
+        RangeMin = 25,
+        Range = 80,
+        Delay = 60 / 300,
+        VisualRecoilMult = 1.5,
+        Recoil = 1.25,
+        RecoilSide = 0.7
+    },
+    ["arccw_go_scar"] = {
+        -- 266-213 DPS
+        Trivia_Desc = "Low recoil battle rifle.",
+        Primary = {Ammo = "SniperPenetratedRound"},
+        HipDispersion = 900,
+        MoveDispersion = 100,
+        AccuracyMOA = 2,
+        Damage = 40,
+        DamageMin = 32,
+        RangeMin = 25,
+        Range = 80,
+        Delay = 60 / 400,
+        VisualRecoilMult = 1.5,
+        Recoil = 0.8,
+        RecoilSide = 0.5
+    },
+}
+
+local function GSOE()
     local wpnList = list.GetForEdit("Weapon")
     for class, t in pairs(balanceList) do
         local stored = weapons.GetStored(class)
         if not stored then continue end
+
         for i, v in pairs(t) do
             if i == "AttachmentElements" then
                 for name, ae in pairs(v) do
                     stored.AttachmentElements[name] = ae
                 end
             elseif gunBal:GetBool() and i ~= "Category" and i ~= "TTT_Stats" then
-                stored[i] = v
+                if i == "Primary" or i == "Attachments" then
+                    stored[i] = table.Merge(stored[i], v)
+                else
+                    stored[i] = v
+                end
             end
         end
-        if gunBal:GetBool() and engine.ActiveGamemode() == "terrortown" and t.TTT_Stats then
-            for k, v in pairs(t.TTT_Stats) do
-                stored[k] = v
+        if engine.ActiveGamemode() == "terrortown" or tttEdit:GetInt() == 2 then
+            if tttEdit:GetBool() and tttEditList[class] then
+                for i, v in pairs(tttEditList[class]) do
+                    if i == "Primary" or i == "Attachments" then
+                        stored[i] = table.Merge(stored[i], v)
+                    else
+                        stored[i] = v
+                    end
+                end
+            elseif gunBal:GetBool() and t.TTT_Stats then
+                for i, v in pairs(t.TTT_Stats) do
+                    if i == "Primary" or i == "Attachments" then
+                        stored[i] = table.Merge(stored[i], v)
+                    else
+                        stored[i] = v
+                    end
+                end
             end
         end
+
+
 
         if (stored.Num or 1) > 1 and sgMult:GetFloat() ~= 1 then
             stored.Damage = math.Round(stored.Damage * sgMult:GetFloat())
@@ -644,7 +1222,7 @@ local function GSOE()
 
     local r8 = weapons.GetStored("arccw_go_r8")
     r8.ViewModel = "models/weapons/arccw_go/v_pist_r8_extras.mdl"
-    r8.WorldModel = "models/weapons/arccw_go/v_pist_r8_extras.mdl"
+    --r8.WorldModel = "models/weapons/arccw_go/v_pist_r8_extras.mdl" -- I fucked up the collision mesh so let's not
     r8.Delay = 60 / 180
     r8.TriggerDelay = true
     r8.Hook_TranslateAnimation = function(wep, anim)
@@ -1313,12 +1891,106 @@ local function PostLoadAtt()
                 Mult_HipDispersion = "nil",
                 Description = "Precision-tooled rounds with carefully measured powder improves weapon accuracy and range, but deals slightly less damage.",
             },
+
+            ["go_negev_belt_100"] = {
+                Mult_HeatCapacity = 1.5,
+            },
         }
+        local ttttable = {
+            ["go_m249_mag_12g_45"] = {
+                Mult_AccuracyMOA = 2,
+            },
+            ["go_negev_belt_100"] = {
+                Mult_AccuracyMOA = 2,
+                Mult_Damage = 0.7,
+                Mult_DamageMin = 0.7,
+                Mult_Range = 0.5,
+            },
+            ["go_g3_barrel_long"] = {
+                Mult_Damage = 1.25,
+                Mult_DamageMin = 1.25,
+                Mult_RPM = 0.4
+            },
+            ["go_scar_barrel_long"] = {
+                Mult_Damage = 1.2,
+                Mult_DamageMin = 1.2,
+                Mult_RPM = 0.45
+            },
+            ["go_glock_slide_auto"] = {
+                Mult_HipDispersion = 3,
+                Mult_AccuracyMOA = 2,
+                Mult_Recoil = 0.85,
+            },
+            ["go_cz75_slide_auto"] = {
+                Mult_RPM = 2,
+                Mult_HipDispersion = 2,
+                Mult_Recoil = 0.75,
+            },
+            ["go_m9_slide_auto"] = {
+                Mult_Damage = 1.5,
+                Mult_DamageMin = 1.5,
+                Mult_HipDispersion = 1.5,
+                Mult_Recoil = 0.5,
+                Mult_RPM = 3,
+                Override_Firemodes = {
+                    {
+                        Mode = -3,
+                        Mult_RPM = 1,
+                        PostBurstDelay = 0.2,
+                    },
+                    { Mode = 0 }
+                }
+            },
+            ["go_mac10_barrel_long"] = {
+                Mult_Damage = 1.5,
+                Mult_DamageMin = 1.5,
+            },
+            ["go_scar_mag_20_556"] = {
+                Mult_RPM = 1.5,
+                Mult_Damage = 0.5,
+                Mult_DamageMin = 0.5,
+                Mult_AccuracyMOA = 2,
+            },
+            ["go_scar_mag_30_556"] = {
+                Mult_RPM = 1.5,
+                Mult_Damage = 0.5,
+                Mult_DamageMin = 0.5,
+                Mult_AccuracyMOA = 2,
+            },
+            ["go_scar_mag_60_556"] = {
+                Mult_RPM = 1.5,
+                Mult_Damage = 0.5,
+                Mult_DamageMin = 0.5,
+                Mult_AccuracyMOA = 2,
+            },
+            ["go_g3_mag_20_556"] = {
+                Mult_RPM = 2,
+                Mult_Damage = 0.4,
+                Mult_DamageMin = 0.4,
+                Mult_AccuracyMOA = 3,
+            },
+            ["go_g3_mag_30_556"] = {
+                Mult_RPM = 2,
+                Mult_Damage = 0.4,
+                Mult_DamageMin = 0.4,
+                Mult_AccuracyMOA = 3,
+            },
+            ["go_g3_mag_50_556"] = {
+                Mult_RPM = 2,
+                Mult_Damage = 0.4,
+                Mult_DamageMin = 0.4,
+                Mult_AccuracyMOA = 3,
+            },
+        }
+
+        if tttEdit:GetInt() == 2 or (tttEdit:GetInt() == 1 and engine.ActiveGamemode() == "terrortown") then
+            baltable = table.Merge(baltable, ttttable)
+        end
 
         for i, t in pairs(baltable) do
             if not ArcCW.AttachmentTable[i] then continue end
             for k, v in pairs(t) do
-                if k == "Desc_Pros" or k == "Desc_Cons" then
+                if k == "Desc_Pros" or k == "Desc_Cons" or k == "Desc_Neutrals" then
                     table.Add(ArcCW.AttachmentTable[i][k], v)
                 elseif v == "nil" then
                     ArcCW.AttachmentTable[i][k] = nil
