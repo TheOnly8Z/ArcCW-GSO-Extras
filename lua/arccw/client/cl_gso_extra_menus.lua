@@ -10,6 +10,10 @@ local GSOEPanel_SV = {
             choices = {[0] = "#arccw.cvar.gsoe_catmode.0", [1] = "#arccw.cvar.gsoe_catmode.1", [2] = "#arccw.cvar.gsoe_catmode.2", [3] = "#arccw.cvar.gsoe_catmode.3"}},
     { type = "c", text = "#arccw.cvar.gsoe_catmode.desc" },
 
+    { type = "o", text = "#arccw.cvar.gsoe_tttbal", var = "arccw_gsoe_tttbal", sv = true,
+            choices = {[0] = "#arccw.combobox.disabled", [1] = "#arccw.cvar.gsoe_tttbal.1", [2] = "#arccw.cvar.gsoe_tttbal.2"}},
+    { type = "c", text = "#arccw.cvar.gsoe_tttbal.desc" },
+
     --{ type = "i", text = "#arccw.cvar.gsoe_lasermode", var = "arccw_gsoe_lasermode", sv = true, min = 0, max = 2 },
     { type = "o", text = "#arccw.cvar.gsoe_lasermode", var = "arccw_gsoe_lasermode", sv = true,
             choices = {[0] = "#arccw.cvar.gsoe_lasermode.0", [1] = "#arccw.cvar.gsoe_lasermode.1", [2] = "#arccw.cvar.gsoe_lasermode.2", [3] = "#arccw.cvar.gsoe_lasermode.3"}},

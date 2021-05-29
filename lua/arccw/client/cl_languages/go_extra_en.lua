@@ -28,7 +28,11 @@ L["arccw.cvar.gsoe_addsway.2"]             = "2 - Enabled for everything"
 L["arccw.cvar.gsoe_addsway.desc"]          = "Dynamically insert aim sway to GSO (or all) guns and attachments. Requires reload. Gun sway is based on hip dispersion and handling; attachment sway is based on attachment type (range for barrels and handling for optics)."
 L["arccw.cvar.gsoe_mult_fire"]             = "Molotov Damage"
 L["arccw.cvar.gsoe_mult_thermite"]         = "Thermite Damage"
-L["arccw.cvar.gsoe_mult_shotgun"]    = "GSO Shotgun Damage"
+L["arccw.cvar.gsoe_mult_shotgun"]          = "GSO Shotgun Damage"
+L["arccw.cvar.gsoe_tttbal"]                = "TTT-Specific Rebalance"
+L["arccw.cvar.gsoe_tttbal.desc"]           = "Drastically overhaul all weapon stats to be more in-line with TTT's vanilla weapon balance."
+L["arccw.cvar.gsoe_tttbal.1"]              = "1 - Enabled in TTT"
+L["arccw.cvar.gsoe_tttbal.2"]              = "2 - Force Enabled"
 
 -- Client
 L["arccw.cvar.gsoe_laser_enabled"]         = "Custom laser colors"
