@@ -979,7 +979,6 @@ local tttEditList = {
         RecoilSide = 2,
     },
     ["arccw_go_nova"] = {
-        --
         Trivia_Desc = "Low spread shotgun.",
         HipDispersion = 400,
         MoveDispersion = 50,
@@ -1002,7 +1001,7 @@ local tttEditList = {
     ["arccw_go_m249para"] = {
         -- 294-141 DPS
         Trivia_Desc = "Close range machine gun.",
-        HipDispersion = 700,
+        HipDispersion = 850,
         MoveDispersion = 200,
         AccuracyMOA = 25,
         Damage = 20,
@@ -1011,13 +1010,13 @@ local tttEditList = {
         Range = 80,
         Delay = 60 / 700,
         VisualRecoilMult = 1,
-        Recoil = 0.6,
+        Recoil = 0.5,
         RecoilSide = 0.3
     },
     ["arccw_go_negev"] = {
         -- 260-166 DPS
         Trivia_Desc = "High power machine gun.",
-        HipDispersion = 800,
+        HipDispersion = 1000,
         MoveDispersion = 250,
         AccuracyMOA = 15,
         Damage = 25,
@@ -1035,18 +1034,18 @@ local tttEditList = {
     ]]
     ["arccw_go_ssg08"] = {
         Trivia_Desc = "Scoped bolt action rifle.",
-        HipDispersion = 500,
+        HipDispersion = 600,
         MoveDispersion = 50,
         AccuracyMOA = 0.25,
         Damage = 70,
         DamageMin = 110,
-        RangeMin = 25,
+        RangeMin = 10,
         Range = 50,
     },
     ["arccw_go_g3"] = {
         Trivia_Desc = "High power battle rifle.",
         Primary = {Ammo = "SniperPenetratedRound"},
-        HipDispersion = 1100,
+        HipDispersion = 1200,
         MoveDispersion = 150,
         AccuracyMOA = 1,
         Damage = 30,
@@ -1061,7 +1060,7 @@ local tttEditList = {
     ["arccw_go_scar"] = {
         Trivia_Desc = "Low recoil battle rifle.",
         Primary = {Ammo = "SniperPenetratedRound"},
-        HipDispersion = 900,
+        HipDispersion = 1100,
         MoveDispersion = 100,
         AccuracyMOA = 2,
         Damage = 24,
