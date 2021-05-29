@@ -32,7 +32,7 @@ end
 
 att.O_Hook_Override_HeatDissipation = function(wep, data)
     local tbl = {}
-    tbl.current = (wep.RegularClipSize or wep.Primary.ClipSize) * 0.125
+    tbl.current = (wep.RegularClipSize or wep.Primary.ClipSize) * 0.2
             * ((wep:Clip1() == 0 or wep:GetReloading()) and 0.25 or 1)
             * (wep:Clip1() <= 0 and wep:GetHeatLocked() and (wep:Clip1() > 0 and 1.5 or 0) or 1)
             * (wep:GetBuff_Override("GSOE_Overdrive") and 0.75 or 1)
