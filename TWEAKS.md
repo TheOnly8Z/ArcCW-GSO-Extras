@@ -368,12 +368,12 @@ Slight delay from firing animation to cycling. Shoot as soon as bolt has been cy
 No longer does knockback.
 Does damage every 0.1s instead of 0.25s.
 Damage reduced to 50% (configurable).
-Damage ramps up from 20% to 100% over a period of 3 seconds.
+Damage ramps up over a period of 1 second.
 
 ### Molotov Cocktail
 No longer does knockback.
 Damage reduced to 50% (configurable).
-Damage ramps up from 20% to 100% over a period of 5 seconds.
+Damage ramps up over a period of 3 seconds.
 
 ### Model 5210 Smoke
 Can extinguish molotovs and thermite grenades.
