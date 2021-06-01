@@ -651,33 +651,46 @@ local tttEditList = {
     },
 
     ["arccw_go_deagle"] = {
-        -- 100-60 DPS
+        -- 104-70 DPS
         Trivia_Desc = "Powerful magnum pistol.",
         HipDispersion = 500,
         MoveDispersion = 50,
         AccuracyMOA = 5,
-        Damage = 50,
-        DamageMin = 30,
+        Damage = 52,
+        DamageMin = 35,
         RangeMin = 5,
-        Range = 15,
+        Range = 20,
         Delay = 60 / 120,
         VisualRecoilMult = 0.25,
         Recoil = 4,
     },
     ["arccw_go_r8"] = {
-        -- 136-106DPS
-        -- Probably much less due to trigger delay
+        -- Trigger delay makes this somewhat weaker than expected
         Trivia_Desc = "Accurate revolver, can be fanned for faster firing.",
-        HipDispersion = 200,
+        HipDispersion = 100,
         MoveDispersion = 25,
         AccuracyMOA = 5,
-        Damage = 45,
-        DamageMin = 35,
+        Damage = 49,
+        DamageMin = 41,
         RangeMin = 10,
-        Range = 30,
+        Range = 40,
         Delay = 60 / 180,
         VisualRecoilMult = 0.25,
-        Recoil = 3.5,
+        Recoil = 2,
+    },
+    ["arccw_go_sw29"] = {
+        -- 128-88 DPS
+        Trivia_Desc = "Fast firing revolver.",
+        HipDispersion = 200,
+        MoveDispersion = 100,
+        AccuracyMOA = 8,
+        Damage = 32,
+        DamageMin = 22,
+        RangeMin = 10,
+        Range = 30,
+        Delay = 60 / 240,
+        VisualRecoilMult = 0.25,
+        Recoil = 3,
     },
 
     --[[
@@ -688,13 +701,13 @@ local tttEditList = {
         rifles can have higher because they have shit hip dispersion
     ]]
     ["arccw_go_mac10"] = {
-        -- 261-152 DPS
+        -- 239-130 DPS
         Trivia_Desc = "Short range bullet hose SMG.",
         HipDispersion = 500,
         MoveDispersion = 150,
-        AccuracyMOA = 30,
-        Damage = 12,
-        DamageMin = 7,
+        AccuracyMOA = 20,
+        Damage = 11,
+        DamageMin = 6,
         RangeMin = 5,
         Range = 30,
         Delay = 60 / 1300,
@@ -763,14 +776,15 @@ local tttEditList = {
         RecoilSide = 0.3
     },
     ["arccw_go_bizon"] = {
-        -- 175-150 DPS
+        -- 175-100 DPS
+        -- this is too easy to use due to the big mag and low spread
         Trivia_Desc = "High capacity SMG.",
-        HipDispersion = 300,
-        MoveDispersion = 75,
+        HipDispersion = 400,
+        MoveDispersion = 150,
         AccuracyMOA = 20,
-        Damage = 15,
-        DamageMin = 12,
-        RangeMin = 10,
+        Damage = 14,
+        DamageMin = 8,
+        RangeMin = 5,
         Range = 40,
         Delay = 60 / 750,
         VisualRecoilMult = 1,
@@ -785,7 +799,7 @@ local tttEditList = {
         AccuracyMOA = 7,
         Damage = 22,
         DamageMin = 18,
-        RangeMin = 5,
+        RangeMin = 15,
         Range = 40,
         Delay = 60 / 600,
         VisualRecoilMult = 1,
@@ -824,14 +838,14 @@ local tttEditList = {
         RecoilSide = 0.15
     },
     ["arccw_go_galil_ar"] = {
-        -- 209-173 DPS
+        -- 184-152 DPS
         Trivia_Desc = "Low recoil, long range rifle.",
         HipDispersion = 700,
         MoveDispersion = 100,
         AccuracyMOA = 3,
-        Damage = 19,
-        DamageMin = 16,
-        RangeMin = 25,
+        Damage = 17,
+        DamageMin = 14,
+        RangeMin = 20,
         Range = 60,
         Delay = 60 / 650,
         VisualRecoilMult = 1.5,
@@ -914,13 +928,14 @@ local tttEditList = {
         RecoilSide = 0.15
     },
     ["arccw_go_sg556"] = {
-        -- 183-158 DPS
+        -- 166-141 DPS
+        -- very easy to use midrange due to low RPM and recoil
         Trivia_Desc = "Long range, low fire rate rifle.",
         HipDispersion = 700,
         MoveDispersion = 150,
         AccuracyMOA = 2,
-        Damage = 22,
-        DamageMin = 19,
+        Damage = 20,
+        DamageMin = 17,
         RangeMin = 20,
         Range = 80,
         Delay = 60 / 500,
@@ -933,12 +948,11 @@ local tttEditList = {
         TTT Shotgun has 88 damage and 0.8 delay, aka 110DPS, 75RPM
     ]]
     ["arccw_go_m1014"] = {
-        -- 140-80 DPS
         Trivia_Desc = "Semi-automatic shotgun.",
         HipDispersion = 300,
-        MoveDispersion = 100,
+        MoveDispersion = 75,
         AccuracyMOA = 35,
-        Damage = 7,
+        Damage = 6,
         DamageMin = 4,
         Num = 8,
         RangeMin = 5,
@@ -949,12 +963,11 @@ local tttEditList = {
         RecoilSide = 3,
     },
     ["arccw_go_mag7"] = {
-        --
         Trivia_Desc = "Magazine-fed close range shotgun.",
         HipDispersion = 200,
-        MoveDispersion = 75,
+        MoveDispersion = 50,
         AccuracyMOA = 45,
-        Damage = 8,
+        Damage = 7,
         DamageMin = 3,
         Num = 8,
         RangeMin = 5,
@@ -964,12 +977,11 @@ local tttEditList = {
         RecoilSide = 3,
     },
     ["arccw_go_870"] = {
-        --
         Trivia_Desc = "Easy to handle shotgun.",
         HipDispersion = 150,
-        MoveDispersion = 50,
+        MoveDispersion = 75,
         AccuracyMOA = 35,
-        Damage = 8,
+        Damage = 7,
         DamageMin = 5,
         Num = 8,
         RangeMin = 5,
@@ -983,7 +995,7 @@ local tttEditList = {
         HipDispersion = 300,
         MoveDispersion = 50,
         AccuracyMOA = 25,
-        Damage = 9,
+        Damage = 8,
         DamageMin = 6,
         Num = 8,
         RangeMin = 10,
@@ -1006,8 +1018,8 @@ local tttEditList = {
         AccuracyMOA = 15,
         Damage = 20,
         DamageMin = 12,
-        RangeMin = 15,
-        Range = 60,
+        RangeMin = 10,
+        Range = 50,
         Delay = 60 / 700,
         VisualRecoilMult = 1,
         Recoil = 0.5,
@@ -1021,8 +1033,8 @@ local tttEditList = {
         AccuracyMOA = 12,
         Damage = 25,
         DamageMin = 16,
-        RangeMin = 20,
-        Range = 80,
+        RangeMin = 15,
+        Range = 75,
         Delay = 60 / 625,
         VisualRecoilMult = 1,
         Recoil = 0.7,
@@ -1034,11 +1046,11 @@ local tttEditList = {
     ]]
     ["arccw_go_ssg08"] = {
         Trivia_Desc = "Scoped bolt action rifle.",
-        HipDispersion = 600,
-        MoveDispersion = 50,
+        HipDispersion = 500,
+        MoveDispersion = 25,
         AccuracyMOA = 0.25,
         Damage = 70,
-        DamageMin = 110,
+        DamageMin = 125,
         RangeMin = 10,
         Range = 50,
     },
@@ -1049,9 +1061,9 @@ local tttEditList = {
         MoveDispersion = 150,
         AccuracyMOA = 1,
         Damage = 30,
-        DamageMin = 48,
+        DamageMin = 65,
         RangeMin = 20,
-        Range = 50,
+        Range = 60,
         Delay = 60 / 300,
         VisualRecoilMult = 1.5,
         Recoil = 1.5,
@@ -1064,13 +1076,28 @@ local tttEditList = {
         MoveDispersion = 100,
         AccuracyMOA = 2,
         Damage = 24,
-        DamageMin = 42,
+        DamageMin = 52,
         RangeMin = 20,
-        Range = 50,
+        Range = 60,
         Delay = 60 / 400,
         VisualRecoilMult = 1.5,
         Recoil = 0.8,
         RecoilSide = 0.5
+    },
+    ["arccw_go_fnfal"] = {
+        Trivia_Desc = "Semi-automatic battle rifle.",
+        Primary = {Ammo = "SniperPenetratedRound"},
+        HipDispersion = 600,
+        MoveDispersion = 75,
+        AccuracyMOA = 3,
+        Damage = 28,
+        DamageMin = 60,
+        RangeMin = 20,
+        Range = 60,
+        Delay = 60 / 500,
+        VisualRecoilMult = 1.5,
+        Recoil = 1.3,
+        RecoilSide = 0.6
     },
 }
 
@@ -1739,7 +1766,13 @@ local function PostLoadAtt()
             ["go_mp5_barrel_short"] = bal_sb,
             ["go_mag7_barrel_short"] = bal_sb,
             ["go_m4_barrel_short"] = bal_sb,
-            ["go_m249_barrel_short"] = bal_sb,
+            ["go_m249_barrel_short"] = {
+                Mult_DrawTime = 0.85,
+                Mult_HolsterTime = 0.85,
+                Mult_ReloadTime = 0.9,
+                Mult_HipDispersion = 0.9,
+                Mult_HeatCapacity = 0.75,
+            },
             ["go_m1014_barrel_short"] = bal_sb,
             ["go_g3_barrel_short"] = bal_sb,
             ["go_famas_barrel_short"] = bal_sb,
@@ -1840,6 +1873,10 @@ local function PostLoadAtt()
             ["go_g3_mag_60_556"] = {Mult_Recoil = 0.4},
             ["go_g3_mag_30_556"] = {Mult_Recoil = 0.4},
             ["go_g3_mag_20_556"] = {Mult_Recoil = 0.4},
+            ["go_g3_stock_collapsible"] = {
+                Description = "Retractable and lightweight stock for the G3, improving sight time and moving spread at the cost of recoil.",
+                Mult_SightTime = 0.85,
+            },
 
             -- Improved shotgun pistol stocks
             ["go_nova_stock_pistol"] = {
@@ -1869,6 +1906,32 @@ local function PostLoadAtt()
                 Mult_RPM = 1.2,
             },
 
+            ["go_usp_mag_20"] = {
+                Mult_MoveSpeed = 0.95,
+                Mult_SightTime = 1.15,
+                Mult_ReloadTime = 1.25,
+            },
+
+            ["go_usp_mag_20"] = {
+                Mult_MoveSpeed = 0.9,
+                Mult_SightTime = 1.25,
+                Mult_ReloadTime = 1.4,
+                SortOrder = 19,
+            },
+
+            ["go_supp_osprey"] = {
+                Description = "Medium sound suppressor with some ballistic-enhancing properties. Less quiet but more agile than other suppressors.",
+                Mult_ShootVol = 0.85,
+                Mult_SightTime = 1.05,
+                Mult_HipDispersion = 1.08,
+            },
+
+            ["go_supp_osprey_shot"] = {
+                Description = "Medium sound suppressor with some ballistic-enhancing properties. Less quiet but more agile than other suppressors.",
+                Mult_ShootVol = 0.85,
+                Mult_SightTime = 1.08,
+            },
+
             -- Compact pistol
             ["go_glock_slide_short"] = bal_compactpist,
             ["go_p250_slide_short"] = bal_compactpist,
@@ -1894,8 +1957,23 @@ local function PostLoadAtt()
             },
         }
         local ttttable = {
+            -- MG
             ["go_m249_mag_12g_45"] = {
-                Mult_AccuracyMOA = 2,
+                Mult_AccuracyMOA = 3, -- 45 MOA
+                Mult_Damage = 3, -- 60 dmg
+                Mult_DamageMin = 2.5, -- 30 dmg
+                Mult_RPM = 0.6, -- 420 RPM
+                Mult_HipDispersion = 1.5,
+                Mult_RecoilSide = 3,
+                Mult_HeatCapacity = 0.4, -- 15 shots
+                Mult_HeatDissipation = 0.4,
+                Mult_HeatDelayTime = 0.75,
+            },
+            ["go_m249_mag_9_200"] = {
+                Mult_Damage = 10 / 20,
+                Mult_DamageMin = 6 / 12,
+                Mult_Recoil = 0.75,
+                Mult_HeatDissipation = 2,
             },
             ["go_negev_belt_100"] = {
                 Mult_AccuracyMOA = 2,
@@ -1903,16 +1981,69 @@ local function PostLoadAtt()
                 Mult_DamageMin = 0.7,
                 Mult_Range = 0.5,
             },
+
+            -- Sniper
+            ["go_ssg08_mag_10_762"] = {
+                Override_Ammo = "nil", --"SniperPenetratedRound",
+                Mult_RPM = 1.5,
+                Mult_Damage = 58 / 70,
+                Mult_DamageMin = 50 / 125,
+                Mult_Range = 1.5,
+                Mult_MinRange = 0.25,
+                Mult_HipDispersion = 0.5,
+            },
             ["go_g3_barrel_long"] = {
-                Mult_Damage = 1.25,
-                Mult_DamageMin = 1.25,
-                Mult_RPM = 0.4
+                Mult_RPM = 0.4,
+                Mult_RangeMin = 1.5,
             },
             ["go_scar_barrel_long"] = {
-                Mult_Damage = 1.2,
-                Mult_DamageMin = 1.2,
-                Mult_RPM = 0.45
+                Mult_RPM = 0.45,
+                Mult_RangeMin = 1.5,
             },
+            ["go_g3_mag_20_556"] = {
+                Mult_RPM = 1.6,
+                Mult_Damage = 22 / 30,
+                Mult_DamageMin = 18 / 65,
+                Mult_AccuracyMOA = 3,
+                Mult_Recoil = 0.5,
+            },
+            ["go_g3_mag_30_556"] = {
+                Mult_RPM = 1.6,
+                Mult_Damage = 22 / 30,
+                Mult_DamageMin = 18 / 65,
+                Mult_AccuracyMOA = 3,
+                Mult_Recoil = 0.5,
+            },
+            ["go_g3_mag_50_556"] = {
+                Mult_RPM = 1.6,
+                Mult_Damage = 22 / 30,
+                Mult_DamageMin = 18 / 65,
+                Mult_AccuracyMOA = 3,
+                Mult_Recoil = 0.5,
+            },
+            ["go_scar_mag_20_556"] = {
+                Mult_RPM = 1.5,
+                Mult_Damage = 20 / 24,
+                Mult_DamageMin = 16 / 52,
+                Mult_AccuracyMOA = 3,
+                Mult_Recoil = 0.75,
+            },
+            ["go_scar_mag_30_556"] = {
+                Mult_RPM = 1.5,
+                Mult_Damage = 20 / 24,
+                Mult_DamageMin = 16 / 52,
+                Mult_AccuracyMOA = 3,
+                Mult_Recoil = 0.75,
+            },
+            ["go_scar_mag_60_556"] = {
+                Mult_RPM = 1.5,
+                Mult_Damage = 20 / 24,
+                Mult_DamageMin = 16 / 52,
+                Mult_AccuracyMOA = 3,
+                Mult_Recoil = 0.75,
+            },
+
+            -- Pistol
             ["go_glock_slide_auto"] = {
                 Mult_HipDispersion = 3,
                 Mult_AccuracyMOA = 2,
@@ -1938,45 +2069,29 @@ local function PostLoadAtt()
                     { Mode = 0 }
                 }
             },
+
+            -- SMG
             ["go_mac10_barrel_long"] = {
                 Mult_Damage = 1.5,
                 Mult_DamageMin = 1.5,
             },
-            ["go_scar_mag_20_556"] = {
-                Mult_RPM = 1.5,
-                Mult_Damage = 0.5,
-                Mult_DamageMin = 0.5,
+            ["go_mac10_barrel_stub"] = {
                 Mult_AccuracyMOA = 2,
+                Mult_HipDispersion = 0.75,
+                Mult_RPM = 1,
             },
-            ["go_scar_mag_30_556"] = {
-                Mult_RPM = 1.5,
-                Mult_Damage = 0.5,
-                Mult_DamageMin = 0.5,
-                Mult_AccuracyMOA = 2,
+
+            -- Shotgun
+            ["go_ammo_sg_slug"] = {
+                Damage = "nil",
+                DamageMin = 1.1,
+                HipDispersion = 1.25
             },
-            ["go_scar_mag_60_556"] = {
-                Mult_RPM = 1.5,
-                Mult_Damage = 0.5,
-                Mult_DamageMin = 0.5,
-                Mult_AccuracyMOA = 2,
-            },
-            ["go_g3_mag_20_556"] = {
-                Mult_RPM = 2,
-                Mult_Damage = 0.4,
-                Mult_DamageMin = 0.4,
-                Mult_AccuracyMOA = 3,
-            },
-            ["go_g3_mag_30_556"] = {
-                Mult_RPM = 2,
-                Mult_Damage = 0.4,
-                Mult_DamageMin = 0.4,
-                Mult_AccuracyMOA = 3,
-            },
-            ["go_g3_mag_50_556"] = {
-                Mult_RPM = 2,
-                Mult_Damage = 0.4,
-                Mult_DamageMin = 0.4,
-                Mult_AccuracyMOA = 3,
+            ["go_ammo_sg_sabot"] = {
+                Damage = 0.75,
+                DamageMin = 1.5,
+                Range = 0.5,
+                HipDispersion = 1.5
             },
         }
 
@@ -1997,10 +2112,6 @@ local function PostLoadAtt()
             end
         end
 
-
-        -- G3 Stock
-        ArcCW.AttachmentTable["go_g3_stock_collapsible"].Description = "Retractable and lightweight stock for the G3, improving sight time and moving spread at the cost of recoil."
-        ArcCW.AttachmentTable["go_g3_stock_collapsible"].Mult_SightTime = 0.85
 
         -- Perks
         ArcCW.AttachmentTable["go_perk_rapidfire"].Mult_RPM = 1.1
@@ -2044,28 +2155,10 @@ local function PostLoadAtt()
         ArcCW.AttachmentTable["go_ammo_sg_sabot"].Override_Penetration = 24
         ArcCW.AttachmentTable["go_ammo_sg_sabot"].Desc_Pros = {"pro.pen.24"}
 
-        ArcCW.AttachmentTable["go_usp_mag_20"].Mult_MoveSpeed = 0.95
-        ArcCW.AttachmentTable["go_usp_mag_20"].Mult_SightTime = 1.15
-        ArcCW.AttachmentTable["go_usp_mag_20"].Mult_ReloadTime = 1.25
-
-        ArcCW.AttachmentTable["go_usp_mag_30"].Mult_MoveSpeed = 0.9
-        ArcCW.AttachmentTable["go_usp_mag_30"].Mult_SightTime = 1.25
-        ArcCW.AttachmentTable["go_usp_mag_30"].Mult_ReloadTime = 1.4
-        ArcCW.AttachmentTable["go_usp_mag_30"].SortOrder = 19
-
-        ArcCW.AttachmentTable["go_supp_osprey"].Description = "Medium sound suppressor with some ballistic-enhancing properties. Less quiet but more agile than other suppressors."
-        ArcCW.AttachmentTable["go_supp_osprey"].Mult_ShootVol = 0.85
-        ArcCW.AttachmentTable["go_supp_osprey"].Mult_SightTime = 1.05
-        ArcCW.AttachmentTable["go_supp_osprey"].Mult_HipDispersion = 1.08
-
-        ArcCW.AttachmentTable["go_supp_osprey_shot"].Description = "Medium sound suppressor with some ballistic-enhancing properties. Unable to fully suppress shotguns due to its size, but is slightly more agile than other suppressors."
-        ArcCW.AttachmentTable["go_supp_osprey_shot"].Mult_ShootVol = 0.85
-        ArcCW.AttachmentTable["go_supp_osprey_shot"].Mult_SightTime = 1.08
-
         ArcCW.AttachmentTable["go_muzz_brake"].Mult_Recoil = 0.95
         --ArcCW.AttachmentTable["go_muzz_brake"].Mult_RecoilSide = 0.8
 
-        ArcCW.AttachmentTable["go_perk_headshot"].Description = "Increases headshot damage by 50%."
+        ArcCW.AttachmentTable["go_perk_headshot"].Description = "Excellent shot placement improves headshot damage even further."
         ArcCW.AttachmentTable["go_perk_headshot"].Desc_Pros = {"pro.gsoe.perk_headshot"}
         ArcCW.AttachmentTable["go_perk_headshot"].Hook_BulletHit = function(wep, data)
             if SERVER and data.tr.HitGroup == HITGROUP_HEAD then
@@ -2101,6 +2194,7 @@ local function PostLoadAtt()
     if laserColor:GetBool() then
         --ArcCW.AttachmentTable["go_laser"].LaserStrength = 0.2 * 2
         ArcCW.AttachmentTable["go_laser"].Description = "Barely visible laser pointer. Improves hip-fire accuracy."
+        ArcCW.AttachmentTable["go_laser"].BaseIronsFirst = true
         ArcCW.AttachmentTable["go_laser"].ToggleStats = {
             {
                 PrintName = "On",
@@ -2123,6 +2217,7 @@ local function PostLoadAtt()
         }
         --ArcCW.AttachmentTable["go_laser_peq"].LaserStrength = 1 * 2
         ArcCW.AttachmentTable["go_laser_peq"].Description = "Incredibly bright laser pointer. Improves hip fire, moving accuracy, and sight time."
+        ArcCW.AttachmentTable["go_laser_peq"].BaseIronsFirst = true
         ArcCW.AttachmentTable["go_laser_peq"].Mult_SightTime = 1.1
         ArcCW.AttachmentTable["go_laser_peq"].ToggleStats = {
             {
@@ -2131,7 +2226,7 @@ local function PostLoadAtt()
                 LaserColor = Color(0, 0, 255),
                 Mult_HipDispersion = 0.75,
                 Mult_MoveDispersion = 0.75,
-                Mult_SightTime = 0.85,
+                Mult_SightTime = 0.82,
                 AdditionalSights = {
                     {
                         Pos = Vector(-2, 10, -4), -- relative to where att.Model is placed
@@ -2148,6 +2243,7 @@ local function PostLoadAtt()
         }
         --ArcCW.AttachmentTable["go_laser_surefire"].LaserStrength = 0.6 * 2
         ArcCW.AttachmentTable["go_laser_surefire"].Description = "Somewhat visible laser pointer. Improves hip fire and move dispersion."
+        ArcCW.AttachmentTable["go_laser_surefire"].BaseIronsFirst = true
         ArcCW.AttachmentTable["go_laser_surefire"].ToggleStats = {
             {
                 PrintName = "On",
