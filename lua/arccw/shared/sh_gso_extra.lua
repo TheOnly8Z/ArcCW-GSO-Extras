@@ -114,35 +114,35 @@ local balanceList = {
         Damage = 30,
         DamageMin = 12,
         Category = "SMG",
-        TTTWeight = 200,
+        TTTWeight = 2000,
         TTTWeaponType = "weapon_ttt_m16",
     },
     ["arccw_go_mp5"] = {
         Damage = 24,
         DamageMin = 18,
         Category = "SMG",
-        TTTWeight = 200,
+        TTTWeight = 2000,
         TTTWeaponType = "weapon_ttt_m16",
     },
     ["arccw_go_mp7"] = {
         Damage = 25,
         DamageMin = 17,
         Category = "SMG",
-        TTTWeight = 200,
+        TTTWeight = 2000,
         TTTWeaponType = "weapon_zm_mac10",
     },
     ["arccw_go_mp9"] = {
         Damage = 27,
         DamageMin = 15,
         Category = "SMG",
-        TTTWeight = 200,
+        TTTWeight = 2000,
         TTTWeaponType = "weapon_zm_mac10",
     },
     ["arccw_go_p90"] = {
         Damage = 24,
         DamageMin = 20,
         Category = "SMG",
-        TTTWeight = 100,
+        TTTWeight = 1000,
         TTTWeaponType = "weapon_zm_mac10",
     },
     ["arccw_go_ump"] = {
@@ -150,12 +150,12 @@ local balanceList = {
         DamageMin = 19,
         Recoil = 0.31,
         Category = "SMG",
-        TTTWeight = 200,
+        TTTWeight = 2000,
         TTTWeaponType = "weapon_ttt_m16",
     },
     ["arccw_go_bizon"] = {
         Category = "SMG",
-        TTTWeight = 200,
+        TTTWeight = 2000,
         TTTWeaponType = "weapon_ttt_m16",
     },
     -- ARs
@@ -166,14 +166,14 @@ local balanceList = {
         SpeedMult = 0.93,
         Range = 120,
         Category = "Rifles",
-        TTTWeight = 50,
+        TTTWeight = 500,
         TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_mac10"},
     },
     ["arccw_go_aug"] = {
         Damage = 28,
         DamageMin = 24,
         Category = "Rifles",
-        TTTWeight = 50,
+        TTTWeight = 500,
         TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_mac10"},
     },
     ["arccw_go_ace"] = {
@@ -182,57 +182,57 @@ local balanceList = {
         Category = "Rifles",
         Damage = 28,
         DamageMin = 19,
-        TTTWeight = 50,
+        TTTWeight = 500,
         TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_mac10"},
     },
     ["arccw_go_ak47"] = {
         Category = "Rifles",
-        TTTWeight = 50,
+        TTTWeight = 500,
         TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_mac10"},
     },
     ["arccw_go_famas"] = {
         Category = "Rifles",
         SightTime = 0.27,
-        TTTWeight = 50,
+        TTTWeight = 500,
         TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_mac10"},
     },
     ["arccw_go_m16a2"] = {
         Category = "Rifles",
-        TTTWeight = 50,
+        TTTWeight = 500,
         TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_mac10"},
     },
     ["arccw_go_m4"] = {
         Category = "Rifles",
-        TTTWeight = 50,
+        TTTWeight = 500,
         TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_mac10"},
     },
     ["arccw_go_sg556"] = {
         Category = "Rifles",
-        TTTWeight = 50,
+        TTTWeight = 500,
         TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_mac10"},
     },
     -- BRs
     ["arccw_go_fnfal"] = {
         Category = "Rifles",
-        TTTWeight = 50,
-        TTTWeaponType = {"weapon_ttt_m16", "weapon_zm_rifle"},
+        TTTWeight = 500,
+        TTTWeaponType = {"weapon_zm_rifle"},
         ShootSound = "arccw_go/fnfal/fal-good_inc.wav"
     },
     ["arccw_go_g3"] = {
         Category = "Rifles",
-        TTTWeight = 50,
+        TTTWeight = 500,
         TTTWeaponType = {"weapon_zm_rifle"},
     },
     ["arccw_go_scar"] = {
         Category = "Rifles",
-        TTTWeight = 50,
+        TTTWeight = 500,
         TTTWeaponType = {"weapon_zm_rifle"},
     },
     -- SRs
     ["arccw_go_awp"] = {
         Category = "Rifles",
         TTTWeight = 0,
-        TTT_Stats = { -- This is only applied when there TTT Edit is not enabled
+        TTT_Stats = {
             Kind = 7, --WEAPON_EQUIP2,
             Slot = 6,
             RangeMin = 0,
@@ -251,7 +251,7 @@ local balanceList = {
     },
     ["arccw_go_ssg08"] = {
         Category = "Rifles",
-        TTTWeight = 200,
+        TTTWeight = 2000,
         TTTWeaponType = "weapon_zm_rifle",
         TTT_Stats = {
             Range = 10,
@@ -267,7 +267,7 @@ local balanceList = {
         RecoilSide = 2,
         AccuracyMOA = 20,
         Category = "Heavy",
-        TTTWeight = 50,
+        TTTWeight = 500,
         TTTWeaponType = "weapon_zm_shotgun",
         RangeMin = 10,
         TTT_Stats = {
@@ -285,8 +285,8 @@ local balanceList = {
         RecoilSide = 2,
         AccuracyMOA = 30,
         Category = "Heavy",
-        TTTWeight = 100,
-        RangeMin = 10,
+        TTTWeight = 1000,
+        RangeMin = 100,
         TTTWeaponType = "weapon_zm_shotgun",
         TTT_Stats = {
             --DamageMin = 4,
@@ -302,7 +302,7 @@ local balanceList = {
         RecoilSide = 1.5,
         AccuracyMOA = 30,
         Category = "Heavy",
-        TTTWeight = 100,
+        TTTWeight = 1000,
         RangeMin = 15,
         TTTWeaponType = "weapon_zm_shotgun",
         TTT_Stats = {
@@ -319,7 +319,7 @@ local balanceList = {
         RecoilSide = 1.5,
         AccuracyMOA = 20,
         Category = "Heavy",
-        TTTWeight = 100,
+        TTTWeight = 1000,
         RangeMin = 20,
         TTTWeaponType = "weapon_zm_shotgun",
         TTT_Stats = {
@@ -332,12 +332,12 @@ local balanceList = {
     -- MGs
     ["arccw_go_m249para"] = {
         Category = "Heavy",
-        TTTWeight = 100,
+        TTTWeight = 1000,
         TTTWeaponType = "weapon_zm_sledge",
     },
     ["arccw_go_negev"] = {
         Category = "Heavy",
-        TTTWeight = 100,
+        TTTWeight = 1000,
         TTTWeaponType = "weapon_zm_sledge",
     },
     -- Pistols
@@ -351,8 +351,8 @@ local balanceList = {
         SightTime = 0.2,
         Trivia_Desc = "Czech handgun developed to export to the West during the height of the Cold War. It functions similarly to other 9mm double-stack pistols but handles better.",
         Category = "Pistols",
-        TTTWeight = 50,
-        TTTWeaponType = {"weapon_zm_pistol", "weapon_ttt_glock"},
+        TTTWeight = 1000,
+        TTTWeaponType = "weapon_ttt_glock",
     },
     ["arccw_go_fiveseven"] = {
         HipDispersion = 250,
@@ -362,8 +362,8 @@ local balanceList = {
         SightTime = 0.3,
         Trivia_Desc = "Handgun designed as a companion to the P90 PDW. Its thin but long cartridge allows for exceptional range and accuracy for a pistol, but isn't very hard hitting.",
         Category = "Pistols",
-        TTTWeight = 100,
-        TTTWeaponType = "weapon_zm_pistol",
+        TTTWeight = 1000,
+        TTTWeaponType = "weapon_ttt_glock",
     },
     ["arccw_go_glock"] = {
         HipDispersion = 250,
@@ -371,8 +371,8 @@ local balanceList = {
         AccuracyMOA = 12,
         SightTime = 0.2,
         Category = "Pistols",
-        TTTWeight = 50,
-        TTTWeaponType = {"weapon_zm_pistol", "weapon_ttt_glock"},
+        TTTWeight = 1000,
+        TTTWeaponType = "weapon_ttt_glock",
     },
     ["arccw_go_m9"] = {
         HipDispersion = 300,
@@ -385,8 +385,8 @@ local balanceList = {
         Recoil = 0.29,
         Trivia_Desc = "Popular full-sized Italian 9mm handgun adopted by the US military. The longer slide provides excellent accuracy and recoil control at the cost of hip fire performance.",
         Category = "Pistols",
-        TTTWeight = 50,
-        TTTWeaponType = {"weapon_zm_pistol", "weapon_ttt_glock"},
+        TTTWeight = 1000,
+        TTTWeaponType = "weapon_ttt_glock",
     },
     ["arccw_go_p2000"] = {
         HipDispersion = 150,
@@ -398,7 +398,7 @@ local balanceList = {
         SightTime = 0.25,
         Trivia_Desc = "Handgun developed to meet modern police and paramilitary needs. It is comfortable to hold and provides better hip firing performance.",
         Category = "Pistols",
-        TTTWeight = 100,
+        TTTWeight = 1000,
         TTTWeaponType = "weapon_zm_pistol",
     },
     ["arccw_go_p250"] = {
@@ -413,7 +413,7 @@ local balanceList = {
         DamageMin = 26,
         Trivia_Desc = "Compact hard-hitting handgun that incorporates numerous improvements over previous generations of SIG pistols. Its .357 SIG cartridge is more powerful, but also kicks harder.",
         Category = "Pistols",
-        TTTWeight = 100,
+        TTTWeight = 1000,
         TTTWeaponType = "weapon_zm_pistol",
     },
     ["arccw_go_tec9"] = {
@@ -424,7 +424,7 @@ local balanceList = {
         SightTime = 0.3,
         Trivia_Desc = "Cheap open bolt pistol notorious for its ease of conversion to full auto. Has a generous magazine capacity, but isn't particularly accurate.",
         Category = "Pistols",
-        TTTWeight = 100,
+        TTTWeight = 1000,
         TTTWeaponType = "weapon_zm_pistol",
     },
     ["arccw_go_usp"] = {
@@ -436,7 +436,7 @@ local balanceList = {
         DamageMin = 24,
         Trivia_Desc = "Iconic pistol designed for police and special forces use. Accurate and powerful, but magazine capacity is smaller than most pistols.",
         Category = "Pistols",
-        TTTWeight = 100,
+        TTTWeight = 1000,
         TTTWeaponType = "weapon_zm_pistol",
     },
     ["arccw_go_deagle"] = {
@@ -447,7 +447,7 @@ local balanceList = {
         DamageMin = 40,
         SightTime = 0.35,
         Category = "Pistols",
-        TTTWeight = 100,
+        TTTWeight = 1000,
         TTTWeaponType = "weapon_zm_revolver",
         TTT_Stats = {
             Delay = 60 / 120
@@ -460,12 +460,12 @@ local balanceList = {
         DamageMin = 32,
         SightTime = 0.32,
         Category = "Pistols",
-        TTTWeight = 100,
+        TTTWeight = 1000,
         TTTWeaponType = "weapon_zm_revolver",
     },
     ["arccw_go_sw29"] = {
         Category = "Pistols",
-        TTTWeight = 100,
+        TTTWeight = 1000,
         TTTWeaponType = "weapon_zm_revolver",
     },
     -- Equipment
@@ -506,6 +506,17 @@ local balanceList = {
     },
     ["arccw_go_shield"] = {
         Category = "Gear",
+        TTTWeight = 0,
+        AutoSpawnable = false,
+        TTT_Stats = { -- This is only applied when there TTT Edit is not enabled
+            Kind = 7, --WEAPON_EQUIP2,
+            Slot = 6,
+            CanBuy = {1, 2}, --{ROLE_TRAITOR, ROLE_DETECTIVE},
+            EquipMenuData = {
+                type = "Weapon",
+                desc = "A bulletproof shield, unable to be shot through by most weapons.\nVulnerable on the legs and to the side, but not the eyehole."
+            }
+        }
     },
     ["arccw_go_nade_molotov"] = {
         Category = "Gear",
@@ -564,15 +575,15 @@ local tttEditList = {
         Recoil = 1,
     },
     ["arccw_go_fiveseven"] = {
-        -- 50-150 DPS
+        -- 40-125 DPS
         Trivia_Desc = "Long range pistol, less powerful up close.",
         HipDispersion = 400,
         MoveDispersion = 50,
         AccuracyMOA = 3,
-        Damage = 10,
-        DamageMin = 30,
-        RangeMin = 5,
-        Range = 30,
+        Damage = 8,
+        DamageMin = 25,
+        RangeMin = 0,
+        Range = 20,
         Delay = 60 / 300,
         VisualRecoilMult = 0.25,
         Recoil = 2,
@@ -623,7 +634,7 @@ local tttEditList = {
         -- 120-80 DPS
         -- will be slightly lower due to mashing
         Slot = 1,
-        Trivia_Desc = "High RPM pistol.",
+        Trivia_Desc = "Fast firing, high capacity pistol.",
         HipDispersion = 150,
         MoveDispersion = 150,
         AccuracyMOA = 20,
@@ -634,6 +645,24 @@ local tttEditList = {
         Delay = 60 / 600,
         VisualRecoilMult = 0.25,
         Recoil = 1,
+        HeatCapacity = 48,
+        Firemodes = {
+            {Mode = 1},
+            {
+                Mode = 2,
+                Mult_HipDispersion = 2,
+                Mult_AccuracyMOA = 2,
+                Mult_RecoilSide = 2,
+                PrintName = "SEAR",
+                Override_Jamming = true,
+            },
+            {Mode = 0}
+        },
+        M_Hook_Mult_HipDispersion = function(wep, data)
+            if wep:GetCurrentFiremode().Mode == 2 then
+                data.mult = data.mult * math.min(3, 1 + wep:GetHeat() / wep:GetMaxHeat() * 2)
+            end
+        end,
     },
     ["arccw_go_usp"] = {
         -- 72-48 DPS
@@ -653,20 +682,20 @@ local tttEditList = {
     ["arccw_go_deagle"] = {
         -- 104-70 DPS
         Trivia_Desc = "Powerful magnum pistol.",
-        HipDispersion = 500,
-        MoveDispersion = 50,
+        HipDispersion = 400,
+        MoveDispersion = 100,
         AccuracyMOA = 5,
-        Damage = 52,
-        DamageMin = 35,
-        RangeMin = 5,
-        Range = 20,
+        Damage = 60,
+        DamageMin = 40,
+        RangeMin = 3,
+        Range = 25,
         Delay = 60 / 120,
         VisualRecoilMult = 0.25,
         Recoil = 4,
     },
     ["arccw_go_r8"] = {
         -- Trigger delay makes this somewhat weaker than expected
-        Trivia_Desc = "Accurate revolver, can be fanned for faster firing.",
+        Trivia_Desc = "Accurate revolver with trigger delay. Can be fanned for faster firing.",
         HipDispersion = 100,
         MoveDispersion = 25,
         AccuracyMOA = 5,
@@ -679,16 +708,16 @@ local tttEditList = {
         Recoil = 2,
     },
     ["arccw_go_sw29"] = {
-        -- 128-88 DPS
-        Trivia_Desc = "Fast firing revolver.",
-        HipDispersion = 200,
+        -- 126-105 DPS
+        Trivia_Desc = "Well-rounded revolver.",
+        HipDispersion = 300,
         MoveDispersion = 100,
         AccuracyMOA = 8,
-        Damage = 32,
-        DamageMin = 22,
+        Damage = 42,
+        DamageMin = 35,
         RangeMin = 10,
         Range = 30,
-        Delay = 60 / 240,
+        Delay = 60 / 180,
         VisualRecoilMult = 0.25,
         Recoil = 3,
     },
@@ -808,19 +837,41 @@ local tttEditList = {
     },
     ["arccw_go_ar15"] = {
         -- 266-213 DPS
-        -- "omg so OP!" it's semi only dummy, practical firerate probably is more like 400-600rpm
-        Trivia_Desc = "Semi-automatic rifle.",
-        HipDispersion = 500,
+        Trivia_Desc = "Civilian rifle with homemate automatic modification.",
+        HipDispersion = 250,
         MoveDispersion = 100,
-        AccuracyMOA = 4,
-        Damage = 22,
-        DamageMin = 18,
+        AccuracyMOA = 6,
+        Damage = 20,
+        DamageMin = 16,
         RangeMin = 15,
         Range = 60,
         Delay = 60 / 800,
         VisualRecoilMult = 1.5,
         Recoil = 0.35,
-        RecoilSide = 0.15
+        RecoilSide = 0.15,
+        HeatCapacity = 60,
+        Firemodes = {
+            {Mode = 1},
+            {
+                Mode = 2,
+                Mult_HipDispersion = 2,
+                Mult_AccuracyMOA = 2,
+                Mult_RecoilSide = 3,
+                PrintName = "SEAR",
+                Override_Jamming = true,
+            },
+            {Mode = 0}
+        },
+        M_Hook_Mult_AccuracyMOA = function(wep, data)
+            if wep:GetCurrentFiremode().Mode == 2 then
+                data.mult = data.mult * math.min(3, 1 + wep:GetHeat() / wep:GetMaxHeat() * 2)
+            end
+        end,
+        M_Hook_Mult_HipDispersion = function(wep, data)
+            if wep:GetCurrentFiremode().Mode == 2 then
+                data.mult = data.mult * math.min(2.5, 1 + wep:GetHeat() / wep:GetMaxHeat() * 1.5)
+            end
+        end,
     },
     ["arccw_go_ace"] = {
         -- 213-160 DPS
@@ -2069,6 +2120,44 @@ local function PostLoadAtt()
                     { Mode = 0 }
                 }
             },
+            ["go_sw29_barrel_short"] = {
+                Mult_RPM = 240 / 180,
+                Mult_HipDispersion = 1.5,
+                Mult_Damage = 32 / 42,
+                Mult_DamageMin = 22 / 35,
+            },
+            ["go_sw29_barrel_long"] = {
+                Mult_RPM = 120 / 180,
+                Mult_HipDispersion = 0.5,
+                Mult_Damage = 46 / 42,
+                Mult_DamageMin = 40 / 35,
+            },
+            ["go_deagle_slide_short"] = {
+                Mult_HipDispersion = 1.5,
+            },
+            ["go_deagle_slide_long"] = {
+                Mult_HipDispersion = 0.5,
+            },
+            ["go_deagle_mag_8_44"] = {
+                Mult_RPM = 1.15,
+                Mult_Damage = 51 / 60,
+                Mult_DamageMin = 34 / 40,
+            },
+            ["go_deagle_mag_10_44"] = {
+                Mult_RPM = 1.15,
+                Mult_Damage = 51 / 60,
+                Mult_DamageMin = 34 / 40,
+            },
+            ["go_deagle_mag_9_357"] = {
+                Mult_RPM = 1.3,
+                Mult_Damage = 42 / 60,
+                Mult_DamageMin = 28 / 40,
+            },
+            ["go_deagle_mag_12_357"] = {
+                Mult_RPM = 1.3,
+                Mult_Damage = 42 / 60,
+                Mult_DamageMin = 28 / 40,
+            },
 
             -- SMG
             ["go_mac10_barrel_long"] = {
@@ -2083,15 +2172,35 @@ local function PostLoadAtt()
 
             -- Shotgun
             ["go_ammo_sg_slug"] = {
-                Damage = "nil",
-                DamageMin = 1.1,
-                HipDispersion = 1.25
+                Mult_Damage = "nil",
+                Mult_DamageMin = 1.1,
+                Mult_HipDispersion = 1.25
             },
             ["go_ammo_sg_sabot"] = {
-                Damage = 0.75,
-                DamageMin = 1.5,
-                Range = 0.5,
-                HipDispersion = 1.5
+                Mult_Damage = 0.75,
+                Mult_DamageMin = 2,
+                Mult_Range = 0.5,
+                Override_RangeMin = 0,
+                Mult_HipDispersion = 1.5,
+            },
+            ["go_ammo_sg_flechette"] = {
+                Mult_Damage = 0.9,
+                Mult_DamageMin = 1.25,
+                Mult_Range = 0.5,
+                Override_RangeMin = 0,
+                Mult_HipDispersion = 1.5
+            },
+
+            -- Rifle
+            ["go_m4_mag_21_9mm"] = {
+                Mult_HipDispersion = 0.5,
+                Mult_Damage = 0.75,
+                Mult_DamageMin = 0.75,
+            },
+            ["go_m4_mag_30_9mm"] = {
+                Mult_HipDispersion = 0.5,
+                Mult_Damage = 0.75,
+                Mult_DamageMin = 0.75,
             },
         }
 
