@@ -1893,10 +1893,10 @@ local function PostLoadAtt()
 
             -- Bayonet anim edit
             ["go_muzz_bayonet"] = {
-                Override_BashPreparePos = Vector(2, -12, -2.6),
-                Override_BashPrepareAng = Angle(8, 4, 5),
-                Override_BashPos = Vector(1.2, 7, -1.8),
-                Override_BashAng = Angle(4, 6, 0),
+                Override_BashPreparePos = Vector(4, -12, 1.8),
+                Override_BashPrepareAng = Angle(15, -5, 20),
+                Override_BashPos = Vector(-5, 24, -0.7),
+                Override_BashAng = Angle(-12, 16, -25),
             },
 
             -- Stub barrel shouldn't be shit
