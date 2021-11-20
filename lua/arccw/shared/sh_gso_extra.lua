@@ -1470,13 +1470,15 @@ local function GSOE()
 
     -- Dirty dirty overwrites
     local base = weapons.GetStored("arccw_base")
-    base.DoLaser = function(self, world)
+    base.DoLaser = function(self, world, nocontext)
         world = world or false
 
-        if world then
-            cam.Start3D()
-        else
-            cam.Start3D(EyePos(), EyeAngles(), self.CurrentViewModelFOV)
+        if not nocontext then
+            if world then
+                cam.Start3D()
+            else
+                cam.Start3D(EyePos(), EyeAngles(), self.CurrentViewModelFOV)
+            end
         end
 
         for slot, k in pairs(self.Attachments) do
@@ -1544,7 +1546,9 @@ local function GSOE()
             end
         end
 
-        cam.End3D()
+        if not nocontext then
+            cam.End3D()
+        end
     end
 
     local function myfiredamage(s, dmg, origin, radius)
