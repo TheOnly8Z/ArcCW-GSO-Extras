@@ -1153,6 +1153,12 @@ local tttEditList = {
 }
 
 local function GSOE()
+
+    if not weapons.GetStored("arccw_go_mp9") then
+        print("GSO not detected, GSO Extras will not load changes.")
+        return
+    end
+
     local wpnList = list.GetForEdit("Weapon")
     for class, t in pairs(balanceList) do
         local stored = weapons.GetStored(class)
@@ -1309,12 +1315,12 @@ local function GSOE()
     r8.Firemodes = {
         {
             Mode = 1,
-            PrintName = "DACT",
+            PrintName = "fcg.dact",
             --Override_TriggerDelay = true,
         },
         {
             Mode = 1,
-            PrintName = "FAN",
+            PrintName = "fcg.fan",
             Override_TriggerDelay = false,
             Add_SightsDispersion = 50,
             Mult_HipDispersion = 4,
@@ -2213,7 +2219,10 @@ local function PostLoadAtt()
         end
 
         for i, t in pairs(baltable) do
-            if not ArcCW.AttachmentTable[i] then continue end
+            if not ArcCW.AttachmentTable[i] then
+                print("GSO attachments not detected, GSO Extra changes will not load.")
+                return
+            end
             for k, v in pairs(t) do
                 if k == "Desc_Pros" or k == "Desc_Cons" or k == "Desc_Neutrals" then
                     table.Add(ArcCW.AttachmentTable[i][k], v)

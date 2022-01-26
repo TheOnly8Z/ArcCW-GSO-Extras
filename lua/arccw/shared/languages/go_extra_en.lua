@@ -39,3 +39,6 @@ L["con.gsoe.add_accuracymoa.30"] = "+30MOA Imprecision"
 
 L["ui.gsoe.cook"] = "COOKED! LOST %d RNDS"
 L["ui.gsoe.overdrive"] = "OVERDRIVE"
+
+L["fcg.fan"] = "Fanning"
+L["fcg.fan.abbrev"] = "FAN"
