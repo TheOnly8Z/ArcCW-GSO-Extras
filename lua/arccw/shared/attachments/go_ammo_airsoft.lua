@@ -2,16 +2,16 @@ att.PrintName = "Airsoft"
 att.Icon = Material("entities/acwatt_go_ammo_airsoft.png", "smooth mips")
 att.Description = "Replace weapon internals to fire tiny plastic BB pellets, effectively making the gun a toy. While the projectile does minimal damage, the weapon can load a lot more pellets and handles incredibly well.\nRemember, no full auto in the buildings!"
 att.Desc_Pros = {
-    "Shoot BB pellets",
-    "Large magazine capacity",
-    "Great handling and no recoil"
+    "pro.gsoe.airsoft.1",
+    "pro.gsoe.airsoft.2",
+    "pro.gsoe.airsoft.3"
 }
 att.Desc_Cons = {
-    "Minimal damage"
+    "con.gsoe.airsoft.1"
 }
 att.Desc_Neutrals = {
-    "Uses BB Pellets ammo",
-    "Airsoft users instakill each other"
+    "desc.gsoe.airsoft.1",
+    "desc.gsoe.airsoft.2"
 }
 att.Slot = "go_ammo"
 

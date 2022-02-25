@@ -32,6 +32,15 @@ L["con.gsoe.overdrive.3"] = "Take self damage above 200% overdrive"
 L["desc.gsoe.overdrive.1"] = "Device malfunctions at 300% and beyond"
 L["desc.gsoe.overdrive.2"] = "DO NOT BRING OVERDRIVE ABOVE 500%"
 
+L["pro.gsoe.airsoft.1"] = "Shoot BB pellets"
+L["pro.gsoe.airsoft.2"] = "Large magazine capacity"
+L["pro.gsoe.airsoft.3"] = "Great handling and no recoil"
+
+L["con.gsoe.airsoft.1"] = "Minimal damage"
+
+L["desc.gsoe.airsoft.1"] = "Uses BB Pellets ammo"
+L["desc.gsoe.airsoft.2"] = "Airsoft users instakill each other"
+
 L["pro.gsoe.dragonsbreath"] = "Fire a puff of incendiary powder"
 L["con.gsoe.dragonsbreath"] = "Projectile has low velocity and high gravity"
 L["con.gsoe.add_accuracymoa.30"] = "+30MOA Imprecision"
