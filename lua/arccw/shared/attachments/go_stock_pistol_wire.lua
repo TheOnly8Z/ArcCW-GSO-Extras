@@ -12,8 +12,8 @@ att.Model = "models/weapons/arccw_go/atts/pistol_stock_wire.mdl"
 att.ModelOffset = Vector(-0.5, 0, -0.5)
 
 att.Mult_SightTime = 1.25
-att.Mult_DrawSpeed = 1.25
-att.Mult_HolsterSpeed = 1.25
+att.Mult_DrawTime = 1.25
+att.Mult_HolsterTime = 1.25
 
 att.Mult_Recoil = 0.95
 att.Mult_MoveDispersion = 0.9
